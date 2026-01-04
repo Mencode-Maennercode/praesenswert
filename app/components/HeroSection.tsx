@@ -59,7 +59,7 @@ export default function HeroSection() {
           className="relative w-full max-w-4xl hidden sm:block"
         >
           <Image
-            src="https://praesenzwert.de/Gehirn_Transparent.png"
+            src="/Gehirn_Transparent.png"
             alt="PräsenzWert Logo Background"
             width={1600}
             height={800}
@@ -77,7 +77,7 @@ export default function HeroSection() {
           className="absolute top-1/3 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[280px] max-w-[80vw]"
         >
           <Image
-            src="https://praesenzwert.de/Gehirn_Transparent.png"
+            src="/Gehirn_Transparent.png"
             alt="PräsenzWert Logo Mobile"
             width={800}
             height={400}
