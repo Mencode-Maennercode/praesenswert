@@ -20,7 +20,7 @@ export default function Footer() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
             <div className="text-left relative -mt-16">
               <Image
-                src="https://praesenzwert.de/Gehirn_Transparent.png"
+                src="/Gehirn_Transparent.png"
                 alt="PräsenzWert Logo"
                 width={180}
                 height={60}
