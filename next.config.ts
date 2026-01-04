@@ -6,7 +6,7 @@ const nextConfig: NextConfig = {
   images: {
     unoptimized: true,
   },
-  assetPrefix: 'https://praesenzwert.de',
+  basePath: '',
 }
 
 export default nextConfig

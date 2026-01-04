@@ -55,7 +55,7 @@ export default function Header() {
               }}
             >
               <Image
-                src="/Gehirn_Transparent.png"
+                src="https://praesenzwert.de/Gehirn_Transparent.png"
                 alt="PräsenzWert Logo"
                 width={420}
                 height={210}
