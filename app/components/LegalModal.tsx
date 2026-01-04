@@ -203,7 +203,7 @@ export default function LegalModal({ isOpen, onClose, type }: LegalModalProps) {
         <h3 className="text-xl font-bold text-brand-navy mb-3">SSL-Verschlüsselung</h3>
         <p className="text-gray-700 text-sm leading-relaxed">
           Diese Seite nutzt aus Sicherheitsgründen eine SSL/TLS-Verschlüsselung. Eine verschlüsselte Verbindung 
-          erkennen Sie daran, dass die Adresszeile des Browsers von „http://" auf „https://" wechselt und an dem 
+          erkennen Sie daran, dass die Adresszeile des Browsers „https://" anzeigt und an dem 
           Schloss-Symbol in Ihrer Browserzeile.
         </p>
       </section>
