@@ -24,10 +24,11 @@ export async function POST(request: NextRequest) {
     }
 
     // Create transporter (using environment variables for security)
+    const port = parseInt(process.env.SMTP_PORT || '587')
     const transporter = nodemailer.createTransport({
       host: process.env.SMTP_HOST || 'smtp.gmail.com',
-      port: parseInt(process.env.SMTP_PORT || '587'),
-      secure: false,
+      port: port,
+      secure: port === 465, // true für Port 465 (SSL), false für Port 587 (STARTTLS)
       auth: {
         user: process.env.SMTP_USER,
         pass: process.env.SMTP_PASS,
