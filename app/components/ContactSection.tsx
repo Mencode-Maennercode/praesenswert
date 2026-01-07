@@ -1,7 +1,7 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import { Mail, Phone, MapPin, Send } from 'lucide-react'
+import { Mail, Phone, MapPin, Send, MessageCircle } from 'lucide-react'
 import { useState } from 'react'
 
 export default function ContactSection() {
@@ -12,35 +12,66 @@ export default function ContactSection() {
     phone: '',
     message: '',
   })
+  const [isSubmitting, setIsSubmitting] = useState(false)
+  const [submitMessage, setSubmitMessage] = useState('')
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     
     // Validate required fields
     if (!formData.name.trim()) {
-      alert('Name ist ein Pflichtfeld.')
+      setSubmitMessage('Name ist ein Pflichtfeld.')
       return
     }
     
     if (!formData.email.trim()) {
-      alert('E-Mail ist ein Pflichtfeld.')
+      setSubmitMessage('E-Mail ist ein Pflichtfeld.')
       return
     }
     
     if (!formData.message.trim()) {
-      alert('Nachricht ist ein Pflichtfeld.')
+      setSubmitMessage('Nachricht ist ein Pflichtfeld.')
       return
     }
     
     // Validate email format
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
     if (!emailRegex.test(formData.email)) {
-      alert('Bitte geben Sie eine gültige E-Mail-Adresse ein.')
+      setSubmitMessage('Bitte geben Sie eine gültige E-Mail-Adresse ein.')
       return
     }
     
-    console.log('Form submitted:', formData)
-    // Here you would typically send the data to your backend
+    setIsSubmitting(true)
+    setSubmitMessage('')
+    
+    try {
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      })
+      
+      const data = await response.json()
+      
+      if (response.ok) {
+        setSubmitMessage('Anfrage erfolgreich gesendet! Ich melde mich bald bei Ihnen.')
+        setFormData({
+          name: '',
+          email: '',
+          company: '',
+          phone: '',
+          message: '',
+        })
+      } else {
+        setSubmitMessage(data.error || 'Fehler beim Senden der Anfrage.')
+      }
+    } catch (error) {
+      setSubmitMessage('Fehler beim Senden der Anfrage. Bitte versuchen Sie es später erneut.')
+    } finally {
+      setIsSubmitting(false)
+    }
   }
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -159,11 +190,22 @@ export default function ContactSection() {
 
               <button
                 type="submit"
-                className="w-full bg-brand-cyan text-white px-8 py-4 rounded-lg font-semibold text-lg hover:bg-brand-navy transition-all duration-300 shadow-lg hover:shadow-xl flex items-center justify-center gap-2"
+                disabled={isSubmitting}
+                className="w-full bg-brand-cyan text-white px-8 py-4 rounded-lg font-semibold text-lg hover:bg-brand-navy transition-all duration-300 shadow-lg hover:shadow-xl flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
               >
-                Unverbindliche Anfrage senden
+                {isSubmitting ? 'Wird gesendet...' : 'Unverbindliche Anfrage senden'}
                 <Send size={20} />
               </button>
+              
+              {submitMessage && (
+                <div className={`mt-4 p-4 rounded-lg text-sm ${
+                  submitMessage.includes('erfolgreich') 
+                    ? 'bg-green-50 text-green-700 border border-green-200' 
+                    : 'bg-red-50 text-red-700 border border-red-200'
+                }`}>
+                  {submitMessage}
+                </div>
+              )}
             </form>
           </motion.div>
 
@@ -185,7 +227,12 @@ export default function ContactSection() {
                   </div>
                   <div>
                     <h4 className="font-semibold text-brand-navy mb-1">E-Mail</h4>
-                    <p className="text-gray-600">info@praesenzwert.de</p>
+                    <a 
+                      href="mailto:kontakt@praesenzwert.de" 
+                      className="text-gray-600 hover:text-brand-cyan transition-colors underline"
+                    >
+                      kontakt@praesenzwert.de
+                    </a>
                   </div>
                 </div>
 
@@ -195,7 +242,29 @@ export default function ContactSection() {
                   </div>
                   <div>
                     <h4 className="font-semibold text-brand-navy mb-1">Telefon</h4>
-                    <p className="text-gray-600">+49 (0) 123 456789</p>
+                    <a 
+                      href="tel:+491717460398" 
+                      className="text-gray-600 hover:text-brand-cyan transition-colors underline"
+                    >
+                      +49 171 7460398
+                    </a>
+                  </div>
+                </div>
+
+                <div className="flex items-start gap-4">
+                  <div className="bg-green-500/10 p-3 rounded-lg">
+                    <MessageCircle className="w-6 h-6 text-green-600" />
+                  </div>
+                  <div>
+                    <h4 className="font-semibold text-brand-navy mb-1">WhatsApp</h4>
+                    <a 
+                      href="https://wa.me/491717460398" 
+                      target="_blank" 
+                      rel="noopener noreferrer"
+                      className="text-gray-600 hover:text-green-600 transition-colors underline"
+                    >
+                      Direkt auf WhatsApp schreiben
+                    </a>
                   </div>
                 </div>
 
