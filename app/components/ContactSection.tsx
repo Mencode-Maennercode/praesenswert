@@ -1,7 +1,7 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import { Mail, Phone, MapPin, Send, MessageCircle } from 'lucide-react'
+import { Mail, Phone, MapPin, Send, CheckCircle } from 'lucide-react'
 import { useState } from 'react'
 
 export default function ContactSection() {
@@ -12,65 +12,48 @@ export default function ContactSection() {
     phone: '',
     message: '',
   })
-  const [isSubmitting, setIsSubmitting] = useState(false)
-  const [submitMessage, setSubmitMessage] = useState('')
+  const [submitted, setSubmitted] = useState(false)
+  const [submitting, setSubmitting] = useState(false)
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     
-    // Validate required fields
-    if (!formData.name.trim()) {
-      setSubmitMessage('Name ist ein Pflichtfeld.')
+    if (!formData.name.trim() || !formData.email.trim() || !formData.message.trim()) {
+      alert('Bitte füllen Sie alle Pflichtfelder aus.')
       return
     }
     
-    if (!formData.email.trim()) {
-      setSubmitMessage('E-Mail ist ein Pflichtfeld.')
-      return
-    }
-    
-    if (!formData.message.trim()) {
-      setSubmitMessage('Nachricht ist ein Pflichtfeld.')
-      return
-    }
-    
-    // Validate email format
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
     if (!emailRegex.test(formData.email)) {
-      setSubmitMessage('Bitte geben Sie eine gültige E-Mail-Adresse ein.')
+      alert('Bitte geben Sie eine gültige E-Mail-Adresse ein.')
       return
     }
-    
-    setIsSubmitting(true)
-    setSubmitMessage('')
-    
+
+    setSubmitting(true)
+
     try {
-      const response = await fetch('/api/contact', {
+      const response = await fetch('/contact.php', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(formData),
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name: formData.name,
+          email: formData.email,
+          company: formData.company,
+          phone: formData.phone,
+          message: formData.message,
+        }),
       })
-      
-      const data = await response.json()
-      
+
       if (response.ok) {
-        setSubmitMessage('Anfrage erfolgreich gesendet! Ich melde mich bald bei Ihnen.')
-        setFormData({
-          name: '',
-          email: '',
-          company: '',
-          phone: '',
-          message: '',
-        })
+        setSubmitted(true)
+        setFormData({ name: '', email: '', company: '', phone: '', message: '' })
       } else {
-        setSubmitMessage(data.error || 'Fehler beim Senden der Anfrage.')
+        throw new Error('Fehler beim Senden')
       }
-    } catch (error) {
-      setSubmitMessage('Fehler beim Senden der Anfrage. Bitte versuchen Sie es später erneut.')
+    } catch {
+      alert('Fehler beim Senden. Bitte schreiben Sie direkt an: info@praesenzwert.de')
     } finally {
-      setIsSubmitting(false)
+      setSubmitting(false)
     }
   }
 
@@ -109,104 +92,103 @@ export default function ContactSection() {
             <h3 className="text-2xl font-bold text-brand-navy mb-6">
               Anfrage
             </h3>
-            <form onSubmit={handleSubmit} className="space-y-6">
-              <div>
-                <label htmlFor="name" className="block text-sm font-semibold text-brand-navy mb-2">
-                  Name *
-                </label>
-                <input
-                  type="text"
-                  id="name"
-                  name="name"
-                  required
-                  value={formData.name}
-                  onChange={handleChange}
-                  className="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:border-brand-cyan focus:outline-none transition-colors"
-                  placeholder="Vorname Nachname"
-                />
-              </div>
 
-              <div>
-                <label htmlFor="email" className="block text-sm font-semibold text-brand-navy mb-2">
-                  E-Mail *
-                </label>
-                <input
-                  type="email"
-                  id="email"
-                  name="email"
-                  required
-                  value={formData.email}
-                  onChange={handleChange}
-                  className="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:border-brand-cyan focus:outline-none transition-colors"
-                  placeholder="beispiel@email.de"
-                />
+            {submitted ? (
+              <div className="flex flex-col items-center justify-center py-16 text-center">
+                <CheckCircle className="w-16 h-16 text-brand-cyan mb-4" />
+                <h4 className="text-2xl font-bold text-brand-navy mb-2">Anfrage gesendet!</h4>
+                <p className="text-gray-600">Vielen Dank! Ich melde mich so schnell wie möglich bei Ihnen.</p>
               </div>
-
-              <div>
-                <label htmlFor="company" className="block text-sm font-semibold text-brand-navy mb-2">
-                  Unternehmen
-                </label>
-                <input
-                  type="text"
-                  id="company"
-                  name="company"
-                  value={formData.company}
-                  onChange={handleChange}
-                  className="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:border-brand-cyan focus:outline-none transition-colors"
-                  placeholder="Name des Unternehmens"
-                />
-              </div>
-
-              <div>
-                <label htmlFor="phone" className="block text-sm font-semibold text-brand-navy mb-2">
-                  Telefon
-                </label>
-                <input
-                  type="tel"
-                  id="phone"
-                  name="phone"
-                  value={formData.phone}
-                  onChange={handleChange}
-                  className="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:border-brand-cyan focus:outline-none transition-colors"
-                  placeholder="Telefonnummer"
-                />
-              </div>
-
-              <div>
-                <label htmlFor="message" className="block text-sm font-semibold text-brand-navy mb-2">
-                  Nachricht *
-                </label>
-                <textarea
-                  id="message"
-                  name="message"
-                  required
-                  value={formData.message}
-                  onChange={handleChange}
-                  rows={5}
-                  className="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:border-brand-cyan focus:outline-none transition-colors resize-none"
-                  placeholder="Kurze Projektbeschreibung und Vorstellungen..."
-                />
-              </div>
-
-              <button
-                type="submit"
-                disabled={isSubmitting}
-                className="w-full bg-brand-cyan text-white px-8 py-4 rounded-lg font-semibold text-lg hover:bg-brand-navy transition-all duration-300 shadow-lg hover:shadow-xl flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
-              >
-                {isSubmitting ? 'Wird gesendet...' : 'Unverbindliche Anfrage senden'}
-                <Send size={20} />
-              </button>
-              
-              {submitMessage && (
-                <div className={`mt-4 p-4 rounded-lg text-sm ${
-                  submitMessage.includes('erfolgreich') 
-                    ? 'bg-green-50 text-green-700 border border-green-200' 
-                    : 'bg-red-50 text-red-700 border border-red-200'
-                }`}>
-                  {submitMessage}
+            ) : (
+              <form onSubmit={handleSubmit} className="space-y-6">
+                <div>
+                  <label htmlFor="name" className="block text-sm font-semibold text-brand-navy mb-2">
+                    Name *
+                  </label>
+                  <input
+                    type="text"
+                    id="name"
+                    name="name"
+                    required
+                    value={formData.name}
+                    onChange={handleChange}
+                    className="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:border-brand-cyan focus:outline-none transition-colors"
+                    placeholder="Vorname Nachname"
+                  />
                 </div>
-              )}
-            </form>
+
+                <div>
+                  <label htmlFor="email" className="block text-sm font-semibold text-brand-navy mb-2">
+                    E-Mail *
+                  </label>
+                  <input
+                    type="email"
+                    id="email"
+                    name="email"
+                    required
+                    value={formData.email}
+                    onChange={handleChange}
+                    className="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:border-brand-cyan focus:outline-none transition-colors"
+                    placeholder="beispiel@email.de"
+                  />
+                </div>
+
+                <div>
+                  <label htmlFor="company" className="block text-sm font-semibold text-brand-navy mb-2">
+                    Unternehmen
+                  </label>
+                  <input
+                    type="text"
+                    id="company"
+                    name="company"
+                    value={formData.company}
+                    onChange={handleChange}
+                    className="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:border-brand-cyan focus:outline-none transition-colors"
+                    placeholder="Name des Unternehmens"
+                  />
+                </div>
+
+                <div>
+                  <label htmlFor="phone" className="block text-sm font-semibold text-brand-navy mb-2">
+                    Telefon
+                  </label>
+                  <input
+                    type="tel"
+                    id="phone"
+                    name="phone"
+                    value={formData.phone}
+                    onChange={handleChange}
+                    className="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:border-brand-cyan focus:outline-none transition-colors"
+                    placeholder="Telefonnummer"
+                  />
+                </div>
+
+                <div>
+                  <label htmlFor="message" className="block text-sm font-semibold text-brand-navy mb-2">
+                    Nachricht *
+                  </label>
+                  <textarea
+                    id="message"
+                    name="message"
+                    required
+                    value={formData.message}
+                    onChange={handleChange}
+                    rows={5}
+                    className="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:border-brand-cyan focus:outline-none transition-colors resize-none"
+                    placeholder="Kurze Projektbeschreibung und Vorstellungen..."
+                  />
+                </div>
+
+                <button
+                  type="submit"
+                  disabled={submitting}
+                  className="w-full bg-brand-cyan text-white px-8 py-4 rounded-lg font-semibold text-lg hover:bg-brand-navy transition-all duration-300 shadow-lg hover:shadow-xl flex items-center justify-center gap-2 disabled:opacity-60 disabled:cursor-not-allowed"
+                >
+                  {submitting ? 'Wird gesendet...' : 'Unverbindliche Anfrage senden'}
+                  {!submitting && <Send size={20} />}
+                </button>
+              </form>
+            )}
           </motion.div>
 
           <motion.div
@@ -227,12 +209,7 @@ export default function ContactSection() {
                   </div>
                   <div>
                     <h4 className="font-semibold text-brand-navy mb-1">E-Mail</h4>
-                    <a 
-                      href="mailto:kontakt@praesenzwert.de" 
-                      className="text-gray-600 hover:text-brand-cyan transition-colors underline"
-                    >
-                      kontakt@praesenzwert.de
-                    </a>
+                    <p className="text-gray-600">info@praesenzwert.de</p>
                   </div>
                 </div>
 
@@ -242,29 +219,7 @@ export default function ContactSection() {
                   </div>
                   <div>
                     <h4 className="font-semibold text-brand-navy mb-1">Telefon</h4>
-                    <a 
-                      href="tel:+491717460398" 
-                      className="text-gray-600 hover:text-brand-cyan transition-colors underline"
-                    >
-                      +49 171 7460398
-                    </a>
-                  </div>
-                </div>
-
-                <div className="flex items-start gap-4">
-                  <div className="bg-green-500/10 p-3 rounded-lg">
-                    <MessageCircle className="w-6 h-6 text-green-600" />
-                  </div>
-                  <div>
-                    <h4 className="font-semibold text-brand-navy mb-1">WhatsApp</h4>
-                    <a 
-                      href="https://wa.me/491717460398" 
-                      target="_blank" 
-                      rel="noopener noreferrer"
-                      className="text-gray-600 hover:text-green-600 transition-colors underline"
-                    >
-                      Direkt auf WhatsApp schreiben
-                    </a>
+                    <p className="text-gray-600">+49 (0) 123 456789</p>
                   </div>
                 </div>
 

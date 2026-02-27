@@ -50,6 +50,11 @@ export default function Footer() {
                   </a>
                 </li>
                 <li>
+                  <a href="#referenzen" className="text-gray-400 hover:text-brand-cyan transition-colors">
+                    Referenzen
+                  </a>
+                </li>
+                <li>
                   <a href="#hinweise" className="text-gray-400 hover:text-brand-cyan transition-colors">
                     Hinweise
                   </a>

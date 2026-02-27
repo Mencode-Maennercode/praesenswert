@@ -2,7 +2,7 @@
 
 import Image from 'next/image'
 import { useState, useEffect } from 'react'
-import { Menu, X, Home, Briefcase, Settings, Info, Mail } from 'lucide-react'
+import { Menu, X, Home, Briefcase, Settings, Info, Mail, Star } from 'lucide-react'
 import { motion, AnimatePresence } from 'framer-motion'
 
 export default function Header() {
@@ -64,48 +64,52 @@ export default function Header() {
             </div>
           </div>
 
-          <div className="hidden md:flex items-center justify-end flex-1 ml-8">
-            <nav className="flex space-x-4 lg:space-x-6 xl:space-x-8">
-              <a
-                href="#home"
-                className="text-brand-navy hover:text-brand-cyan transition-colors font-medium whitespace-nowrap"
-              >
-                Home
-              </a>
-              <a
-                href="#leistungen"
-                className="text-brand-navy hover:text-brand-cyan transition-colors font-medium whitespace-nowrap"
-              >
-                Leistungen
-              </a>
-              <a
-                href="#arbeitsweise"
-                className="text-brand-navy hover:text-brand-cyan transition-colors font-medium whitespace-nowrap"
-              >
-                Arbeitsweise
-              </a>
-              <a
-                href="#hinweise"
-                className="text-brand-navy hover:text-brand-cyan transition-colors font-medium whitespace-nowrap"
-              >
-                Hinweise
-              </a>
-              <a
-                href="#kontakt"
-                className="text-brand-navy hover:text-brand-cyan transition-colors font-medium whitespace-nowrap"
-              >
-                Kontakt
-              </a>
-            </nav>
+          <nav className="hidden md:flex space-x-8">
+            <a
+              href="#home"
+              className="text-brand-navy hover:text-brand-cyan transition-colors font-medium"
+            >
+              Home
+            </a>
+            <a
+              href="#leistungen"
+              className="text-brand-navy hover:text-brand-cyan transition-colors font-medium"
+            >
+              Leistungen
+            </a>
+            <a
+              href="#arbeitsweise"
+              className="text-brand-navy hover:text-brand-cyan transition-colors font-medium"
+            >
+              Arbeitsweise
+            </a>
+            <a
+              href="#referenzen"
+              className="text-brand-navy hover:text-brand-cyan transition-colors font-medium"
+            >
+              Referenzen
+            </a>
+            <a
+              href="#hinweise"
+              className="text-brand-navy hover:text-brand-cyan transition-colors font-medium"
+            >
+              Hinweise
+            </a>
+            <a
+              href="#kontakt"
+              className="text-brand-navy hover:text-brand-cyan transition-colors font-medium"
+            >
+              Kontakt
+            </a>
+          </nav>
 
-            <div className="ml-4 lg:ml-6 xl:ml-8 flex-shrink-0">
-              <a
-                href="#kontakt"
-                className="bg-brand-cyan text-white px-4 lg:px-5 xl:px-6 py-3 rounded-lg font-semibold hover:bg-brand-navy transition-all duration-300 shadow-lg hover:shadow-xl whitespace-nowrap"
-              >
-                Jetzt starten
-              </a>
-            </div>
+          <div className="hidden md:block">
+            <a
+              href="#kontakt"
+              className="bg-brand-cyan text-white px-6 py-3 rounded-lg font-semibold hover:bg-brand-navy transition-all duration-300 shadow-lg hover:shadow-xl"
+            >
+              Jetzt starten
+            </a>
           </div>
 
           <button
@@ -162,6 +166,12 @@ export default function Header() {
                     <a href="#arbeitsweise" className="flex items-center gap-3 rounded-md px-3 py-3 text-gray-800 hover:bg-gray-50" onClick={() => setIsMobileMenuOpen(false)}>
                       <Settings size={20} className="text-brand-cyan" />
                       <span>Arbeitsweise</span>
+                    </a>
+                  </li>
+                  <li>
+                    <a href="#referenzen" className="flex items-center gap-3 rounded-md px-3 py-3 text-gray-800 hover:bg-gray-50" onClick={() => setIsMobileMenuOpen(false)}>
+                      <Star size={20} className="text-brand-cyan" />
+                      <span>Referenzen</span>
                     </a>
                   </li>
                   <li>

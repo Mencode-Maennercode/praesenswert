@@ -21,8 +21,8 @@ export default function LegalModal({ isOpen, onClose, type }: LegalModalProps) {
             <strong>PräsenzWert – Dennis Heidenreich</strong>
           </p>
           <p className="text-gray-700 text-sm mb-1">Dennis Heidenreich</p>
-          <p className="text-gray-700 text-sm mb-1">Josef-Martin-Weg 4</p>
-          <p className="text-gray-700 text-sm">53501 Grafschaft, Deutschland</p>
+          <p className="text-gray-700 text-sm mb-1">[Straße und Hausnummer]</p>
+          <p className="text-gray-700 text-sm">[PLZ] [Ort], Deutschland</p>
         </div>
       </section>
 
@@ -30,22 +30,10 @@ export default function LegalModal({ isOpen, onClose, type }: LegalModalProps) {
         <h3 className="text-xl font-bold text-brand-navy mb-3">Kontakt</h3>
         <div className="bg-gray-50 p-4 rounded-lg">
           <p className="text-gray-700 text-sm mb-1">
-            <strong>Telefon:</strong> <a href="tel:+491717460398" className="text-brand-cyan hover:underline">+49 171 7460398</a>
+            <strong>Telefon:</strong> [Telefonnummer]
           </p>
           <p className="text-gray-700 text-sm">
-            <strong>E-Mail:</strong> <a href="mailto:kontakt@praesenzwert.de" className="text-brand-cyan hover:underline">kontakt@praesenzwert.de</a>
-          </p>
-        </div>
-      </section>
-
-      <section>
-        <h3 className="text-xl font-bold text-brand-navy mb-3">Berufsbezeichnung</h3>
-        <div className="bg-gray-50 p-4 rounded-lg">
-          <p className="text-gray-700 text-sm">
-            <strong>Tätigkeit:</strong> Webdesigner & Digitaler Dienstleister für Unternehmenswebsites
-          </p>
-          <p className="text-gray-700 text-sm mt-2">
-            <strong>Schwerpunkt:</strong> Technische Umsetzung informativer Websites für kleine und mittelständische Betriebe
+            <strong>E-Mail:</strong> info@praesenzwert.de
           </p>
         </div>
       </section>
@@ -95,19 +83,6 @@ export default function LegalModal({ isOpen, onClose, type }: LegalModalProps) {
           zu forschen, die auf eine rechtswidrige Tätigkeit hinweisen.
         </p>
       </section>
-
-      <section>
-        <h3 className="text-xl font-bold text-brand-navy mb-3">Streitschlichtung</h3>
-        <p className="text-gray-700 text-sm leading-relaxed">
-          Die Europäische Kommission stellt eine Plattform zur Online-Streitbeilegung (OS) bereit: 
-          <a href="https://ec.europa.eu/consumers/odr" target="_blank" rel="noopener noreferrer" className="text-brand-cyan hover:underline">
-            https://ec.europa.eu/consumers/odr
-          </a>
-        </p>
-        <p className="text-gray-700 text-sm leading-relaxed mt-2">
-          Wir sind nicht bereit oder verpflichtet, an Streitbeilegungsverfahren vor einer Verbraucherschlichtungsstelle teilzunehmen.
-        </p>
-      </section>
     </div>
   )
 
@@ -124,8 +99,8 @@ export default function LegalModal({ isOpen, onClose, type }: LegalModalProps) {
         <h4 className="text-lg font-semibold text-brand-navy mb-2">Verantwortliche Stelle</h4>
         <p className="text-gray-700 text-sm leading-relaxed mb-3">
           <strong>PräsenzWert – Dennis Heidenreich</strong><br />
-          Dennis Heidenreich, Josef-Martin-Weg 4, 53501 Grafschaft, Deutschland<br />
-          E-Mail: <a href="mailto:kontakt@praesenzwert.de" className="text-brand-cyan hover:underline">kontakt@praesenzwert.de</a>
+          Dennis Heidenreich, [Straße und Hausnummer], [PLZ] [Ort], Deutschland<br />
+          E-Mail: info@praesenzwert.de
         </p>
       </section>
 
@@ -163,9 +138,8 @@ export default function LegalModal({ isOpen, onClose, type }: LegalModalProps) {
         <h3 className="text-xl font-bold text-brand-navy mb-3">Kontaktformular</h3>
         <p className="text-gray-700 text-sm leading-relaxed mb-3">
           Wenn Sie mir über das Kontaktformular eine Anfrage senden, werden die von Ihnen eingegebenen Daten 
-          ausschließlich zur Bearbeitung Ihrer Anfrage verwendet. Rechtsgrundlage für die Datenverarbeitung 
-          ist Art. 6 Abs. 1 lit. b DSGVO (Erfüllung vorvertraglicher Maßnahmen) und Art. 6 Abs. 1 lit. f DSGVO 
-          (berechtigtes Interesse an der Kontaktaufnahme).
+          ausschließlich zur Bearbeitung Ihrer Anfrage verwendet. Ich speichere diese Daten nur solange, wie es 
+          für die Bearbeitung Ihrer Anfrage erforderlich ist.
         </p>
         <div className="bg-gray-50 p-3 sm:p-4 rounded-lg">
           <p className="text-gray-700 text-sm mb-2">
@@ -179,11 +153,6 @@ export default function LegalModal({ isOpen, onClose, type }: LegalModalProps) {
             <li className="pl-1 sm:pl-0">Nachricht (Pflichtfeld)</li>
           </ul>
         </div>
-        <p className="text-gray-700 text-sm leading-relaxed mt-3">
-          <strong>Speicherdauer:</strong> Die Formulardaten werden nur solange gespeichert, wie es für die 
-          Bearbeitung Ihrer Anfrage erforderlich ist. In der Regel erfolgt die Löschung nach Abschluss der 
-          Kommunikation, spätestens jedoch nach 6 Monaten.
-        </p>
         <p className="text-gray-700 text-sm leading-relaxed mt-3">
           <strong>Wichtiger Hinweis:</strong> Aktuell werden die Formulardaten nur im Browser verarbeitet und 
           an mich weitergeleitet. Es findet keine dauerhafte Speicherung auf einem Server statt. Ich verwende 
@@ -226,7 +195,7 @@ export default function LegalModal({ isOpen, onClose, type }: LegalModalProps) {
           Löschung dieser Daten zu verlangen.
         </p>
         <p className="text-gray-700 text-sm leading-relaxed">
-          Bei Fragen zum Datenschutz können Sie sich jederzeit an mich wenden: <a href="mailto:kontakt@praesenzwert.de" className="text-brand-cyan hover:underline">kontakt@praesenzwert.de</a>
+          Bei Fragen zum Datenschutz können Sie sich jederzeit an mich wenden: info@praesenzwert.de
         </p>
       </section>
 
@@ -234,7 +203,7 @@ export default function LegalModal({ isOpen, onClose, type }: LegalModalProps) {
         <h3 className="text-xl font-bold text-brand-navy mb-3">SSL-Verschlüsselung</h3>
         <p className="text-gray-700 text-sm leading-relaxed">
           Diese Seite nutzt aus Sicherheitsgründen eine SSL/TLS-Verschlüsselung. Eine verschlüsselte Verbindung 
-          erkennen Sie daran, dass die Adresszeile des Browsers „https://" anzeigt und an dem 
+          erkennen Sie daran, dass die Adresszeile des Browsers von „http://" auf „https://" wechselt und an dem 
           Schloss-Symbol in Ihrer Browserzeile.
         </p>
       </section>
