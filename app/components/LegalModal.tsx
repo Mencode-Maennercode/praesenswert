@@ -107,29 +107,35 @@ export default function LegalModal({ isOpen, onClose, type }: LegalModalProps) {
       <section>
         <h3 className="text-xl font-bold text-brand-navy mb-3">Hosting und Datenverarbeitung</h3>
         <p className="text-gray-700 text-sm leading-relaxed mb-3">
-          Diese Website wird bei netcup gehostet. netcup ist ein deutscher Hosting-Anbieter mit Rechenzentren 
-          in Deutschland und Österreich, die vollständig DSGVO-konform betrieben werden.
+          Diese Website wird bei netcup gehostet und über Cloudflare CDN ausgeliefert. Beide Anbieter sind 
+          europäische Unternehmen mit DSGVO-konformen Rechenzentren.
         </p>
         <div className="bg-gray-50 p-3 sm:p-4 rounded-lg">
           <p className="text-gray-700 text-sm mb-2">
             <strong>Hosting-Details:</strong>
           </p>
           <ul className="list-disc list-inside text-sm text-gray-700 space-y-1 sm:space-y-1">
-            <li className="pl-1 sm:pl-0">Anbieter: netcup GmbH</li>
+            <li className="pl-1 sm:pl-0">Hosting-Anbieter: netcup GmbH (Deutschland)</li>
+            <li className="pl-1 sm:pl-0">CDN-Anbieter: Cloudflare Inc. (EU-Datenverarbeitung)</li>
             <li className="pl-1 sm:pl-0 whitespace-nowrap">Serverstandort: Deutschland/Österreich (EU)</li>
             <li className="pl-1 sm:pl-0 whitespace-nowrap">DSGVO-Konformität: Ja, vollständig konform</li>
             <li className="pl-1 sm:pl-0">ISO 27001 Zertifizierung: Vorhanden</li>
           </ul>
         </div>
         <p className="text-gray-700 text-sm leading-relaxed mt-3">
-          Durch die Wahl eines europäischen Hosting-Anbieters stelle ich sicher, dass Ihre Daten nicht unter 
+          Durch die Wahl europäischer Anbieter stelle ich sicher, dass Ihre Daten nicht unter 
           ausländische Gesetze wie den US CLOUD Act fallen und ausschließlich nach europäischen Datenschutzstandards 
           verarbeitet werden.
         </p>
         <p className="text-gray-700 text-sm leading-relaxed mt-3">
+          <strong>Cloudflare CDN:</strong> Zur Beschleunigung der Website und Bereitstellung von SSL-Verschlüsselung 
+          wird Cloudflare als CDN-Dienst genutzt. Cloudflare verarbeitet dabei automatisch IP-Adressen und technische 
+          Verbindungsdaten. Die Datenverarbeitung erfolgt ausschließlich in Europa nach DSGVO-Standards.
+        </p>
+        <p className="text-gray-700 text-sm leading-relaxed mt-3">
           <strong>Hinweis zu Auftragsverarbeitungsverträgen:</strong><br className="block sm:hidden" /> <span className="inline whitespace-nowrap sm:whitespace-normal">Da&nbsp;auf&nbsp;dieser&nbsp;Website</span> aktuell keine 
           personenbezogenen Daten serverseitig gespeichert werden (das Kontaktformular leitet Daten nur an mich weiter), 
-          ist aktuell kein Auftragsverarbeitungsvertrag mit netcup erforderlich. Sollte sich dies in Zukunft ändern, 
+          ist aktuell kein Auftragsverarbeitungsvertrag erforderlich. Sollte sich dies in Zukunft ändern, 
           werde ich entsprechende Verträge abschließen.
         </p>
       </section>
@@ -201,11 +207,22 @@ export default function LegalModal({ isOpen, onClose, type }: LegalModalProps) {
 
       <section>
         <h3 className="text-xl font-bold text-brand-navy mb-3">SSL-Verschlüsselung</h3>
-        <p className="text-gray-700 text-sm leading-relaxed">
-          Diese Seite nutzt aus Sicherheitsgründen eine SSL/TLS-Verschlüsselung. Eine verschlüsselte Verbindung 
-          erkennen Sie daran, dass die Adresszeile des Browsers von „http://" auf „https://" wechselt und an dem 
-          Schloss-Symbol in Ihrer Browserzeile.
+        <p className="text-gray-700 text-sm leading-relaxed mb-3">
+          Diese Seite nutzt aus Sicherheitsgründen eine SSL/TLS-Verschlüsselung über Cloudflare. Eine verschlüsselte 
+          Verbindung erkennen Sie daran, dass die Adresszeile des Browsers von „http://" auf „https://" wechselt und 
+          an dem Schloss-Symbol in Ihrer Browserzeile.
         </p>
+        <div className="bg-gray-50 p-3 sm:p-4 rounded-lg">
+          <p className="text-gray-700 text-sm mb-2">
+            <strong>SSL-Details:</strong>
+          </p>
+          <ul className="list-disc list-inside text-sm text-gray-700 space-y-1 sm:space-y-1">
+            <li className="pl-1 sm:pl-0">Zertifikatsanbieter: Cloudflare (kostenlos)</li>
+            <li className="pl-1 sm:pl-0">Verschlüsselungsstärke: TLS 1.3 / 256-Bit</li>
+            <li className="pl-1 sm:pl-0">Automatische Erneuerung: Ja</li>
+            <li className="pl-1 sm:pl-0">HTTPS-Umleitung: Erzwungen</li>
+          </ul>
+        </div>
       </section>
     </div>
   )
@@ -252,7 +269,7 @@ export default function LegalModal({ isOpen, onClose, type }: LegalModalProps) {
               
               <div className="mt-8 pt-6 border-t border-gray-200">
                 <p className="text-gray-500 text-xs">
-                  Stand: Januar 2026
+                  Stand: Februar 2026
                 </p>
               </div>
             </div>
