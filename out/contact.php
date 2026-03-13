@@ -42,7 +42,7 @@ if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
     exit;
 }
 
-$to      = 'info@praesenzwert.de';
+$to      = 'kontakt@praesenzwert.de';
 $subject = '=?UTF-8?B?' . base64_encode('Neue Anfrage von ' . $name) . '?=';
 
 $body  = "Neue Kontaktanfrage von der PräsenzWert Website\n";

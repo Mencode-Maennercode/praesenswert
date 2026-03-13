@@ -83,7 +83,7 @@ const localBusinessSchema = {
   name: 'PräsenzWert',
   description: 'Professionelle Unternehmenswebsites für kleine und mittelständische Betriebe in der Region Eifel, Ahr und Rhein.',
   url: 'https://www.praesenzwert.de',
-  email: 'info@praesenzwert.de',
+  email: 'kontakt@praesenzwert.de',
   areaServed: [
     { '@type': 'AdministrativeArea', name: 'Eifel' },
     { '@type': 'AdministrativeArea', name: 'Ahrtal' },
