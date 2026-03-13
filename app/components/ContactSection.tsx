@@ -211,9 +211,8 @@ export default function ContactSection() {
                     <h4 className="font-semibold text-brand-navy mb-1">Telefon</h4>
                     <a 
                       href="tel:+491714760398" 
-                      className="text-gray-600 hover:text-brand-cyan transition-colors inline-flex items-center gap-2 group"
+                      className="text-gray-600 hover:text-brand-cyan transition-colors"
                     >
-                      <span className="group-hover:scale-110 transition-transform">📞</span>
                       0171 / 7460398
                     </a>
                   </div>
