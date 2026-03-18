@@ -1,4 +1,43 @@
+# Robots.txt für praesenzwert.de - AI & SEO optimiert 2026
+
+# Standard Suchmaschinen
 User-agent: *
 Allow: /
+Crawl-delay: 0
 
+# Google Bot
+User-agent: Googlebot
+Allow: /
+
+# Bing Bot
+User-agent: Bingbot
+Allow: /
+
+# AI Crawlers - Explizit erlaubt für KI-Indexierung
+User-agent: GPTBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: CCBot
+Allow: /
+
+User-agent: anthropic-ai
+Allow: /
+
+User-agent: Claude-Web
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Applebot-Extended
+Allow: /
+
+# Sitemaps
 Sitemap: https://www.praesenzwert.de/sitemap.xml
+Sitemap: https://www.praesenzwert.de/sitemap-images.xml

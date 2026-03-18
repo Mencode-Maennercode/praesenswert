@@ -1,9 +1,41 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1"
+        xmlns:video="http://www.google.com/schemas/sitemap-video/1.1">
+  
+  <!-- Homepage -->
   <url>
     <loc>https://www.praesenzwert.de/</loc>
-    <lastmod>2026-02-27</lastmod>
-    <changefreq>monthly</changefreq>
+    <lastmod>2026-03-18</lastmod>
+    <changefreq>weekly</changefreq>
     <priority>1.0</priority>
+    <image:image>
+      <image:loc>https://www.praesenzwert.de/Logo_Transparent.png</image:loc>
+      <image:title>PräsenzWert Logo - Webdesign Eifel, Ahr, Rhein</image:title>
+      <image:caption>Professionelles Webdesign für KMU in der Region Eifel, Ahrtal und Rhein</image:caption>
+    </image:image>
   </url>
+  
+  <!-- Bestell-Bar Seite -->
+  <url>
+    <loc>https://www.praesenzwert.de/bestell-bar</loc>
+    <lastmod>2026-03-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://www.praesenzwert.de/bar.png</image:loc>
+      <image:title>Bestell-Bar App Bestellübersicht</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.praesenzwert.de/kellner.png</image:loc>
+      <image:title>Bestell-Bar Kellner App</image:title>
+    </image:image>
+    <video:video>
+      <video:thumbnail_loc>https://www.praesenzwert.de/Logo_Transparent.png</video:thumbnail_loc>
+      <video:title>Bestell-Bar Demo Video</video:title>
+      <video:description>Digitale Event-Bestellung - Getränkebestellung mit Live-Statistik</video:description>
+      <video:content_loc>https://www.praesenzwert.de/5847855-hd_1280_720_30fps.mp4</video:content_loc>
+    </video:video>
+  </url>
+  
 </urlset>
