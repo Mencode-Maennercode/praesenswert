@@ -15,11 +15,20 @@ export const metadata: Metadata = {
     'Webdesign Eifel',
     'Website erstellen Eifel',
     'Webdesign Ahrtal',
+    'Webdesign Ahr',
     'Website Ahr',
     'Webdesign Rhein',
     'Website erstellen Rhein',
+    'Webdesign Grafschaft',
+    'Webdesign Remagen',
+    'Webdesign Sinzig',
+    'Webdesign Linz am Rhein',
+    'Webdesign Neuwied',
+    'Webdesign Bonn',
+    'Webdesign Euskirchen',
     'Webdesign Adenau',
     'Webdesign Bad Neuenahr',
+    'Webdesign Bad Neuenahr-Ahrweiler',
     'Webdesign Ahrweiler',
     'Webdesign Mayen',
     'Webdesign Andernach',
@@ -28,12 +37,28 @@ export const metadata: Metadata = {
     'Webdesign Daun',
     'Webdesign Bitburg',
     'Webdesign Prüm',
+    'Webagentur Eifel',
+    'Webagentur Ahrtal',
+    'Webagentur Rhein',
     'Homepage erstellen Eifel',
+    'Homepage erstellen Ahrtal',
+    'Homepage erstellen Rhein',
     'Unternehmenswebsite KMU',
     'Firmenwebsite Rheinland-Pfalz',
     'Webdesigner Eifel',
+    'Webdesigner Ahrtal',
     'Webentwicklung Ahr',
+    'SEO Eifel',
+    'SEO Ahrtal',
+    'SEO Rhein',
+    'lokale SEO Rheinland-Pfalz',
+    'Google Ranking Ahrtal',
+    'KI SEO Eifel',
+    'AI Search Optimierung',
     'Google Business Profil einrichten',
+    'Website für Handwerker Eifel',
+    'Website für Praxis Ahrtal',
+    'Website für Solarbetriebe',
     'PräsenzWert',
     'praesenzwert.de',
   ],
@@ -86,8 +111,12 @@ export const metadata: Metadata = {
   other: {
     'ai:indexing': 'enabled',
     'ai:crawling': 'allowed',
-    'ai:summary': 'PräsenzWert bietet professionelles Webdesign für KMU in der Region Eifel, Ahrtal und Rhein. Spezialisiert auf Unternehmenswebsites mit fairen Preisen und moderner Umsetzung.',
-    'ai:context': 'Webdesign-Agentur, Region Rheinland-Pfalz, Eifel, Ahrtal, Rhein',
+    'ai:summary': 'PräsenzWert bietet professionelles Webdesign für KMU in der Region Eifel, Ahrtal, Grafschaft und Rhein. Spezialisiert auf Unternehmenswebsites mit fairen Preisen, moderner Umsetzung und lokaler SEO-Optimierung für Google und KI-Suchmaschinen.',
+    'ai:context': 'Webdesign-Agentur, Region Rheinland-Pfalz, Eifel, Ahrtal, Grafschaft, Rhein, Bad Neuenahr-Ahrweiler, Remagen, Sinzig, Adenau, Koblenz',
+    'geo.region': 'DE-RP',
+    'geo.placename': 'Grafschaft, Ahrtal, Eifel, Rhein',
+    'geo.position': '50.5833;7.0667',
+    'ICBM': '50.5833, 7.0667',
   },
 }
 
@@ -121,6 +150,11 @@ const organizationSchema = {
     { '@type': 'AdministrativeArea', name: 'Rhein' },
     { '@type': 'AdministrativeArea', name: 'Rheinland-Pfalz' },
     { '@type': 'City', name: 'Bad Neuenahr-Ahrweiler' },
+    { '@type': 'City', name: 'Grafschaft' },
+    { '@type': 'City', name: 'Remagen' },
+    { '@type': 'City', name: 'Sinzig' },
+    { '@type': 'City', name: 'Linz am Rhein' },
+    { '@type': 'City', name: 'Neuwied' },
     { '@type': 'City', name: 'Adenau' },
     { '@type': 'City', name: 'Mayen' },
     { '@type': 'City', name: 'Andernach' },
@@ -128,8 +162,15 @@ const organizationSchema = {
     { '@type': 'City', name: 'Daun' },
     { '@type': 'City', name: 'Bitburg' },
     { '@type': 'City', name: 'Cochem' },
+    { '@type': 'City', name: 'Bonn' },
+    { '@type': 'City', name: 'Euskirchen' },
   ],
-  knowsAbout: ['Webdesign', 'Website Entwicklung', 'SEO', 'Google Business', 'Digitale Präsenz'],
+  knowsAbout: ['Webdesign', 'Website Entwicklung', 'SEO', 'Lokale SEO', 'KI-Suchmaschinen-Optimierung', 'Google Business Profil', 'Digitale Präsenz', 'Unternehmenswebsites KMU'],
+  sameAs: [
+    'https://www.srautomation.de/',
+    'https://www.ag-solar.net/',
+    'https://manuela-rosenkranz.de/',
+  ],
 }
 
 const localBusinessSchema = {
@@ -220,6 +261,88 @@ const serviceSchema = {
   },
 }
 
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  '@id': 'https://www.praesenzwert.de/#faq',
+  mainEntity: [
+    {
+      '@type': 'Question',
+      name: 'Welche Regionen bedient PräsenzWert?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: 'PräsenzWert ist auf Unternehmen in der Region Eifel, Ahrtal, Grafschaft und am Rhein spezialisiert – darunter Bad Neuenahr-Ahrweiler, Remagen, Sinzig, Adenau, Mayen, Andernach, Koblenz, Bonn und Umgebung.',
+      },
+    },
+    {
+      '@type': 'Question',
+      name: 'Was kostet eine professionelle Unternehmenswebsite?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: 'Die Preise richten sich nach Umfang und Anforderungen. PräsenzWert bietet faire, transparente Festpreise für KMU in der Eifel, im Ahrtal und am Rhein. Eine unverbindliche Anfrage ist jederzeit möglich.',
+      },
+    },
+    {
+      '@type': 'Question',
+      name: 'Werden die Websites auch für Google und KI-Suchmaschinen optimiert?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: 'Ja. Jede Website wird technisch SEO-optimiert ausgeliefert (semantisches HTML, strukturierte Daten, Schema.org, Sitemap, robots.txt) und ist explizit für KI-Crawler wie GPTBot, ChatGPT-User, ClaudeBot, PerplexityBot und Google-Extended freigegeben.',
+      },
+    },
+    {
+      '@type': 'Question',
+      name: 'Welche Referenzen gibt es?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: 'Aktuelle Referenzen sind u.a. SR Automation (Automatisierungstechnik), AG Solar GmbH (Photovoltaik & Wallboxen, Grafschaft/Ahr/Rhein) und die Praxis Manuela Rosenkranz (Individualpsychologische Beratung, Bad Neuenahr-Ahrweiler).',
+      },
+    },
+  ],
+}
+
+const portfolioSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'ItemList',
+  '@id': 'https://www.praesenzwert.de/#referenzen',
+  name: 'Referenzen PräsenzWert',
+  itemListElement: [
+    {
+      '@type': 'ListItem',
+      position: 1,
+      item: {
+        '@type': 'CreativeWork',
+        name: 'SR Automation',
+        url: 'https://www.srautomation.de/',
+        about: 'Unternehmenswebsite für einen Automatisierungstechnik-Spezialisten',
+        creator: { '@id': 'https://www.praesenzwert.de/#organization' },
+      },
+    },
+    {
+      '@type': 'ListItem',
+      position: 2,
+      item: {
+        '@type': 'CreativeWork',
+        name: 'AG Solar GmbH',
+        url: 'https://www.ag-solar.net/',
+        about: 'Unternehmenswebsite für Photovoltaik, Batteriespeicher und Wallboxen in der Grafschaft, Ahr und Rhein',
+        creator: { '@id': 'https://www.praesenzwert.de/#organization' },
+      },
+    },
+    {
+      '@type': 'ListItem',
+      position: 3,
+      item: {
+        '@type': 'CreativeWork',
+        name: 'Manuela Rosenkranz – Praxis für Individualpsychologische Beratung',
+        url: 'https://manuela-rosenkranz.de/',
+        about: 'Praxis-Website für Individualpsychologische Beratung & therapeutische Seelsorge in Bad Neuenahr-Ahrweiler',
+        creator: { '@id': 'https://www.praesenzwert.de/#organization' },
+      },
+    },
+  ],
+}
+
 export default function RootLayout({
   children,
 }: {
@@ -251,6 +374,14 @@ export default function RootLayout({
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceSchema) }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(portfolioSchema) }}
         />
       </head>
       <body className={inter.className}>{children}</body>

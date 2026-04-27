@@ -7,8 +7,22 @@ const projects = [
   {
     name: 'SR Automation',
     url: 'https://www.srautomation.de/',
-    description: 'Professionelle Unternehmenswebsite für einen Automatisierungstechnik-Spezialisten. Moderne Präsentation, klare Struktur und ansprechendes Design.',
+    description: 'Professionelle Unternehmenswebsite für einen Automatisierungstechnik-Spezialisten. Moderne Präsentation, klare Struktur und ansprechendes Design. Derzeit in finalen Nacharbeiten.',
     tags: ['Unternehmenswebsite', 'Automatisierungstechnik', 'Webdesign'],
+    status: 'In finalen Nacharbeiten',
+  },
+  {
+    name: 'AG Solar GmbH',
+    url: 'https://www.ag-solar.net/',
+    description: 'Regional verankerte Unternehmenswebsite für einen Photovoltaik-, Batteriespeicher- und Wallbox-Spezialisten aus der Grafschaft (Ahr & Rhein). Klare Leistungsdarstellung, lokaler Fokus und starke Call-to-Actions. Derzeit in finalen Nacharbeiten.',
+    tags: ['Unternehmenswebsite', 'Photovoltaik & Erneuerbare Energien', 'Regional Ahr · Rhein'],
+    status: 'In finalen Nacharbeiten',
+  },
+  {
+    name: 'Manuela Rosenkranz – Praxis',
+    url: 'https://manuela-rosenkranz.de/',
+    description: 'Vertrauensvolle Praxis-Website für Individualpsychologische Beratung & therapeutische Seelsorge in Bad Neuenahr-Ahrweiler. Einfühlsames Design, klare Angebotsstruktur und einfache Terminvereinbarung.',
+    tags: ['Praxis-Website', 'Beratung & Seelsorge', 'Bad Neuenahr-Ahrweiler'],
   },
   {
     name: 'Weitere Projekte in Auftrag',

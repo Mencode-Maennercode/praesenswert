@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
+  
+  <url>
+    <loc>https://www.praesenzwert.de/</loc>
+    <image:image>
+      <image:loc>https://www.praesenzwert.de/Logo_Transparent.png</image:loc>
+      <image:title>PräsenzWert Logo - Webdesign Eifel</image:title>
+      <image:caption>Professionelles Webdesign für die Region Eifel, Ahr und Rhein</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.praesenzwert.de/Logo.png</image:loc>
+      <image:title>PräsenzWert Corporate Logo</image:title>
+    </image:image>
+  </url>
+  
+  <url>
+    <loc>https://www.praesenzwert.de/bestell-bar</loc>
+    <image:image>
+      <image:loc>https://www.praesenzwert.de/bar.png</image:loc>
+      <image:title>Bestell-Bar App - Bestellübersicht</image:title>
+      <image:caption>Digitale Getränkebestellung für Events</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.praesenzwert.de/kellner.png</image:loc>
+      <image:title>Bestell-Bar Kellner App</image:title>
+      <image:caption>Kellner-Ansicht für effiziente Bedienung</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.praesenzwert.de/qrscann.png</image:loc>
+      <image:title>QR-Code Scanner</image:title>
+      <image:caption>Einfaches Scannen am Tisch</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.praesenzwert.de/vorbereitung.png</image:loc>
+      <image:title>Bestell-Bar Administration</image:title>
+      <image:caption>Selbstverwaltung von Produkten und Preisen</image:caption>
+    </image:image>
+  </url>
+  
+</urlset>
