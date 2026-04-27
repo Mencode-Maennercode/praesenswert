@@ -1,0 +1,32 @@
+{
+  "name": "PräsenzWert - Professionelles Webdesign Eifel, Ahr & Rhein",
+  "short_name": "PräsenzWert",
+  "description": "Professionelle Unternehmenswebsites für kleine und mittelständische Betriebe in der Eifel, Ahrtal und am Rhein",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#1e293b",
+  "theme_color": "#1e293b",
+  "orientation": "portrait-primary",
+  "categories": ["business", "productivity", "web-design"],
+  "lang": "de-DE",
+  "dir": "ltr",
+  "icons": [
+    {
+      "src": "/favicon.ico",
+      "sizes": "any",
+      "type": "image/x-icon"
+    },
+    {
+      "src": "/favicon.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/Logo_Transparent.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ]
+}
