@@ -200,7 +200,7 @@ export default function ContactSection() {
           >
             <div>
               <h3 className="text-2xl font-bold text-brand-navy mb-6">
-                Ihre Region Rhein · Ahr · Eifel
+                Ihre Region Köln · Bonn · Eifel · Ahr · Rhein
               </h3>
               <div className="space-y-6">
                 <div className="flex items-start gap-4">

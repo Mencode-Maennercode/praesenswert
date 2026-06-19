@@ -2,7 +2,7 @@
 
 import Image from 'next/image'
 import { useState, useEffect } from 'react'
-import { Menu, X, Home, Briefcase, Settings, Info, Mail, Star, Boxes } from 'lucide-react'
+import { Menu, X, Home, Briefcase, Settings, Info, Mail, Star, Boxes, HelpCircle } from 'lucide-react'
 import { motion, AnimatePresence } from 'framer-motion'
 
 export default function Header() {
@@ -96,6 +96,12 @@ export default function Header() {
               Produkte
             </a>
             <a
+              href="#faq"
+              className="text-brand-navy hover:text-brand-cyan transition-colors font-medium"
+            >
+              FAQ
+            </a>
+            <a
               href="#hinweise"
               className="text-brand-navy hover:text-brand-cyan transition-colors font-medium"
             >
@@ -184,6 +190,12 @@ export default function Header() {
                     <a href="#produkte" className="flex items-center gap-3 rounded-md px-3 py-3 text-gray-800 hover:bg-gray-50" onClick={() => setIsMobileMenuOpen(false)}>
                       <Boxes size={20} className="text-brand-cyan" />
                       <span>Produkte</span>
+                    </a>
+                  </li>
+                  <li>
+                    <a href="#faq" className="flex items-center gap-3 rounded-md px-3 py-3 text-gray-800 hover:bg-gray-50" onClick={() => setIsMobileMenuOpen(false)}>
+                      <HelpCircle size={20} className="text-brand-cyan" />
+                      <span>FAQ</span>
                     </a>
                   </li>
                   <li>

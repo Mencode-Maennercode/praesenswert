@@ -124,23 +124,45 @@ function KarnevalMockup() {
 function MaennerCodeMockup() {
   return (
     <div className="flex justify-center">
-      <div className="relative w-44 rounded-[2rem] bg-brand-navy p-2.5 shadow-2xl ring-1 ring-brand-navy/20">
+      <div className="relative w-48 rounded-[2rem] bg-brand-navy p-2.5 shadow-2xl ring-1 ring-brand-navy/20">
         <div className="absolute left-1/2 top-2 z-10 h-1 w-12 -translate-x-1/2 rounded-full bg-white/30" />
         <div className="overflow-hidden rounded-[1.6rem] bg-gradient-to-b from-brand-light to-white">
           <div className="bg-brand-navy px-4 pb-4 pt-7 text-center">
             <p className="text-sm font-black tracking-wide text-white">MännerCode</p>
-            <p className="text-[10px] text-brand-cyan">Android App</p>
+            <p className="text-[10px] text-brand-cyan">Jeden Tag eine gute Tat</p>
           </div>
-          <div className="space-y-2 p-4">
-            <div className="h-3 w-3/4 rounded-full bg-brand-cyan/30" />
-            <div className="h-3 w-full rounded-full bg-gray-200" />
-            <div className="h-3 w-5/6 rounded-full bg-gray-200" />
-            <div className="mt-3 rounded-xl bg-brand-cyan/10 p-3">
-              <div className="mb-2 h-2.5 w-1/2 rounded-full bg-brand-cyan/40" />
-              <div className="h-2.5 w-4/5 rounded-full bg-gray-200" />
+          <div className="space-y-3 p-4">
+            {/* Punkte & Streak */}
+            <div className="flex items-center justify-between rounded-xl bg-brand-navy/5 px-3 py-2.5">
+              <div>
+                <p className="text-[9px] uppercase tracking-wide text-gray-400">Punkte</p>
+                <p className="text-lg font-black leading-none text-brand-navy">320</p>
+              </div>
+              <span className="inline-flex items-center gap-1 rounded-full bg-amber-100 px-2 py-1 text-[10px] font-bold text-amber-700">
+                🔥 7 Tage
+              </span>
             </div>
-            <div className="mt-2 rounded-lg bg-brand-cyan py-2 text-center text-[11px] font-bold text-white">
-              Öffnen
+            {/* Fortschritts-Herz */}
+            <div>
+              <div className="mb-1 flex items-center justify-between text-[9px] text-gray-400">
+                <span>Beziehungs-Level</span>
+                <span className="font-semibold text-rose-500">75 %</span>
+              </div>
+              <div className="h-2 w-full overflow-hidden rounded-full bg-gray-200">
+                <div className="h-full w-3/4 rounded-full bg-gradient-to-r from-rose-400 to-rose-500" />
+              </div>
+            </div>
+            {/* Tagesaufgabe */}
+            <div className="rounded-xl border border-brand-cyan/30 bg-brand-cyan/5 p-3">
+              <p className="mb-1 flex items-center gap-1 text-[10px] font-bold uppercase tracking-wide text-brand-cyan">
+                ❤️ Tagesaufgabe
+              </p>
+              <p className="text-[11px] leading-snug text-brand-navy">
+                Sag ihr heute, wofür du dankbar bist – mit einer ehrlichen Nachricht.
+              </p>
+            </div>
+            <div className="rounded-lg bg-brand-cyan py-2 text-center text-[11px] font-bold text-white">
+              Erledigt ✓ &nbsp;+20 Punkte
             </div>
           </div>
         </div>
@@ -178,28 +200,33 @@ const products: Product[] = [
   },
   {
     icon: Camera,
-    badge: 'Hardware + Software',
-    name: 'Fotobox für den Raspberry Pi',
+    badge: 'Fotobox-Vermietung · KI',
+    name: 'Fotobox mieten – mit KI & Filtern',
     description:
-      'Eine komplette Fotobox-Lösung auf Basis eines Raspberry Pi – mit Live-Vorschau, KI-Filtern, Hintergrund-Austausch, Sofort-Druck und QR-Download. Einmal aufgebaut, beliebig oft einsetzbar.',
+      'Die moderne Fotobox zum Mieten für Hochzeit, Geburtstag, Firmenfeier oder Verein in Eifel, Köln & Bonn. Mit KI-Effekten, lustigen Filtern, Sofort-Druck und einer Online-Fotodatenbank für alle Aufnahmen – deutlich günstiger als andere Anbieter.',
     advantages: [
-      'Einmalige Hardware statt teurer Miete pro Event',
-      'KI-Filter & Hintergründe (Gesichtserkennung) in Echtzeit',
-      'Sofort-Druck und QR-Download für die Gäste',
-      'Läuft eigenständig & offline – keine Cloud nötig',
+      'Deutlich günstiger als klassische Fotobox-Anbieter',
+      'KI-Effekte & Filter (Gesichtserkennung) in Echtzeit',
+      'Online-Fotodatenbank – alle Bilder sicher gespeichert & teilbar',
+      'Sofort-Druck vor Ort + QR-Download für die Gäste',
+      'Mieten statt teuer kaufen – inkl. Aufbau & Einweisung',
     ],
     mockup: <FotoboxMockup />,
+    cta: {
+      label: 'Fotobox anfragen',
+      href: '#kontakt',
+    },
   },
   {
     icon: Beer,
     badge: 'Web-App · Events',
     name: 'Bestell- & Service-System',
     description:
-      'Digitales Bestellsystem für Karneval, Feste und Gastronomie. Gäste scannen den QR-Code am Tisch, bestellen oder rufen den Kellner – die Theke und das Service-Team behalten alles in Echtzeit im Blick.',
+      'Digitales Bestellsystem für Karneval, Feste, Vereine und Gastronomie. Gäste scannen den QR-Code am Tisch, bestellen oder rufen den Kellner – und auch die Theke sieht jede Bestellung live in einer übersichtlichen Ansicht.',
     advantages: [
       'Gäste bestellen per QR – ganz ohne App',
+      'Theke & Kellner sehen alle Bestellungen live',
       'Farbcodierte Dringlichkeit nach Wartezeit',
-      'Kellner sehen nur ihre Tische, mit Vibrationsalarm',
       'Keine teure Kassen-Hardware – läuft im Browser',
     ],
     mockup: <KarnevalMockup />,
@@ -209,11 +236,12 @@ const products: Product[] = [
     badge: 'Android App · Play Store',
     name: 'MännerCode',
     description:
-      'Eine native Android-App aus eigener Entwicklung – veröffentlicht und installierbar direkt über den Google Play Store. Von der Idee über die Umsetzung bis zur Store-Veröffentlichung alles aus einer Hand.',
+      'Die App für eine starke Beziehung: Jeden Tag bekommt der Mann eine kleine Tagesaufgabe – eine gute Tat für seine Partnerin. So bleibt die Liebe lebendig und die Frau bekommt im Alltag genau das, was sie wirklich braucht. Mit Punkten, Streaks und sichtbarem Fortschritt.',
     advantages: [
-      'Veröffentlicht im Google Play Store',
-      'Native Android-App, kein Baukasten',
-      'Komplette Umsetzung inkl. Store-Listing',
+      'Jeden Tag eine konkrete Tagesaufgabe für den Mann',
+      'Punkte & Streaks sammeln – spielerisch dranbleiben',
+      'Stärkt die Beziehung mit kleinen, ehrlichen Gesten',
+      'Kostenlos verfügbar im Google Play Store',
     ],
     mockup: <MaennerCodeMockup />,
     cta: {

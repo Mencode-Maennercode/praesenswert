@@ -101,10 +101,10 @@ export default function HeroSection() {
             </h1>
             <div className="hidden sm:block">
               <p className="text-2xl sm:text-3xl text-white/90 font-semibold mb-4 drop-shadow-xl">
-                Innovation für Digitale Sichtbarkeit
+                Günstige Websites für Firmen & Vereine
               </p>
               <p className="text-xl sm:text-2xl text-gray-200 drop-shadow-lg">
-                Eine professionelle Online-Präsenz in der Region Rhein · Ahr · Eifel
+                Professionelle Online-Präsenz im Raum Köln · Bonn · Eifel · Ahr · Rhein
               </p>
             </div>
           </motion.div>
@@ -116,9 +116,9 @@ export default function HeroSection() {
             transition={{ duration: 0.8, delay: 0.6 }}
             className="text-base sm:text-lg sm:text-xl text-gray-300 mb-8 sm:mb-12 max-w-3xl mx-auto leading-relaxed px-4 sm:px-0"
           >
-            <span className="sm:hidden">Informative Unternehmenswebsites für kleine und mittelständische Organisationen.</span>
-            <span className="hidden sm:inline">Ich erstelle informative Unternehmenswebsites für kleine und mittelständische Organisationen. 
-            Klare Struktur, ansprechendes Design, faire Preise.</span>
+            <span className="sm:hidden">Günstige, professionelle Websites für kleine Firmen und Vereine in Köln, Bonn, der Eifel & am Rhein.</span>
+            <span className="hidden sm:inline">Ich erstelle günstige, professionelle Websites für kleine Firmen und Vereine in Köln, Bonn, der Eifel, im Ahrtal und am Rhein.
+            Klare Struktur, ansprechendes Design, faire Festpreise – auch bei kleinem Budget.</span>
           </motion.p>
 
           {/* CTA Button */}

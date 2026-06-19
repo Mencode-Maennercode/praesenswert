@@ -4,6 +4,7 @@ import ServicesSection from './components/ServicesSection'
 import BenefitsSection from './components/BenefitsSection'
 import PortfolioSection from './components/PortfolioSection'
 import ProductsSection from './components/ProductsSection'
+import FaqSection from './components/FaqSection'
 import DisclaimerSection from './components/DisclaimerSection'
 import ContactSection from './components/ContactSection'
 import Footer from './components/Footer'
@@ -17,6 +18,7 @@ export default function Home() {
       <BenefitsSection />
       <PortfolioSection />
       <ProductsSection />
+      <FaqSection />
       <DisclaimerSection />
       <ContactSection />
       <Footer />
