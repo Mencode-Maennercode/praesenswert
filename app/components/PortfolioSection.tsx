@@ -1,37 +1,104 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import { ExternalLink } from 'lucide-react'
+import { ExternalLink, CheckCircle2, Clock } from 'lucide-react'
 
-const projects = [
-  {
-    name: 'SR Automation',
-    url: 'https://www.srautomation.de/',
-    description: 'Professionelle Unternehmenswebsite für einen Automatisierungstechnik-Spezialisten. Moderne Präsentation, klare Struktur und ansprechendes Design. Derzeit in finalen Nacharbeiten.',
-    tags: ['Unternehmenswebsite', 'Automatisierungstechnik', 'Webdesign'],
-    status: 'In finalen Nacharbeiten',
-  },
+type ProjectStatus = 'live' | 'progress'
+
+interface Project {
+  name: string
+  url: string | null
+  description: string
+  tags: string[]
+  status?: ProjectStatus
+  statusLabel?: string
+  isPlaceholder?: boolean
+}
+
+const projects: Project[] = [
   {
     name: 'AG Solar GmbH',
     url: 'https://www.ag-solar.net/',
-    description: 'Regional verankerte Unternehmenswebsite für einen Photovoltaik-, Batteriespeicher- und Wallbox-Spezialisten aus der Grafschaft (Ahr & Rhein). Klare Leistungsdarstellung, lokaler Fokus und starke Call-to-Actions. Derzeit in finalen Nacharbeiten.',
+    description:
+      'Regional verankerte Unternehmenswebsite für einen Photovoltaik-, Batteriespeicher- und Wallbox-Spezialisten aus der Grafschaft (Ahr & Rhein). Klare Leistungsdarstellung, lokaler Fokus und starke Call-to-Actions.',
     tags: ['Unternehmenswebsite', 'Photovoltaik & Erneuerbare Energien', 'Regional Ahr · Rhein'],
-    status: 'In finalen Nacharbeiten',
+    status: 'live',
+    statusLabel: 'Fertiggestellt · Live',
+  },
+  {
+    name: 'SR Automation',
+    url: 'https://www.srautomation.de/',
+    description:
+      'Professionelle Unternehmenswebsite für einen Automatisierungstechnik-Spezialisten. Moderne Präsentation, klare Struktur und ansprechendes Design.',
+    tags: ['Unternehmenswebsite', 'Automatisierungstechnik', 'Webdesign'],
+    status: 'live',
+    statusLabel: 'Fertiggestellt · Live',
   },
   {
     name: 'Manuela Rosenkranz – Praxis',
     url: 'https://manuela-rosenkranz.de/',
-    description: 'Vertrauensvolle Praxis-Website für Individualpsychologische Beratung & therapeutische Seelsorge in Bad Neuenahr-Ahrweiler. Einfühlsames Design, klare Angebotsstruktur und einfache Terminvereinbarung.',
+    description:
+      'Vertrauensvolle Praxis-Website für Individualpsychologische Beratung & therapeutische Seelsorge in Bad Neuenahr-Ahrweiler. Einfühlsames Design und klare Angebotsstruktur.',
     tags: ['Praxis-Website', 'Beratung & Seelsorge', 'Bad Neuenahr-Ahrweiler'],
+    status: 'live',
+    statusLabel: 'Fertiggestellt · Live',
+  },
+  {
+    name: 'Städtische Realschule Am Heimbach',
+    url: null,
+    description:
+      'Moderne, übersichtliche Schulwebsite für die Städtische Realschule Am Heimbach in Bonn. Klare Informationsstruktur für Eltern, Schülerinnen und Schüler.',
+    tags: ['Schulwebsite', 'Bildung', 'Bonn'],
+    status: 'progress',
+    statusLabel: 'In Arbeit · geplant Juni 2026',
+  },
+  {
+    name: 'Hebammen am Marienhospital Bonn',
+    url: null,
+    description:
+      'Informative Website für die Hebammen am Marienhospital Bonn. Vertrauensvoller Auftritt mit klaren Angeboten und einfacher Kontaktaufnahme für werdende Eltern.',
+    tags: ['Praxis-Website', 'Gesundheit & Geburt', 'Bonn'],
+    status: 'progress',
+    statusLabel: 'In Arbeit · geplant Juni 2026',
+  },
+  {
+    name: 'Möhnenverein Nierendorf e.V.',
+    url: null,
+    description:
+      'Lebendige, animierte Vereinswebsite für den Möhnenverein Nierendorf in der Grafschaft. Mit Veranstaltungen, Galerie und liebevollem Auftritt für Möhnen, Dorfgarde und Frösche.',
+    tags: ['Vereinswebsite', 'Karneval & Brauchtum', 'Grafschaft · Nierendorf'],
+    status: 'progress',
+    statusLabel: 'In Arbeit · geplant Juni 2026',
   },
   {
     name: 'Weitere Projekte in Auftrag',
     url: null,
-    description: 'Aktuell befinden sich weitere Websites für Unternehmen in der Region in der Umsetzung. Interesse? Jetzt unverbindlich anfragen!',
+    description:
+      'Aktuell befinden sich weitere Websites für Unternehmen in der Region in der Umsetzung. Interesse? Jetzt unverbindlich anfragen!',
     tags: ['In Arbeit', 'Region Eifel · Ahr · Rhein'],
     isPlaceholder: true,
   },
 ]
+
+function StatusBadge({ status, label }: { status: ProjectStatus; label: string }) {
+  const isLive = status === 'live'
+  return (
+    <span
+      className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold tracking-wide ${
+        isLive
+          ? 'bg-emerald-50 text-emerald-700 ring-1 ring-emerald-200'
+          : 'bg-amber-50 text-amber-700 ring-1 ring-amber-200'
+      }`}
+    >
+      {isLive ? (
+        <CheckCircle2 className="w-3.5 h-3.5" />
+      ) : (
+        <Clock className="w-3.5 h-3.5" />
+      )}
+      {label}
+    </span>
+  )
+}
 
 export default function PortfolioSection() {
   return (
@@ -60,12 +127,18 @@ export default function PortfolioSection() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: index * 0.15 }}
-              className={`rounded-2xl border-2 p-8 transition-all duration-300 ${
+              className={`flex flex-col rounded-2xl border-2 p-8 transition-all duration-300 ${
                 project.isPlaceholder
                   ? 'border-dashed border-brand-cyan/40 bg-gradient-to-br from-brand-light to-white'
                   : 'border-brand-cyan/20 bg-gradient-to-br from-brand-light to-white shadow-lg hover:shadow-2xl hover:-translate-y-1'
               }`}
             >
+              {project.status && project.statusLabel && (
+                <div className="mb-4">
+                  <StatusBadge status={project.status} label={project.statusLabel} />
+                </div>
+              )}
+
               <div className="flex items-start justify-between mb-4">
                 <h3 className="text-2xl font-bold text-brand-navy">
                   {project.name}
@@ -87,7 +160,7 @@ export default function PortfolioSection() {
                 {project.description}
               </p>
 
-              <div className="flex flex-wrap gap-2">
+              <div className="flex flex-wrap gap-2 mt-auto">
                 {project.tags.map((tag, tagIndex) => (
                   <span
                     key={tagIndex}

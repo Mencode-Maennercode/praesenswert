@@ -2,7 +2,7 @@
 
 import Image from 'next/image'
 import { useState, useEffect } from 'react'
-import { Menu, X, Home, Briefcase, Settings, Info, Mail, Star } from 'lucide-react'
+import { Menu, X, Home, Briefcase, Settings, Info, Mail, Star, Boxes } from 'lucide-react'
 import { motion, AnimatePresence } from 'framer-motion'
 
 export default function Header() {
@@ -90,6 +90,12 @@ export default function Header() {
               Referenzen
             </a>
             <a
+              href="#produkte"
+              className="text-brand-navy hover:text-brand-cyan transition-colors font-medium"
+            >
+              Produkte
+            </a>
+            <a
               href="#hinweise"
               className="text-brand-navy hover:text-brand-cyan transition-colors font-medium"
             >
@@ -172,6 +178,12 @@ export default function Header() {
                     <a href="#referenzen" className="flex items-center gap-3 rounded-md px-3 py-3 text-gray-800 hover:bg-gray-50" onClick={() => setIsMobileMenuOpen(false)}>
                       <Star size={20} className="text-brand-cyan" />
                       <span>Referenzen</span>
+                    </a>
+                  </li>
+                  <li>
+                    <a href="#produkte" className="flex items-center gap-3 rounded-md px-3 py-3 text-gray-800 hover:bg-gray-50" onClick={() => setIsMobileMenuOpen(false)}>
+                      <Boxes size={20} className="text-brand-cyan" />
+                      <span>Produkte</span>
                     </a>
                   </li>
                   <li>
