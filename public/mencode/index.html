@@ -1,0 +1,364 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>MenCode – Jeden Tag eine Mission für eine stärkere Beziehung</title>
+<meta name="description" content="MenCode: die Beziehungs-App für Männer. Jeden Tag eine kleine Mission, 365 Ideen im Jahr, Punkte & Level, kein Konto, komplett offline. Jetzt kostenlos bei Google Play.">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://praesenzwert.de/mencode">
+<link rel="icon" href="assets/logo.png" type="image/png">
+<meta name="theme-color" content="#111417">
+<meta name="keywords" content="Beziehung stärken, Beziehungstipps, Partnerschaft App, Beziehung App Männer, Liebe App, Date Ideen, Beziehung retten, MenCode">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="MenCode">
+<meta property="og:title" content="MenCode – Jeden Tag eine Mission für eine stärkere Beziehung">
+<meta property="og:description" content="365 Missionen, Punkte & Level, kein Konto, komplett offline. Die Beziehungs-App für Männer.">
+<meta property="og:url" content="https://praesenzwert.de/mencode">
+<meta property="og:image" content="https://praesenzwert.de/mencode/assets/og_image.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="MenCode – Jeden Tag eine Mission für eine stärkere Beziehung">
+<meta name="twitter:description" content="365 Missionen, Punkte & Level, kein Konto, komplett offline.">
+<meta name="twitter:image" content="https://praesenzwert.de/mencode/assets/og_image.png">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "MobileApplication",
+  "name": "MenCode",
+  "applicationCategory": "LifestyleApplication",
+  "operatingSystem": "Android",
+  "url": "https://praesenzwert.de/mencode",
+  "image": "https://praesenzwert.de/mencode/assets/og_image.png",
+  "description": "Jeden Tag eine Mission für eine stärkere Beziehung. 365 Missionen, Punkte & Level, kein Konto, komplett offline.",
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "EUR" },
+  "publisher": { "@type": "Person", "name": "Dennis Heidenreich" }
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {"@type":"Question","name":"Was ist MenCode?","acceptedAnswer":{"@type":"Answer","text":"MenCode ist eine App für Männer, die ihre Beziehung stärken wollen. Jeden Tag zeigt sie dir genau eine kleine, konkrete Mission – von einer liebevollen Geste bis zu einer gemeinsamen Aktivität – mit der du deiner Partnerin zeigst, dass sie zählt."},
+    {"@type":"Question","name":"Ist MenCode kostenlos?","acceptedAnswer":{"@type":"Answer","text":"Ja, MenCode ist kostenlos im Google Play Store erhältlich. Es gibt keine Werbung und keine Kaufzwänge in der App."}},
+    {"@type":"Question","name":"Funktioniert MenCode ohne Internet?","acceptedAnswer":{"@type":"Answer","text":"Ja. MenCode läuft komplett offline. Die einzige optionale Online-Funktion ist ein abschaltbarer Wetterabruf, der Missionen an die aktuelle Jahreszeit und das Wetter anpasst."}},
+    {"@type":"Question","name":"Sammelt MenCode meine Daten?","acceptedAnswer":{"@type":"Answer","text":"Nein. MenCode benötigt kein Konto und keine Anmeldung. Es gibt kein Tracking und keine Analyse-Dienste. Alle Fortschrittsdaten bleiben ausschließlich lokal auf deinem Gerät."}},
+    {"@type":"Question","name":"Wie viele Missionen gibt es?","acceptedAnswer":{"@type":"Answer","text":"MenCode hat 365 verschiedene Missionen – für jeden Tag im Jahr eine. Sie passen sich zusätzlich an Jahreszeit, Wetter und Feiertage an, damit es nie langweilig wird."}},
+    {"@type":"Question","name":"In welchen Sprachen ist MenCode verfügbar?","acceptedAnswer":{"@type":"Answer","text":"MenCode ist auf Deutsch, Englisch, Französisch, Spanisch und Niederländisch verfügbar."}},
+    {"@type":"Question","name":"Kann ich eine Mission überspringen, die nicht zu mir passt?","acceptedAnswer":{"@type":"Answer","text":"Ja, du kannst einmal pro Woche die Tagesmission gegen eine neue, zufällige Mission tauschen."}}
+  ]
+}
+</script>
+<style>
+  :root{
+    --ink:#0e1114; --surface:#14181c; --card:#1b2126; --card2:#222a30;
+    --line:#2b333a; --line-soft:#232a30;
+    --gold:#d4a84f; --gold-bright:#ebc06a; --gold-deep:#a97f35;
+    --hi:#eceef0; --mid:#9ba6ae; --low:#616c74; --success:#5da96a;
+    --maxw:1080px;
+    --sans:"Segoe UI",system-ui,-apple-system,Roboto,Helvetica,Arial,sans-serif;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0}
+  body{
+    background:
+      radial-gradient(1200px 700px at 50% -10%, #1c232a 0%, rgba(28,35,42,0) 60%),
+      radial-gradient(1000px 600px at 92% 6%, rgba(212,168,79,.10) 0%, rgba(212,168,79,0) 55%),
+      var(--ink);
+    color:var(--hi);
+    font-family:var(--sans);
+    line-height:1.65;
+    -webkit-font-smoothing:antialiased;
+    text-rendering:optimizeLegibility;
+    min-height:100vh;
+    overflow-x:hidden;
+  }
+  img{max-width:100%;display:block}
+  a{color:var(--gold-bright);text-decoration:none}
+  a:hover{text-decoration:underline}
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 22px}
+  section{padding:64px 0}
+  h1,h2,h3{line-height:1.1;letter-spacing:.01em}
+
+  /* Header */
+  header.site{position:sticky;top:0;z-index:20;backdrop-filter:blur(10px);
+    background:rgba(14,17,20,.78);border-bottom:1px solid var(--line-soft)}
+  header.site .bar{display:flex;align-items:center;gap:14px;padding:14px 0}
+  header.site img{width:38px;height:38px;object-fit:contain}
+  header.site .word{font-weight:800;font-size:19px;letter-spacing:.16em;text-transform:uppercase}
+  header.site .word b{color:var(--gold);font-weight:800}
+  header.site nav{margin-left:auto;display:flex;gap:26px;align-items:center}
+  header.site nav a{color:var(--mid);font-size:14.5px;font-weight:600}
+  header.site nav a:hover{color:var(--hi);text-decoration:none}
+  .navcta{border:1.5px solid var(--gold-deep)!important;border-radius:20px;padding:9px 18px!important;
+    color:var(--hi)!important;background:linear-gradient(180deg,rgba(212,168,79,.12),rgba(212,168,79,.02))}
+  @media (max-width:720px){ header.site nav a:not(.navcta){display:none} }
+
+  /* Hero */
+  .hero{padding:72px 0 20px}
+  .hero-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:56px;align-items:center}
+  @media (max-width:900px){ .hero-grid{grid-template-columns:1fr;text-align:center} .hero-grid .shotwrap{order:-1;justify-self:center} }
+  .kicker{display:inline-flex;align-items:center;gap:8px;font-size:13px;font-weight:700;letter-spacing:.14em;
+    text-transform:uppercase;color:var(--gold);border:1px solid var(--gold-deep);border-radius:20px;padding:7px 16px;
+    background:linear-gradient(180deg,rgba(212,168,79,.10),rgba(212,168,79,.02))}
+  h1.h1{font-size:clamp(34px,5.4vw,58px);margin:22px 0 18px;font-weight:800;
+    background:linear-gradient(176deg,#ffffff 0%,#dfe4e8 55%,#b9c0c6 100%);
+    -webkit-background-clip:text;background-clip:text;color:transparent}
+  h1.h1 .g{background:linear-gradient(176deg,var(--gold-bright),var(--gold) 60%,var(--gold-deep));
+    -webkit-background-clip:text;background-clip:text;color:transparent}
+  .lead{color:var(--mid);font-size:19px;max-width:560px}
+  @media (max-width:900px){ .lead{margin:0 auto} }
+  .ctarow{display:flex;gap:16px;flex-wrap:wrap;margin-top:32px}
+  @media (max-width:900px){ .ctarow{justify-content:center} }
+  .btn-primary{display:inline-flex;align-items:center;gap:12px;height:58px;padding:0 28px;border-radius:16px;
+    background:linear-gradient(135deg,#E9C36E,var(--gold),var(--gold-deep));box-shadow:0 14px 34px rgba(212,168,79,.25);
+    color:#1b1405;font-weight:800;font-size:17px;letter-spacing:.02em}
+  .btn-primary:hover{text-decoration:none;filter:brightness(1.05)}
+  .btn-primary svg{width:22px;height:22px;fill:#1b1405;flex:none}
+  .btn-secondary{display:inline-flex;align-items:center;gap:10px;height:58px;padding:0 24px;border-radius:16px;
+    border:1.5px solid var(--line);color:var(--hi);font-weight:700;font-size:16px}
+  .btn-secondary:hover{border-color:var(--gold-deep);text-decoration:none}
+  .trustrow{display:flex;flex-wrap:wrap;gap:10px;margin-top:28px}
+  @media (max-width:900px){ .trustrow{justify-content:center} }
+  .pill{font-size:13px;font-weight:600;padding:8px 15px;border-radius:20px;border:1px solid var(--line);color:var(--mid)}
+  .shotwrap{position:relative;display:flex;justify-content:center}
+  .shotwrap::before{content:'';position:absolute;top:30px;width:520px;height:520px;border-radius:50%;
+    background:radial-gradient(circle,rgba(212,168,79,.16),rgba(212,168,79,0) 68%);filter:blur(8px)}
+  .shotwrap img{position:relative;width:300px;border-radius:28px;border:1.5px solid var(--line);
+    box-shadow:0 40px 90px rgba(0,0,0,.55)}
+
+  /* Section headings */
+  .sectionhead{text-align:center;max-width:640px;margin:0 auto 46px}
+  .sectionhead .kicker{margin-bottom:14px}
+  h2.h2{font-size:clamp(26px,3.6vw,38px);font-weight:800}
+  .sectionhead p{color:var(--mid);font-size:17px;margin-top:12px}
+
+  /* Feature grid */
+  .fgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+  @media (max-width:860px){ .fgrid{grid-template-columns:repeat(2,1fr)} }
+  @media (max-width:560px){ .fgrid{grid-template-columns:1fr} }
+  .fcard{background:var(--card);border:1.5px solid var(--line-soft);border-radius:22px;padding:26px 24px}
+  .fcard .ic{width:52px;height:52px;border-radius:14px;background:var(--ink);border:1.5px solid var(--line);
+    display:flex;align-items:center;justify-content:center;margin-bottom:16px}
+  .fcard .ic svg{width:26px;height:26px;fill:var(--gold)}
+  .fcard h3{font-size:19px;font-weight:700;margin:0 0 8px}
+  .fcard p{color:var(--mid);font-size:15px;margin:0}
+
+  /* Showcase */
+  .showcase{display:flex;gap:24px;overflow-x:auto;padding:8px 4px 20px;scroll-snap-type:x proximity}
+  .showcase img{width:260px;flex:none;border-radius:22px;border:1.5px solid var(--line);
+    box-shadow:0 24px 60px rgba(0,0,0,.4);scroll-snap-align:start}
+
+  /* Steps */
+  .steps{display:grid;grid-template-columns:repeat(3,1fr);gap:26px}
+  @media (max-width:820px){ .steps{grid-template-columns:1fr} }
+  .step{position:relative;padding:30px 24px 24px;background:var(--card);border:1.5px solid var(--line-soft);border-radius:22px}
+  .step .n{position:absolute;top:-18px;left:24px;width:36px;height:36px;border-radius:50%;
+    background:linear-gradient(135deg,#E9C36E,var(--gold),var(--gold-deep));color:#1b1405;font-weight:800;
+    display:flex;align-items:center;justify-content:center;font-size:16px}
+  .step h3{margin:10px 0 8px;font-size:18px}
+  .step p{color:var(--mid);font-size:15px;margin:0}
+
+  /* FAQ */
+  .faq{max-width:820px;margin:0 auto}
+  details{background:var(--card);border:1.5px solid var(--line-soft);border-radius:18px;padding:20px 24px;margin-bottom:14px}
+  details[open]{border-color:var(--gold-deep)}
+  summary{cursor:pointer;font-weight:700;font-size:16.5px;list-style:none;display:flex;justify-content:space-between;align-items:center;gap:16px}
+  summary::-webkit-details-marker{display:none}
+  summary::after{content:'+';font-size:22px;color:var(--gold);flex:none;transition:transform .18s ease}
+  details[open] summary::after{transform:rotate(45deg)}
+  details p{color:var(--mid);font-size:15.5px;margin:14px 0 2px}
+
+  /* Final CTA */
+  .finalcta{text-align:center;background:linear-gradient(180deg,rgba(212,168,79,.08),rgba(212,168,79,.01));
+    border:1.5px solid var(--gold-deep);border-radius:28px;padding:56px 30px}
+  .finalcta h2{font-size:clamp(24px,3.4vw,34px);font-weight:800;margin:0 0 14px}
+  .finalcta p{color:var(--mid);font-size:17px;max-width:520px;margin:0 auto 28px}
+
+  footer.site{border-top:1px solid var(--line-soft);padding:40px 0;color:var(--low);font-size:13.5px}
+  footer.site .fbar{display:flex;flex-wrap:wrap;gap:18px;justify-content:space-between;align-items:center}
+  footer.site .flinks{display:flex;gap:22px;flex-wrap:wrap}
+  footer.site a{color:var(--mid)}
+</style>
+</head>
+<body>
+
+<header class="site">
+  <div class="wrap bar">
+    <img src="assets/logo.png" alt="MenCode Logo">
+    <div class="word">MEN<b>CODE</b></div>
+    <nav>
+      <a href="#funktionen">Funktionen</a>
+      <a href="#so-gehts">So geht's</a>
+      <a href="#faq">FAQ</a>
+      <a class="navcta" href="https://play.google.com/store/apps/details?id=app.heidenreich.maennercode">Jetzt laden</a>
+    </nav>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="wrap hero-grid">
+    <div>
+      <span class="kicker">Für Männer, die mehr wollen als „eigentlich ganz okay"</span>
+      <h1 class="h1">Jeden Tag<br>eine Mission.<br><span class="g">Eine stärkere Beziehung.</span></h1>
+      <p class="lead">MenCode gibt dir jeden Tag genau eine kleine, konkrete Mission, mit der du deiner Partnerin zeigst, dass sie zählt. Kein Rätselraten, kein dickes Ratgeberbuch – ein Tag, eine Aufgabe, große Wirkung.</p>
+      <div class="ctarow">
+        <a class="btn-primary" href="https://play.google.com/store/apps/details?id=app.heidenreich.maennercode">
+          <svg viewBox="0 0 24 24"><path d="M3 3.6v16.8c0 .5.3.9.7 1.1l10-9.5-10-9.5c-.4.2-.7.6-.7 1.1zm12.4 8.4l2.6-2.5 3.6 2c.6.3.6 1.2 0 1.5l-3.6 2-2.6-2.5.6-.5-.6-.5zm-1.1 1.1l-9.6 9.1 10.9-6.1-1.3-3zm0-2.2l1.3-3-10.9-6.1 9.6 9.1z"/></svg>
+          Jetzt bei Google Play laden
+        </a>
+        <a class="btn-secondary" href="#funktionen">Funktionen ansehen</a>
+      </div>
+      <div class="trustrow">
+        <span class="pill">Kein Konto</span>
+        <span class="pill">Kein Tracking</span>
+        <span class="pill">Keine Werbung</span>
+        <span class="pill">100% Offline</span>
+        <span class="pill">Kostenlos</span>
+      </div>
+    </div>
+    <div class="shotwrap">
+      <img src="assets/shot_hero.png" alt="MenCode App – Mission des Tages" width="300" loading="eager">
+    </div>
+  </div>
+</section>
+
+<section id="funktionen">
+  <div class="wrap">
+    <div class="sectionhead">
+      <span class="kicker">Funktionen</span>
+      <h2 class="h2">Alles, was eine Beziehung stärker macht</h2>
+      <p>Kein Feature-Wirrwarr – nur das, was wirklich zählt.</p>
+    </div>
+    <div class="fgrid">
+      <div class="fcard">
+        <div class="ic"><svg viewBox="0 0 24 24"><path d="M12 2l2.4 7.2H22l-6 4.4 2.3 7.2L12 16.4l-6.3 4.4 2.3-7.2-6-4.4h7.6z"/></svg></div>
+        <h3>365 Missionen</h3>
+        <p>Für jeden Tag im Jahr eine eigene Idee – von kleinen Gesten bis zu gemeinsamen Erlebnissen. Nie zweimal dasselbe.</p>
+      </div>
+      <div class="fcard">
+        <div class="ic"><svg viewBox="0 0 24 24"><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2zm1 15h-2v-2h2v2zm0-4h-2c0-3.3 3-3.1 3-5.2 0-1.2-1-2-2-2-.8 0-1.5.4-1.9 1L8.6 5.5C9.4 4.1 10.8 3.2 12.5 3.2c2.4 0 4.5 1.7 4.5 4 0 3-3 3-3 4.8z"/></svg></div>
+        <h3>Warum es wirkt</h3>
+        <p>Jede Mission erklärt den psychologischen Kniff dahinter. Du verstehst, was in einer Partnerschaft wirklich zählt.</p>
+      </div>
+      <div class="fcard">
+        <div class="ic"><svg viewBox="0 0 24 24"><path d="M7 2v11h3v9l7-12h-4l4-8z"/></svg></div>
+        <h3>Punkte & 20 Level</h3>
+        <p>Sammle Punkte für jede erledigte Mission, steig durch 20 Level auf und schalte echte Belohnungen frei.</p>
+      </div>
+      <div class="fcard">
+        <div class="ic"><svg viewBox="0 0 24 24"><path d="M12 2l2.9 6 6.6.9-4.8 4.6 1.1 6.5L12 16.9l-5.8 3.1 1.1-6.5L2.5 8.9l6.6-.9z"/></svg></div>
+        <h3>8 Auszeichnungen</h3>
+        <p>Für Serien, Meilensteine und Comebacks. Werde zur MenCode-Legende und zeig, dass du dranbleibst.</p>
+      </div>
+      <div class="fcard">
+        <div class="ic"><svg viewBox="0 0 24 24"><path d="M12 3a6 6 0 00-6 6c0 4.2 6 12 6 12s6-7.8 6-12a6 6 0 00-6-6zm0 8a2 2 0 110-4 2 2 0 010 4z"/></svg></div>
+        <h3>Passt sich dem Tag an</h3>
+        <p>Missionen berücksichtigen Jahreszeit, Wetter und Feiertage – nie eine Draußen-Idee bei Dauerregen.</p>
+      </div>
+      <div class="fcard">
+        <div class="ic"><svg viewBox="0 0 24 24"><path d="M12 1L3 5v6c0 5.5 3.8 10.7 9 12 5.2-1.3 9-6.5 9-12V5l-9-4zm-1 15l-4-4 1.4-1.4L11 13.2l6.6-6.6L19 8l-8 8z"/></svg></div>
+        <h3>Kein Konto, kein Tracking</h3>
+        <p>Keine Anmeldung, keine Werbung, keine Datensammelei. Läuft komplett offline auf deinem Handy.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="sectionhead">
+      <span class="kicker">In der App</span>
+      <h2 class="h2">So sieht MenCode aus</h2>
+    </div>
+  </div>
+  <div class="wrap">
+    <div class="showcase">
+      <img src="assets/shot_hero.png" alt="Mission des Tages" loading="lazy">
+      <img src="assets/shot_why.png" alt="Warum es wirkt" loading="lazy">
+      <img src="assets/shot_gamify.png" alt="Punkte und Level" loading="lazy">
+      <img src="assets/shot_trophies.png" alt="Trophäen und Auszeichnungen" loading="lazy">
+    </div>
+  </div>
+</section>
+
+<section id="so-gehts">
+  <div class="wrap">
+    <div class="sectionhead">
+      <span class="kicker">So geht's</span>
+      <h2 class="h2">In drei Schritten zur stärkeren Beziehung</h2>
+    </div>
+    <div class="steps">
+      <div class="step"><div class="n">1</div><h3>App öffnen</h3><p>Jeden Tag wartet genau eine neue Mission auf dich – konkret, machbar, in wenigen Minuten erledigt.</p></div>
+      <div class="step"><div class="n">2</div><h3>Mission erledigen</h3><p>Setz sie um, egal ob Wort, Geste oder gemeinsame Zeit. Danach markierst du sie als erledigt.</p></div>
+      <div class="step"><div class="n">3</div><h3>Punkte sammeln</h3><p>Du steigst im Level auf, schaltest Auszeichnungen frei und baust Tag für Tag eine stärkere Beziehung.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="faq">
+  <div class="wrap">
+    <div class="sectionhead">
+      <span class="kicker">Häufige Fragen</span>
+      <h2 class="h2">Alles, was du wissen musst</h2>
+    </div>
+    <div class="faq">
+      <details open>
+        <summary>Was ist MenCode?</summary>
+        <p>MenCode ist eine App für Männer, die ihre Beziehung stärken wollen. Jeden Tag zeigt sie dir genau eine kleine, konkrete Mission – von einer liebevollen Geste bis zu einer gemeinsamen Aktivität – mit der du deiner Partnerin zeigst, dass sie zählt.</p>
+      </details>
+      <details>
+        <summary>Ist MenCode kostenlos?</summary>
+        <p>Ja, MenCode ist kostenlos im Google Play Store erhältlich. Es gibt keine Werbung und keine Kaufzwänge in der App.</p>
+      </details>
+      <details>
+        <summary>Funktioniert MenCode ohne Internet?</summary>
+        <p>Ja. MenCode läuft komplett offline. Die einzige optionale Online-Funktion ist ein abschaltbarer Wetterabruf, der Missionen an die aktuelle Jahreszeit und das Wetter anpasst.</p>
+      </details>
+      <details>
+        <summary>Sammelt MenCode meine Daten?</summary>
+        <p>Nein. MenCode benötigt kein Konto und keine Anmeldung. Es gibt kein Tracking und keine Analyse-Dienste. Alle Fortschrittsdaten bleiben ausschließlich lokal auf deinem Gerät. Mehr dazu in der <a href="/CodeDatenschutz">Datenschutzerklärung</a>.</p>
+      </details>
+      <details>
+        <summary>Wie viele Missionen gibt es?</summary>
+        <p>MenCode hat 365 verschiedene Missionen – für jeden Tag im Jahr eine. Sie passen sich zusätzlich an Jahreszeit, Wetter und Feiertage an, damit es nie langweilig wird.</p>
+      </details>
+      <details>
+        <summary>In welchen Sprachen ist MenCode verfügbar?</summary>
+        <p>MenCode ist auf Deutsch, Englisch, Französisch, Spanisch und Niederländisch verfügbar.</p>
+      </details>
+      <details>
+        <summary>Kann ich eine Mission überspringen, die nicht zu mir passt?</summary>
+        <p>Ja, du kannst einmal pro Woche die Tagesmission gegen eine neue, zufällige Mission tauschen.</p>
+      </details>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="finalcta">
+      <h2>Bereit für die erste Mission?</h2>
+      <p>Kostenlos, ohne Konto, in wenigen Sekunden startklar.</p>
+      <a class="btn-primary" href="https://play.google.com/store/apps/details?id=app.heidenreich.maennercode">
+        <svg viewBox="0 0 24 24"><path d="M3 3.6v16.8c0 .5.3.9.7 1.1l10-9.5-10-9.5c-.4.2-.7.6-.7 1.1zm12.4 8.4l2.6-2.5 3.6 2c.6.3.6 1.2 0 1.5l-3.6 2-2.6-2.5.6-.5-.6-.5zm-1.1 1.1l-9.6 9.1 10.9-6.1-1.3-3zm0-2.2l1.3-3-10.9-6.1 9.6 9.1z"/></svg>
+        Jetzt bei Google Play laden
+      </a>
+    </div>
+  </div>
+</section>
+
+<footer class="site">
+  <div class="wrap fbar">
+    <div>© 2026 MenCode · Dennis Heidenreich</div>
+    <div class="flinks">
+      <a href="/CodeDatenschutz">Datenschutz</a>
+      <a href="/CodeDatenschutz">Impressum</a>
+      <a href="mailto:kontakt@praesenzwert.de">Kontakt</a>
+      <a href="/">praesenzwert.de</a>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
