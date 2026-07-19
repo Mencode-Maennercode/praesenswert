@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>MenCode – Jeden Tag eine Mission für eine stärkere Beziehung</title>
-<meta name="description" content="MenCode: die Beziehungs-App für Männer. Jeden Tag eine kleine Mission, 365 Ideen im Jahr, Punkte & Level, kein Konto, komplett offline. Jetzt kostenlos bei Google Play.">
+<title id="metaTitle">MenCode – Jeden Tag eine Mission für eine stärkere Beziehung</title>
+<meta id="metaDesc" name="description" content="MenCode: die Beziehungs-App für Männer. Jeden Tag eine kleine Mission, 365 Ideen im Jahr, Punkte & Level, kein Konto, komplett offline. Jetzt kostenlos bei Google Play.">
 <meta name="robots" content="index, follow">
 <link rel="canonical" href="https://praesenzwert.de/mencode">
 <link rel="icon" href="assets/logo.png" type="image/png">
@@ -12,13 +12,13 @@
 <meta name="keywords" content="Beziehung stärken, Beziehungstipps, Partnerschaft App, Beziehung App Männer, Liebe App, Date Ideen, Beziehung retten, MenCode">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="MenCode">
-<meta property="og:title" content="MenCode – Jeden Tag eine Mission für eine stärkere Beziehung">
-<meta property="og:description" content="365 Missionen, Punkte & Level, kein Konto, komplett offline. Die Beziehungs-App für Männer.">
+<meta id="ogTitle" property="og:title" content="MenCode – Jeden Tag eine Mission für eine stärkere Beziehung">
+<meta id="ogDesc" property="og:description" content="365 Missionen, Punkte & Level, kein Konto, komplett offline. Die Beziehungs-App für Männer.">
 <meta property="og:url" content="https://praesenzwert.de/mencode">
 <meta property="og:image" content="https://praesenzwert.de/mencode/assets/og_image.png">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="MenCode – Jeden Tag eine Mission für eine stärkere Beziehung">
-<meta name="twitter:description" content="365 Missionen, Punkte & Level, kein Konto, komplett offline.">
+<meta id="twTitle" name="twitter:title" content="MenCode – Jeden Tag eine Mission für eine stärkere Beziehung">
+<meta id="twDesc" name="twitter:description" content="365 Missionen, Punkte & Level, kein Konto, komplett offline.">
 <meta name="twitter:image" content="https://praesenzwert.de/mencode/assets/og_image.png">
 <script type="application/ld+json">
 {
@@ -39,7 +39,7 @@
   "@context": "https://schema.org",
   "@type": "FAQPage",
   "mainEntity": [
-    {"@type":"Question","name":"Was ist MenCode?","acceptedAnswer":{"@type":"Answer","text":"MenCode ist eine App für Männer, die ihre Beziehung stärken wollen. Jeden Tag zeigt sie dir genau eine kleine, konkrete Mission – von einer liebevollen Geste bis zu einer gemeinsamen Aktivität – mit der du deiner Partnerin zeigst, dass sie zählt."},
+    {"@type":"Question","name":"Was ist MenCode?","acceptedAnswer":{"@type":"Answer","text":"MenCode ist eine App für Männer, die ihre Beziehung stärken wollen. Jeden Tag zeigt sie dir genau eine kleine, konkrete Mission – von einer liebevollen Geste bis zu einer gemeinsamen Aktivität – mit der du deiner Partnerin zeigst, dass sie zählt."}},
     {"@type":"Question","name":"Ist MenCode kostenlos?","acceptedAnswer":{"@type":"Answer","text":"Ja, MenCode ist kostenlos im Google Play Store erhältlich. Es gibt keine Werbung und keine Kaufzwänge in der App."}},
     {"@type":"Question","name":"Funktioniert MenCode ohne Internet?","acceptedAnswer":{"@type":"Answer","text":"Ja. MenCode läuft komplett offline. Die einzige optionale Online-Funktion ist ein abschaltbarer Wetterabruf, der Missionen an die aktuelle Jahreszeit und das Wetter anpasst."}},
     {"@type":"Question","name":"Sammelt MenCode meine Daten?","acceptedAnswer":{"@type":"Answer","text":"Nein. MenCode benötigt kein Konto und keine Anmeldung. Es gibt kein Tracking und keine Analyse-Dienste. Alle Fortschrittsdaten bleiben ausschließlich lokal auf deinem Gerät."}},
@@ -79,6 +79,15 @@
   .wrap{max-width:var(--maxw);margin:0 auto;padding:0 22px}
   section{padding:64px 0}
   h1,h2,h3{line-height:1.1;letter-spacing:.01em}
+
+  /* Language bar */
+  .langbar{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;padding:9px 14px;
+    background:var(--surface);border-bottom:1px solid var(--line-soft)}
+  .langbar button{font:inherit;cursor:pointer;border:1px solid var(--line);background:var(--card);
+    color:var(--mid);border-radius:10px;padding:5px 12px;font-size:12.5px;font-weight:600;
+    letter-spacing:.03em;transition:all .16s ease}
+  .langbar button:hover{border-color:var(--gold-deep);color:var(--hi)}
+  .langbar button.active{background:linear-gradient(180deg,var(--gold-bright),var(--gold));color:#1b1405;border-color:transparent}
 
   /* Header */
   header.site{position:sticky;top:0;z-index:20;backdrop-filter:blur(10px);
@@ -183,16 +192,24 @@
 </head>
 <body>
 
+<div class="langbar" aria-label="Sprache / Language">
+  <button data-lang="de" type="button">Deutsch</button>
+  <button data-lang="en" type="button">English</button>
+  <button data-lang="fr" type="button">Français</button>
+  <button data-lang="es" type="button">Español</button>
+  <button data-lang="nl" type="button">Nederlands</button>
+</div>
+
 <header class="site">
   <div class="wrap bar">
     <img src="assets/logo.png" alt="MenCode Logo">
     <div class="word">MEN<b>CODE</b></div>
     <nav>
-      <a href="#funktionen">Funktionen</a>
-      <a href="#so-gehts">So geht's</a>
-      <a href="#faq">FAQ</a>
-      <a href="/womencode">Für Frauen: WomenCode</a>
-      <a class="navcta" href="https://play.google.com/store/apps/details?id=app.heidenreich.maennercode">Jetzt laden</a>
+      <a href="#funktionen" data-i18n="nav.feat">Funktionen</a>
+      <a href="#so-gehts" data-i18n="nav.steps">So geht's</a>
+      <a href="#faq" data-i18n="nav.faq">FAQ</a>
+      <a href="/womencode" data-i18n="nav.cross">Für Frauen: WomenCode</a>
+      <a class="navcta" href="https://play.google.com/store/apps/details?id=app.heidenreich.maennercode" data-i18n="nav.cta">Jetzt laden</a>
     </nav>
   </div>
 </header>
@@ -200,26 +217,26 @@
 <section class="hero">
   <div class="wrap hero-grid">
     <div>
-      <span class="kicker">Für Männer, die mehr wollen als „eigentlich ganz okay"</span>
-      <h1 class="h1">Jeden Tag<br>eine Mission.<br><span class="g">Eine stärkere Beziehung.</span></h1>
-      <p class="lead">MenCode gibt dir jeden Tag genau eine kleine, konkrete Mission, mit der du deiner Partnerin zeigst, dass sie zählt. Kein Rätselraten, kein dickes Ratgeberbuch – ein Tag, eine Aufgabe, große Wirkung.</p>
+      <span class="kicker" data-i18n="hero.kicker">Für Männer, die mehr wollen als „eigentlich ganz okay"</span>
+      <h1 class="h1"><span data-i18n="hero.h1a">Jeden Tag</span><br><span data-i18n="hero.h1b">eine Mission.</span><br><span class="g" data-i18n="hero.h1c">Eine stärkere Beziehung.</span></h1>
+      <p class="lead" data-i18n="hero.lead">MenCode gibt dir jeden Tag genau eine kleine, konkrete Mission, mit der du deiner Partnerin zeigst, dass sie zählt. Kein Rätselraten, kein dickes Ratgeberbuch – ein Tag, eine Aufgabe, große Wirkung.</p>
       <div class="ctarow">
         <a class="btn-primary" href="https://play.google.com/store/apps/details?id=app.heidenreich.maennercode">
           <svg viewBox="0 0 24 24"><path d="M3 3.6v16.8c0 .5.3.9.7 1.1l10-9.5-10-9.5c-.4.2-.7.6-.7 1.1zm12.4 8.4l2.6-2.5 3.6 2c.6.3.6 1.2 0 1.5l-3.6 2-2.6-2.5.6-.5-.6-.5zm-1.1 1.1l-9.6 9.1 10.9-6.1-1.3-3zm0-2.2l1.3-3-10.9-6.1 9.6 9.1z"/></svg>
-          Jetzt bei Google Play laden
+          <span data-i18n="hero.ctaPrimary">Jetzt bei Google Play laden</span>
         </a>
-        <a class="btn-secondary" href="#funktionen">Funktionen ansehen</a>
+        <a class="btn-secondary" href="#funktionen" data-i18n="hero.ctaSecondary">Funktionen ansehen</a>
       </div>
       <div class="trustrow">
-        <span class="pill">Kein Konto</span>
-        <span class="pill">Kein Tracking</span>
-        <span class="pill">Keine Werbung</span>
-        <span class="pill">100% Offline</span>
-        <span class="pill">Kostenlos</span>
+        <span class="pill" data-i18n="hero.pill0">Kein Konto</span>
+        <span class="pill" data-i18n="hero.pill1">Kein Tracking</span>
+        <span class="pill" data-i18n="hero.pill2">Keine Werbung</span>
+        <span class="pill" data-i18n="hero.pill3">100% Offline</span>
+        <span class="pill" data-i18n="hero.pill4">Kostenlos</span>
       </div>
     </div>
     <div class="shotwrap">
-      <img src="assets/shot_hero.png" alt="MenCode App – Mission des Tages" width="300" loading="eager">
+      <img id="imgHero" src="assets/de/shot_hero.png" alt="MenCode App – Mission des Tages" width="300" loading="eager">
     </div>
   </div>
 </section>
@@ -227,40 +244,40 @@
 <section id="funktionen">
   <div class="wrap">
     <div class="sectionhead">
-      <span class="kicker">Funktionen</span>
-      <h2 class="h2">Alles, was eine Beziehung stärker macht</h2>
-      <p>Kein Feature-Wirrwarr – nur das, was wirklich zählt.</p>
+      <span class="kicker" data-i18n="feat.kicker">Funktionen</span>
+      <h2 class="h2" data-i18n="feat.h2">Alles, was eine Beziehung stärker macht</h2>
+      <p data-i18n="feat.lead">Kein Feature-Wirrwarr – nur das, was wirklich zählt.</p>
     </div>
     <div class="fgrid">
       <div class="fcard">
         <div class="ic"><svg viewBox="0 0 24 24"><path d="M12 2l2.4 7.2H22l-6 4.4 2.3 7.2L12 16.4l-6.3 4.4 2.3-7.2-6-4.4h7.6z"/></svg></div>
-        <h3>365 Missionen</h3>
-        <p>Für jeden Tag im Jahr eine eigene Idee – von kleinen Gesten bis zu gemeinsamen Erlebnissen. Nie zweimal dasselbe.</p>
+        <h3 data-i18n="feat.i1.h3">365 Missionen</h3>
+        <p data-i18n="feat.i1.p">Für jeden Tag im Jahr eine eigene Idee – von kleinen Gesten bis zu gemeinsamen Erlebnissen. Nie zweimal dasselbe.</p>
       </div>
       <div class="fcard">
         <div class="ic"><svg viewBox="0 0 24 24"><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2zm1 15h-2v-2h2v2zm0-4h-2c0-3.3 3-3.1 3-5.2 0-1.2-1-2-2-2-.8 0-1.5.4-1.9 1L8.6 5.5C9.4 4.1 10.8 3.2 12.5 3.2c2.4 0 4.5 1.7 4.5 4 0 3-3 3-3 4.8z"/></svg></div>
-        <h3>Warum es wirkt</h3>
-        <p>Jede Mission erklärt den psychologischen Kniff dahinter. Du verstehst, was in einer Partnerschaft wirklich zählt.</p>
+        <h3 data-i18n="feat.i2.h3">Warum es wirkt</h3>
+        <p data-i18n="feat.i2.p">Jede Mission erklärt den psychologischen Kniff dahinter. Du verstehst, was in einer Partnerschaft wirklich zählt.</p>
       </div>
       <div class="fcard">
         <div class="ic"><svg viewBox="0 0 24 24"><path d="M7 2v11h3v9l7-12h-4l4-8z"/></svg></div>
-        <h3>Punkte & 20 Level</h3>
-        <p>Sammle Punkte für jede erledigte Mission, steig durch 20 Level auf und schalte echte Belohnungen frei.</p>
+        <h3 data-i18n="feat.i3.h3">Punkte & 20 Level</h3>
+        <p data-i18n="feat.i3.p">Sammle Punkte für jede erledigte Mission, steig durch 20 Level auf und schalte echte Belohnungen frei.</p>
       </div>
       <div class="fcard">
         <div class="ic"><svg viewBox="0 0 24 24"><path d="M12 2l2.9 6 6.6.9-4.8 4.6 1.1 6.5L12 16.9l-5.8 3.1 1.1-6.5L2.5 8.9l6.6-.9z"/></svg></div>
-        <h3>8 Auszeichnungen</h3>
-        <p>Für Serien, Meilensteine und Comebacks. Werde zur MenCode-Legende und zeig, dass du dranbleibst.</p>
+        <h3 data-i18n="feat.i4.h3">8 Auszeichnungen</h3>
+        <p data-i18n="feat.i4.p">Für Serien, Meilensteine und Comebacks. Werde zur MenCode-Legende und zeig, dass du dranbleibst.</p>
       </div>
       <div class="fcard">
         <div class="ic"><svg viewBox="0 0 24 24"><path d="M12 3a6 6 0 00-6 6c0 4.2 6 12 6 12s6-7.8 6-12a6 6 0 00-6-6zm0 8a2 2 0 110-4 2 2 0 010 4z"/></svg></div>
-        <h3>Passt sich dem Tag an</h3>
-        <p>Missionen berücksichtigen Jahreszeit, Wetter und Feiertage – nie eine Draußen-Idee bei Dauerregen.</p>
+        <h3 data-i18n="feat.i5.h3">Passt sich dem Tag an</h3>
+        <p data-i18n="feat.i5.p">Missionen berücksichtigen Jahreszeit, Wetter und Feiertage – nie eine Draußen-Idee bei Dauerregen.</p>
       </div>
       <div class="fcard">
         <div class="ic"><svg viewBox="0 0 24 24"><path d="M12 1L3 5v6c0 5.5 3.8 10.7 9 12 5.2-1.3 9-6.5 9-12V5l-9-4zm-1 15l-4-4 1.4-1.4L11 13.2l6.6-6.6L19 8l-8 8z"/></svg></div>
-        <h3>Kein Konto, kein Tracking</h3>
-        <p>Keine Anmeldung, keine Werbung, keine Datensammelei. Läuft komplett offline auf deinem Handy.</p>
+        <h3 data-i18n="feat.i6.h3">Kein Konto, kein Tracking</h3>
+        <p data-i18n="feat.i6.p">Keine Anmeldung, keine Werbung, keine Datensammelei. Läuft komplett offline auf deinem Handy.</p>
       </div>
     </div>
   </div>
@@ -269,16 +286,16 @@
 <section>
   <div class="wrap">
     <div class="sectionhead">
-      <span class="kicker">In der App</span>
-      <h2 class="h2">So sieht MenCode aus</h2>
+      <span class="kicker" data-i18n="showcase.kicker">In der App</span>
+      <h2 class="h2" data-i18n="showcase.h2">So sieht MenCode aus</h2>
     </div>
   </div>
   <div class="wrap">
     <div class="showcase">
-      <img src="assets/shot_hero.png" alt="Mission des Tages" loading="lazy">
-      <img src="assets/shot_why.png" alt="Warum es wirkt" loading="lazy">
-      <img src="assets/shot_gamify.png" alt="Punkte und Level" loading="lazy">
-      <img src="assets/shot_trophies.png" alt="Trophäen und Auszeichnungen" loading="lazy">
+      <img class="shotimg" data-shot="shot_hero" src="assets/de/shot_hero.png" data-i18n-alt="showcase.a0" alt="Mission des Tages" loading="lazy">
+      <img class="shotimg" data-shot="shot_why" src="assets/de/shot_why.png" data-i18n-alt="showcase.a1" alt="Warum es wirkt" loading="lazy">
+      <img class="shotimg" data-shot="shot_gamify" src="assets/de/shot_gamify.png" data-i18n-alt="showcase.a2" alt="Punkte und Level" loading="lazy">
+      <img class="shotimg" data-shot="shot_trophies" src="assets/de/shot_trophies.png" data-i18n-alt="showcase.a3" alt="Trophäen und Auszeichnungen" loading="lazy">
     </div>
   </div>
 </section>
@@ -286,13 +303,13 @@
 <section id="so-gehts">
   <div class="wrap">
     <div class="sectionhead">
-      <span class="kicker">So geht's</span>
-      <h2 class="h2">In drei Schritten zur stärkeren Beziehung</h2>
+      <span class="kicker" data-i18n="steps.kicker">So geht's</span>
+      <h2 class="h2" data-i18n="steps.h2">In drei Schritten zur stärkeren Beziehung</h2>
     </div>
     <div class="steps">
-      <div class="step"><div class="n">1</div><h3>App öffnen</h3><p>Jeden Tag wartet genau eine neue Mission auf dich – konkret, machbar, in wenigen Minuten erledigt.</p></div>
-      <div class="step"><div class="n">2</div><h3>Mission erledigen</h3><p>Setz sie um, egal ob Wort, Geste oder gemeinsame Zeit. Danach markierst du sie als erledigt.</p></div>
-      <div class="step"><div class="n">3</div><h3>Punkte sammeln</h3><p>Du steigst im Level auf, schaltest Auszeichnungen frei und baust Tag für Tag eine stärkere Beziehung.</p></div>
+      <div class="step"><div class="n">1</div><h3 data-i18n="steps.i1.h3">App öffnen</h3><p data-i18n="steps.i1.p">Jeden Tag wartet genau eine neue Mission auf dich – konkret, machbar, in wenigen Minuten erledigt.</p></div>
+      <div class="step"><div class="n">2</div><h3 data-i18n="steps.i2.h3">Mission erledigen</h3><p data-i18n="steps.i2.p">Setz sie um, egal ob Wort, Geste oder gemeinsame Zeit. Danach markierst du sie als erledigt.</p></div>
+      <div class="step"><div class="n">3</div><h3 data-i18n="steps.i3.h3">Punkte sammeln</h3><p data-i18n="steps.i3.p">Du steigst im Level auf, schaltest Auszeichnungen frei und baust Tag für Tag eine stärkere Beziehung.</p></div>
     </div>
   </div>
 </section>
@@ -300,37 +317,37 @@
 <section id="faq">
   <div class="wrap">
     <div class="sectionhead">
-      <span class="kicker">Häufige Fragen</span>
-      <h2 class="h2">Alles, was du wissen musst</h2>
+      <span class="kicker" data-i18n="faq.kicker">Häufige Fragen</span>
+      <h2 class="h2" data-i18n="faq.h2">Alles, was du wissen musst</h2>
     </div>
     <div class="faq">
       <details open>
-        <summary>Was ist MenCode?</summary>
-        <p>MenCode ist eine App für Männer, die ihre Beziehung stärken wollen. Jeden Tag zeigt sie dir genau eine kleine, konkrete Mission – von einer liebevollen Geste bis zu einer gemeinsamen Aktivität – mit der du deiner Partnerin zeigst, dass sie zählt.</p>
+        <summary data-i18n="faq.q1">Was ist MenCode?</summary>
+        <p data-i18n-html="faq.a1">MenCode ist eine App für Männer, die ihre Beziehung stärken wollen. Jeden Tag zeigt sie dir genau eine kleine, konkrete Mission – von einer liebevollen Geste bis zu einer gemeinsamen Aktivität – mit der du deiner Partnerin zeigst, dass sie zählt.</p>
       </details>
       <details>
-        <summary>Ist MenCode kostenlos?</summary>
-        <p>Ja, MenCode ist kostenlos im Google Play Store erhältlich. Es gibt keine Werbung und keine Kaufzwänge in der App.</p>
+        <summary data-i18n="faq.q2">Ist MenCode kostenlos?</summary>
+        <p data-i18n-html="faq.a2">Ja, MenCode ist kostenlos im Google Play Store erhältlich. Es gibt keine Werbung und keine Kaufzwänge in der App.</p>
       </details>
       <details>
-        <summary>Funktioniert MenCode ohne Internet?</summary>
-        <p>Ja. MenCode läuft komplett offline. Die einzige optionale Online-Funktion ist ein abschaltbarer Wetterabruf, der Missionen an die aktuelle Jahreszeit und das Wetter anpasst.</p>
+        <summary data-i18n="faq.q3">Funktioniert MenCode ohne Internet?</summary>
+        <p data-i18n-html="faq.a3">Ja. MenCode läuft komplett offline. Die einzige optionale Online-Funktion ist ein abschaltbarer Wetterabruf, der Missionen an die aktuelle Jahreszeit und das Wetter anpasst.</p>
       </details>
       <details>
-        <summary>Sammelt MenCode meine Daten?</summary>
-        <p>Nein. MenCode benötigt kein Konto und keine Anmeldung. Es gibt kein Tracking und keine Analyse-Dienste. Alle Fortschrittsdaten bleiben ausschließlich lokal auf deinem Gerät. Mehr dazu in der <a href="/CodeDatenschutz">Datenschutzerklärung</a>.</p>
+        <summary data-i18n="faq.q4">Sammelt MenCode meine Daten?</summary>
+        <p data-i18n-html="faq.a4">Nein. MenCode benötigt kein Konto und keine Anmeldung. Es gibt kein Tracking und keine Analyse-Dienste. Alle Fortschrittsdaten bleiben ausschließlich lokal auf deinem Gerät. Mehr dazu in der <a href="/CodeDatenschutz">Datenschutzerklärung</a>.</p>
       </details>
       <details>
-        <summary>Wie viele Missionen gibt es?</summary>
-        <p>MenCode hat 365 verschiedene Missionen – für jeden Tag im Jahr eine. Sie passen sich zusätzlich an Jahreszeit, Wetter und Feiertage an, damit es nie langweilig wird.</p>
+        <summary data-i18n="faq.q5">Wie viele Missionen gibt es?</summary>
+        <p data-i18n-html="faq.a5">MenCode hat 365 verschiedene Missionen – für jeden Tag im Jahr eine. Sie passen sich zusätzlich an Jahreszeit, Wetter und Feiertage an, damit es nie langweilig wird.</p>
       </details>
       <details>
-        <summary>In welchen Sprachen ist MenCode verfügbar?</summary>
-        <p>MenCode ist auf Deutsch, Englisch, Französisch, Spanisch und Niederländisch verfügbar.</p>
+        <summary data-i18n="faq.q6">In welchen Sprachen ist MenCode verfügbar?</summary>
+        <p data-i18n-html="faq.a6">MenCode ist auf Deutsch, Englisch, Französisch, Spanisch und Niederländisch verfügbar.</p>
       </details>
       <details>
-        <summary>Kann ich eine Mission überspringen, die nicht zu mir passt?</summary>
-        <p>Ja, du kannst einmal pro Woche die Tagesmission gegen eine neue, zufällige Mission tauschen.</p>
+        <summary data-i18n="faq.q7">Kann ich eine Mission überspringen, die nicht zu mir passt?</summary>
+        <p data-i18n-html="faq.a7">Ja, du kannst einmal pro Woche die Tagesmission gegen eine neue, zufällige Mission tauschen.</p>
       </details>
     </div>
   </div>
@@ -339,11 +356,11 @@
 <section>
   <div class="wrap">
     <div class="finalcta">
-      <h2>Bereit für die erste Mission?</h2>
-      <p>Kostenlos, ohne Konto, in wenigen Sekunden startklar.</p>
+      <h2 data-i18n="final.h2">Bereit für die erste Mission?</h2>
+      <p data-i18n="final.p">Kostenlos, ohne Konto, in wenigen Sekunden startklar.</p>
       <a class="btn-primary" href="https://play.google.com/store/apps/details?id=app.heidenreich.maennercode">
         <svg viewBox="0 0 24 24"><path d="M3 3.6v16.8c0 .5.3.9.7 1.1l10-9.5-10-9.5c-.4.2-.7.6-.7 1.1zm12.4 8.4l2.6-2.5 3.6 2c.6.3.6 1.2 0 1.5l-3.6 2-2.6-2.5.6-.5-.6-.5zm-1.1 1.1l-9.6 9.1 10.9-6.1-1.3-3zm0-2.2l1.3-3-10.9-6.1 9.6 9.1z"/></svg>
-        Jetzt bei Google Play laden
+        <span data-i18n="final.btn">Jetzt bei Google Play laden</span>
       </a>
     </div>
   </div>
@@ -351,16 +368,253 @@
 
 <footer class="site">
   <div class="wrap fbar">
-    <div>© 2026 MenCode · Dennis Heidenreich</div>
+    <div data-i18n="footer.copy">© 2026 MenCode · Dennis Heidenreich</div>
     <div class="flinks">
-      <a href="/womencode">WomenCode (für Frauen)</a>
-      <a href="/CodeDatenschutz">Datenschutz</a>
-      <a href="/CodeDatenschutz">Impressum</a>
-      <a href="mailto:kontakt@praesenzwert.de">Kontakt</a>
-      <a href="/">praesenzwert.de</a>
+      <a href="/womencode" data-i18n="footer.cross">WomenCode (für Frauen)</a>
+      <a href="/CodeDatenschutz" data-i18n="footer.privacy">Datenschutz</a>
+      <a href="/CodeDatenschutz" data-i18n="footer.imprint">Impressum</a>
+      <a href="mailto:kontakt@praesenzwert.de" data-i18n="footer.contact">Kontakt</a>
+      <a href="/" data-i18n="footer.home">praesenzwert.de</a>
     </div>
   </div>
 </footer>
+
+<script>
+const LANGS = ["de","en","fr","es","nl"];
+
+const T = {
+de: {
+  htmlLang:"de",
+  title:"MenCode – Jeden Tag eine Mission für eine stärkere Beziehung",
+  metaDesc:"MenCode: die Beziehungs-App für Männer. Jeden Tag eine kleine Mission, 365 Ideen im Jahr, Punkte & Level, kein Konto, komplett offline. Jetzt kostenlos bei Google Play.",
+  ogDesc:"365 Missionen, Punkte & Level, kein Konto, komplett offline. Die Beziehungs-App für Männer.",
+  nav:{feat:"Funktionen",steps:"So geht's",faq:"FAQ",cross:"Für Frauen: WomenCode",cta:"Jetzt laden"},
+  hero:{kicker:"Für Männer, die mehr wollen als „eigentlich ganz okay\"",h1a:"Jeden Tag",h1b:"eine Mission.",h1c:"Eine stärkere Beziehung.",
+    lead:"MenCode gibt dir jeden Tag genau eine kleine, konkrete Mission, mit der du deiner Partnerin zeigst, dass sie zählt. Kein Rätselraten, kein dickes Ratgeberbuch – ein Tag, eine Aufgabe, große Wirkung.",
+    ctaPrimary:"Jetzt bei Google Play laden",ctaSecondary:"Funktionen ansehen",
+    pill0:"Kein Konto",pill1:"Kein Tracking",pill2:"Keine Werbung",pill3:"100% Offline",pill4:"Kostenlos"},
+  feat:{kicker:"Funktionen",h2:"Alles, was eine Beziehung stärker macht",lead:"Kein Feature-Wirrwarr – nur das, was wirklich zählt.",
+    i1:{h3:"365 Missionen",p:"Für jeden Tag im Jahr eine eigene Idee – von kleinen Gesten bis zu gemeinsamen Erlebnissen. Nie zweimal dasselbe."},
+    i2:{h3:"Warum es wirkt",p:"Jede Mission erklärt den psychologischen Kniff dahinter. Du verstehst, was in einer Partnerschaft wirklich zählt."},
+    i3:{h3:"Punkte & 20 Level",p:"Sammle Punkte für jede erledigte Mission, steig durch 20 Level auf und schalte echte Belohnungen frei."},
+    i4:{h3:"8 Auszeichnungen",p:"Für Serien, Meilensteine und Comebacks. Werde zur MenCode-Legende und zeig, dass du dranbleibst."},
+    i5:{h3:"Passt sich dem Tag an",p:"Missionen berücksichtigen Jahreszeit, Wetter und Feiertage – nie eine Draußen-Idee bei Dauerregen."},
+    i6:{h3:"Kein Konto, kein Tracking",p:"Keine Anmeldung, keine Werbung, keine Datensammelei. Läuft komplett offline auf deinem Handy."}},
+  showcase:{kicker:"In der App",h2:"So sieht MenCode aus",a0:"Mission des Tages",a1:"Warum es wirkt",a2:"Punkte und Level",a3:"Trophäen und Auszeichnungen"},
+  steps:{kicker:"So geht's",h2:"In drei Schritten zur stärkeren Beziehung",
+    i1:{h3:"App öffnen",p:"Jeden Tag wartet genau eine neue Mission auf dich – konkret, machbar, in wenigen Minuten erledigt."},
+    i2:{h3:"Mission erledigen",p:"Setz sie um, egal ob Wort, Geste oder gemeinsame Zeit. Danach markierst du sie als erledigt."},
+    i3:{h3:"Punkte sammeln",p:"Du steigst im Level auf, schaltest Auszeichnungen frei und baust Tag für Tag eine stärkere Beziehung."}},
+  faq:{kicker:"Häufige Fragen",h2:"Alles, was du wissen musst",
+    q1:"Was ist MenCode?",a1:"MenCode ist eine App für Männer, die ihre Beziehung stärken wollen. Jeden Tag zeigt sie dir genau eine kleine, konkrete Mission – von einer liebevollen Geste bis zu einer gemeinsamen Aktivität – mit der du deiner Partnerin zeigst, dass sie zählt.",
+    q2:"Ist MenCode kostenlos?",a2:"Ja, MenCode ist kostenlos im Google Play Store erhältlich. Es gibt keine Werbung und keine Kaufzwänge in der App.",
+    q3:"Funktioniert MenCode ohne Internet?",a3:"Ja. MenCode läuft komplett offline. Die einzige optionale Online-Funktion ist ein abschaltbarer Wetterabruf, der Missionen an die aktuelle Jahreszeit und das Wetter anpasst.",
+    q4:"Sammelt MenCode meine Daten?",a4:'Nein. MenCode benötigt kein Konto und keine Anmeldung. Es gibt kein Tracking und keine Analyse-Dienste. Alle Fortschrittsdaten bleiben ausschließlich lokal auf deinem Gerät. Mehr dazu in der <a href="/CodeDatenschutz">Datenschutzerklärung</a>.',
+    q5:"Wie viele Missionen gibt es?",a5:"MenCode hat 365 verschiedene Missionen – für jeden Tag im Jahr eine. Sie passen sich zusätzlich an Jahreszeit, Wetter und Feiertage an, damit es nie langweilig wird.",
+    q6:"In welchen Sprachen ist MenCode verfügbar?",a6:"MenCode ist auf Deutsch, Englisch, Französisch, Spanisch und Niederländisch verfügbar.",
+    q7:"Kann ich eine Mission überspringen, die nicht zu mir passt?",a7:"Ja, du kannst einmal pro Woche die Tagesmission gegen eine neue, zufällige Mission tauschen."},
+  final:{h2:"Bereit für die erste Mission?",p:"Kostenlos, ohne Konto, in wenigen Sekunden startklar.",btn:"Jetzt bei Google Play laden"},
+  footer:{copy:"© 2026 MenCode · Dennis Heidenreich",cross:"WomenCode (für Frauen)",privacy:"Datenschutz",imprint:"Impressum",contact:"Kontakt",home:"praesenzwert.de"}
+},
+
+en: {
+  htmlLang:"en",
+  title:"MenCode – One Daily Mission for a Stronger Relationship",
+  metaDesc:"MenCode: the relationship app for men. One small mission a day, 365 ideas a year, points & levels, no account, fully offline. Free now on Google Play.",
+  ogDesc:"365 missions, points & levels, no account, fully offline. The relationship app for men.",
+  nav:{feat:"Features",steps:"How it works",faq:"FAQ",cross:"For women: WomenCode",cta:"Get it now"},
+  hero:{kicker:'For men who want more than "pretty much fine"',h1a:"One mission",h1b:"every day.",h1c:"A stronger relationship.",
+    lead:"MenCode gives you one small, concrete mission every day to show your partner that she matters. No guesswork, no thick self-help book – one day, one task, real impact.",
+    ctaPrimary:"Get it on Google Play",ctaSecondary:"See features",
+    pill0:"No account",pill1:"No tracking",pill2:"No ads",pill3:"100% offline",pill4:"Free"},
+  feat:{kicker:"Features",h2:"Everything that makes a relationship stronger",lead:"No feature clutter – just what actually matters.",
+    i1:{h3:"365 missions",p:"A fresh idea for every day of the year – from small gestures to shared experiences. Never the same twice."},
+    i2:{h3:"Why it works",p:"Every mission explains the psychology behind it. You'll understand what actually matters in a relationship."},
+    i3:{h3:"Points & 20 levels",p:"Earn points for every completed mission, level up through 20 levels, and unlock real rewards."},
+    i4:{h3:"8 achievements",p:"For streaks, milestones and comebacks. Become a MenCode legend and show you stick with it."},
+    i5:{h3:"Fits the day",p:"Missions factor in season, weather and holidays – never an outdoor idea during nonstop rain."},
+    i6:{h3:"No account, no tracking",p:"No sign-up, no ads, no data collection. Runs fully offline on your phone."}},
+  showcase:{kicker:"In the app",h2:"What MenCode looks like",a0:"Mission of the day",a1:"Why it works",a2:"Points and levels",a3:"Trophies and achievements"},
+  steps:{kicker:"How it works",h2:"3 steps to a stronger relationship",
+    i1:{h3:"Open the app",p:"Every day, exactly one new mission is waiting – concrete, doable, finished in minutes."},
+    i2:{h3:"Complete the mission",p:"Follow through, whether it's a word, a gesture, or shared time. Then mark it done."},
+    i3:{h3:"Collect points",p:"You level up, unlock achievements, and build a stronger relationship day by day."}},
+  faq:{kicker:"FAQ",h2:"Everything you need to know",
+    q1:"What is MenCode?",a1:"MenCode is an app for men who want to strengthen their relationship. Every day it shows you exactly one small, concrete mission – from a loving gesture to a shared activity – to show your partner that she matters.",
+    q2:"Is MenCode free?",a2:"Yes, MenCode is free on Google Play. There are no ads and no purchase requirements in the app.",
+    q3:"Does MenCode work without internet?",a3:"Yes. MenCode runs fully offline. The only optional online feature is a toggleable weather lookup that adapts missions to the current season and weather.",
+    q4:"Does MenCode collect my data?",a4:'No. MenCode doesn\'t require an account or sign-up. There is no tracking and no analytics. All progress data stays exclusively on your device. More in the <a href="/CodeDatenschutz">privacy policy</a>.',
+    q5:"How many missions are there?",a5:"MenCode has 365 different missions – one for every day of the year. They also adapt to season, weather and holidays, so it never gets boring.",
+    q6:"What languages is MenCode available in?",a6:"MenCode is available in German, English, French, Spanish and Dutch.",
+    q7:"Can I skip a mission that doesn't fit me?",a7:"Yes, once a week you can swap the day's mission for a new, random one."},
+  final:{h2:"Ready for your first mission?",p:"Free, no account, ready in seconds.",btn:"Get it on Google Play"},
+  footer:{copy:"© 2026 MenCode · Dennis Heidenreich",cross:"WomenCode (for women)",privacy:"Privacy",imprint:"Imprint",contact:"Contact",home:"praesenzwert.de"}
+},
+
+fr: {
+  htmlLang:"fr",
+  title:"MenCode – Une mission par jour pour une relation plus forte",
+  metaDesc:"MenCode : l'appli relation pour les hommes. Une petite mission par jour, 365 idées par an, points et niveaux, sans compte, 100% hors ligne. Gratuite sur Google Play.",
+  ogDesc:"365 missions, points et niveaux, sans compte, 100% hors ligne. L'appli relation pour les hommes.",
+  nav:{feat:"Fonctionnalités",steps:"Comment ça marche",faq:"FAQ",cross:"Pour les femmes : WomenCode",cta:"Télécharger"},
+  hero:{kicker:"Pour les hommes qui veulent plus que « ça va, plutôt bien »",h1a:"Une mission",h1b:"chaque jour.",h1c:"Une relation plus forte.",
+    lead:"MenCode te propose chaque jour une petite mission concrète pour montrer à ta partenaire qu'elle compte. Pas de devinettes, pas de gros guide relationnel – un jour, une tâche, un grand impact.",
+    ctaPrimary:"Télécharger sur Google Play",ctaSecondary:"Voir les fonctionnalités",
+    pill0:"Sans compte",pill1:"Sans pistage",pill2:"Sans publicité",pill3:"100% hors ligne",pill4:"Gratuit"},
+  feat:{kicker:"Fonctionnalités",h2:"Tout ce qui renforce une relation",lead:"Pas de fouillis de fonctionnalités – seulement l'essentiel.",
+    i1:{h3:"365 missions",p:"Une idée différente pour chaque jour de l'année – des petits gestes aux expériences partagées. Jamais deux fois la même chose."},
+    i2:{h3:"Pourquoi ça marche",p:"Chaque mission explique l'astuce psychologique derrière. Tu comprends ce qui compte vraiment dans une relation."},
+    i3:{h3:"Points et 20 niveaux",p:"Gagne des points pour chaque mission accomplie, monte à travers 20 niveaux, débloque de vraies récompenses."},
+    i4:{h3:"8 distinctions",p:"Pour les séries, les étapes clés et les retours. Deviens une légende MenCode et montre ta persévérance."},
+    i5:{h3:"S'adapte à la journée",p:"Les missions tiennent compte de la saison, de la météo et des jours fériés – jamais d'idée en extérieur sous une pluie continue."},
+    i6:{h3:"Sans compte, sans pistage",p:"Pas d'inscription, pas de publicité, pas de collecte de données. Fonctionne entièrement hors ligne sur ton téléphone."}},
+  showcase:{kicker:"Dans l'appli",h2:"À quoi ressemble MenCode",a0:"Mission du jour",a1:"Pourquoi ça marche",a2:"Points et niveaux",a3:"Trophées et distinctions"},
+  steps:{kicker:"Comment ça marche",h2:"3 étapes vers une relation plus forte",
+    i1:{h3:"Ouvrir l'appli",p:"Chaque jour, une nouvelle mission t'attend – concrète, réalisable, terminée en quelques minutes."},
+    i2:{h3:"Accomplir la mission",p:"Mets-la en œuvre, que ce soit un mot, un geste ou du temps partagé. Ensuite, marque-la comme terminée."},
+    i3:{h3:"Gagner des points",p:"Tu montes de niveau, débloques des distinctions et construis jour après jour une relation plus forte."}},
+  faq:{kicker:"Questions fréquentes",h2:"Tout ce qu'il faut savoir",
+    q1:"Qu'est-ce que MenCode ?",a1:"MenCode est une appli pour les hommes qui veulent renforcer leur relation. Chaque jour, elle te montre exactement une petite mission concrète – d'un geste affectueux à une activité partagée – pour montrer à ta partenaire qu'elle compte.",
+    q2:"MenCode est-elle gratuite ?",a2:"Oui, MenCode est gratuite sur Google Play. Il n'y a ni publicité ni achat obligatoire dans l'appli.",
+    q3:"MenCode fonctionne-t-elle sans internet ?",a3:"Oui. MenCode fonctionne entièrement hors ligne. La seule fonction en ligne optionnelle est une consultation météo désactivable qui adapte les missions à la saison et à la météo actuelles.",
+    q4:"MenCode collecte-t-elle mes données ?",a4:'Non. MenCode ne nécessite ni compte ni inscription. Il n\'y a ni pistage ni service d\'analyse. Toutes les données de progression restent exclusivement sur ton appareil. Plus d\'infos dans la <a href="/CodeDatenschutz">politique de confidentialité</a>.',
+    q5:"Combien y a-t-il de missions ?",a5:"MenCode compte 365 missions différentes – une pour chaque jour de l'année. Elles s'adaptent aussi à la saison, à la météo et aux jours fériés, pour ne jamais s'ennuyer.",
+    q6:"Dans quelles langues MenCode est-elle disponible ?",a6:"MenCode est disponible en allemand, anglais, français, espagnol et néerlandais.",
+    q7:"Puis-je passer une mission qui ne me convient pas ?",a7:"Oui, une fois par semaine tu peux échanger la mission du jour contre une nouvelle mission aléatoire."},
+  final:{h2:"Prêt pour ta première mission ?",p:"Gratuite, sans compte, prête en quelques secondes.",btn:"Télécharger sur Google Play"},
+  footer:{copy:"© 2026 MenCode · Dennis Heidenreich",cross:"WomenCode (pour les femmes)",privacy:"Confidentialité",imprint:"Mentions légales",contact:"Contact",home:"praesenzwert.de"}
+},
+
+es: {
+  htmlLang:"es",
+  title:"MenCode – Una misión al día para una relación más fuerte",
+  metaDesc:"MenCode: la app de pareja para hombres. Una pequeña misión al día, 365 ideas al año, puntos y niveles, sin cuenta, 100% sin conexión. Gratis en Google Play.",
+  ogDesc:"365 misiones, puntos y niveles, sin cuenta, 100% sin conexión. La app de pareja para hombres.",
+  nav:{feat:"Funciones",steps:"Cómo funciona",faq:"Preguntas frecuentes",cross:"Para mujeres: WomenCode",cta:"Descargar ahora"},
+  hero:{kicker:"Para hombres que quieren más que un simple «va bien»",h1a:"Una misión",h1b:"cada día.",h1c:"Una relación más fuerte.",
+    lead:"MenCode te da cada día una pequeña misión concreta para mostrarle a tu pareja que ella importa. Sin adivinanzas, sin gruesos manuales de pareja – un día, una tarea, gran impacto.",
+    ctaPrimary:"Descargar en Google Play",ctaSecondary:"Ver funciones",
+    pill0:"Sin cuenta",pill1:"Sin rastreo",pill2:"Sin publicidad",pill3:"100% sin conexión",pill4:"Gratis"},
+  feat:{kicker:"Funciones",h2:"Todo lo que fortalece una relación",lead:"Sin desorden de funciones – solo lo que realmente importa.",
+    i1:{h3:"365 misiones",p:"Una idea distinta para cada día del año – desde pequeños gestos hasta experiencias compartidas. Nunca se repite."},
+    i2:{h3:"Por qué funciona",p:"Cada misión explica el truco psicológico detrás. Entenderás lo que realmente importa en una relación."},
+    i3:{h3:"Puntos y 20 niveles",p:"Gana puntos por cada misión completada, sube entre 20 niveles y desbloquea recompensas reales."},
+    i4:{h3:"8 logros",p:"Por rachas, hitos y regresos. Conviértete en una leyenda de MenCode y demuestra tu constancia."},
+    i5:{h3:"Se adapta al día",p:"Las misiones tienen en cuenta la estación, el clima y los días festivos – nunca una idea al aire libre con lluvia constante."},
+    i6:{h3:"Sin cuenta, sin rastreo",p:"Sin registro, sin publicidad, sin recopilación de datos. Funciona completamente sin conexión en tu teléfono."}},
+  showcase:{kicker:"En la app",h2:"Así se ve MenCode",a0:"Misión del día",a1:"Por qué funciona",a2:"Puntos y niveles",a3:"Trofeos y logros"},
+  steps:{kicker:"Cómo funciona",h2:"3 pasos hacia una relación más fuerte",
+    i1:{h3:"Abre la app",p:"Cada día te espera exactamente una nueva misión – concreta, realizable, terminada en pocos minutos."},
+    i2:{h3:"Completa la misión",p:"Llévala a cabo, ya sea una palabra, un gesto o tiempo compartido. Luego márcala como hecha."},
+    i3:{h3:"Junta puntos",p:"Subes de nivel, desbloqueas logros y construyes día a día una relación más fuerte."}},
+  faq:{kicker:"Preguntas frecuentes",h2:"Todo lo que necesitas saber",
+    q1:"¿Qué es MenCode?",a1:"MenCode es una app para hombres que quieren fortalecer su relación. Cada día te muestra exactamente una pequeña misión concreta – desde un gesto cariñoso hasta una actividad compartida – para mostrarle a tu pareja que ella importa.",
+    q2:"¿Es gratis MenCode?",a2:"Sí, MenCode es gratis en Google Play. No hay publicidad ni compras obligatorias en la app.",
+    q3:"¿Funciona MenCode sin internet?",a3:"Sí. MenCode funciona completamente sin conexión. La única función en línea opcional es una consulta meteorológica desactivable que adapta las misiones a la estación y el clima actuales.",
+    q4:"¿MenCode recopila mis datos?",a4:'No. MenCode no requiere cuenta ni registro. No hay rastreo ni servicios de análisis. Todos los datos de progreso permanecen exclusivamente en tu dispositivo. Más información en la <a href="/CodeDatenschutz">política de privacidad</a>.',
+    q5:"¿Cuántas misiones hay?",a5:"MenCode tiene 365 misiones distintas – una para cada día del año. Además se adaptan a la estación, el clima y los días festivos, para que nunca resulte aburrido.",
+    q6:"¿En qué idiomas está disponible MenCode?",a6:"MenCode está disponible en alemán, inglés, francés, español y neerlandés.",
+    q7:"¿Puedo saltarme una misión que no me encaje?",a7:"Sí, una vez por semana puedes cambiar la misión del día por otra nueva y aleatoria."},
+  final:{h2:"¿Listo para tu primera misión?",p:"Gratis, sin cuenta, lista en segundos.",btn:"Descargar en Google Play"},
+  footer:{copy:"© 2026 MenCode · Dennis Heidenreich",cross:"WomenCode (para mujeres)",privacy:"Privacidad",imprint:"Aviso legal",contact:"Contacto",home:"praesenzwert.de"}
+},
+
+nl: {
+  htmlLang:"nl",
+  title:"MenCode – Elke dag één missie voor een sterkere relatie",
+  metaDesc:"MenCode: de relatie-app voor mannen. Elke dag één kleine missie, 365 ideeën per jaar, punten & levels, geen account, volledig offline. Gratis op Google Play.",
+  ogDesc:"365 missies, punten & levels, geen account, volledig offline. De relatie-app voor mannen.",
+  nav:{feat:"Functies",steps:"Zo werkt het",faq:"Veelgestelde vragen",cross:"Voor vrouwen: WomenCode",cta:"Nu downloaden"},
+  hero:{kicker:"Voor mannen die meer willen dan „gaat wel\"",h1a:"Elke dag",h1b:"één missie.",h1c:"Een sterkere relatie.",
+    lead:"MenCode geeft je elke dag precies één kleine, concrete missie waarmee je je partner laat zien dat ze telt. Geen giswerk, geen dik relatieboek – één dag, één taak, groot effect.",
+    ctaPrimary:"Downloaden via Google Play",ctaSecondary:"Functies bekijken",
+    pill0:"Geen account",pill1:"Geen tracking",pill2:"Geen advertenties",pill3:"100% offline",pill4:"Gratis"},
+  feat:{kicker:"Functies",h2:"Alles wat een relatie sterker maakt",lead:"Geen overbodige functies – alleen wat er echt toe doet.",
+    i1:{h3:"365 missies",p:"Voor elke dag van het jaar een ander idee – van kleine gebaren tot gedeelde ervaringen. Nooit twee keer hetzelfde."},
+    i2:{h3:"Waarom het werkt",p:"Elke missie legt de psychologische truc erachter uit. Je begrijpt wat er echt toe doet in een relatie."},
+    i3:{h3:"Punten & 20 levels",p:"Verdien punten voor elke voltooide missie, stijg door 20 levels en ontgrendel echte beloningen."},
+    i4:{h3:"8 onderscheidingen",p:"Voor reeksen, mijlpalen en comebacks. Word een MenCode-legende en laat zien dat je volhoudt."},
+    i5:{h3:"Past zich aan de dag aan",p:"Missies houden rekening met seizoen, weer en feestdagen – nooit een buitenidee bij aanhoudende regen."},
+    i6:{h3:"Geen account, geen tracking",p:"Geen registratie, geen advertenties, geen dataverzameling. Werkt volledig offline op je telefoon."}},
+  showcase:{kicker:"In de app",h2:"Zo ziet MenCode eruit",a0:"Missie van de dag",a1:"Waarom het werkt",a2:"Punten en levels",a3:"Trofeeën en onderscheidingen"},
+  steps:{kicker:"Zo werkt het",h2:"In 3 stappen naar een sterkere relatie",
+    i1:{h3:"App openen",p:"Elke dag wacht precies één nieuwe missie op je – concreet, haalbaar, in een paar minuten klaar."},
+    i2:{h3:"Missie voltooien",p:"Voer ze uit, of het nu een woord, gebaar of gedeelde tijd is. Markeer haar daarna als voltooid."},
+    i3:{h3:"Punten verzamelen",p:"Je stijgt in level, ontgrendelt onderscheidingen en bouwt dag na dag aan een sterkere relatie."}},
+  faq:{kicker:"Veelgestelde vragen",h2:"Alles wat je moet weten",
+    q1:"Wat is MenCode?",a1:"MenCode is een app voor mannen die hun relatie willen versterken. Elke dag toont de app je precies één kleine, concrete missie – van een liefdevol gebaar tot een gedeelde activiteit – om je partner te laten zien dat ze telt.",
+    q2:"Is MenCode gratis?",a2:"Ja, MenCode is gratis verkrijgbaar op Google Play. Er zijn geen advertenties en geen verplichte aankopen in de app.",
+    q3:"Werkt MenCode zonder internet?",a3:"Ja. MenCode werkt volledig offline. De enige optionele online functie is een uitschakelbare weersopvraag die missies aanpast aan het huidige seizoen en weer.",
+    q4:"Verzamelt MenCode mijn gegevens?",a4:'Nee. MenCode vereist geen account of registratie. Er is geen tracking en geen analysediensten. Alle voortgangsgegevens blijven uitsluitend op je toestel. Meer in de <a href="/CodeDatenschutz">privacyverklaring</a>.',
+    q5:"Hoeveel missies zijn er?",a5:"MenCode heeft 365 verschillende missies – één voor elke dag van het jaar. Ze passen zich ook aan seizoen, weer en feestdagen aan, zodat het nooit saai wordt.",
+    q6:"In welke talen is MenCode beschikbaar?",a6:"MenCode is beschikbaar in het Duits, Engels, Frans, Spaans en Nederlands.",
+    q7:"Kan ik een missie overslaan die niet bij me past?",a7:"Ja, eenmaal per week kun je de dagmissie inwisselen voor een nieuwe, willekeurige missie."},
+  final:{h2:"Klaar voor je eerste missie?",p:"Gratis, zonder account, in enkele seconden klaar.",btn:"Downloaden via Google Play"},
+  footer:{copy:"© 2026 MenCode · Dennis Heidenreich",cross:"WomenCode (voor vrouwen)",privacy:"Privacy",imprint:"Colofon",contact:"Contact",home:"praesenzwert.de"}
+}
+};
+
+function getPath(obj, path){
+  return path.split(".").reduce((o,k)=> (o==null?undefined:o[k]), obj);
+}
+
+const SHOTS = ["shot_hero","shot_why","shot_gamify","shot_trophies"];
+
+function render(lang){
+  const d = T[lang];
+  document.documentElement.lang = d.htmlLang;
+  document.title = d.title;
+  document.getElementById("metaTitle").textContent = d.title;
+  document.getElementById("metaDesc").setAttribute("content", d.metaDesc);
+  document.getElementById("ogTitle").setAttribute("content", d.title);
+  document.getElementById("ogDesc").setAttribute("content", d.ogDesc);
+  document.getElementById("twTitle").setAttribute("content", d.title);
+  document.getElementById("twDesc").setAttribute("content", d.ogDesc);
+
+  document.querySelectorAll("[data-i18n]").forEach(function(el){
+    const v = getPath(d, el.getAttribute("data-i18n"));
+    if (v != null) el.textContent = v;
+  });
+  document.querySelectorAll("[data-i18n-html]").forEach(function(el){
+    const v = getPath(d, el.getAttribute("data-i18n-html"));
+    if (v != null) el.innerHTML = v;
+  });
+  document.querySelectorAll("[data-i18n-alt]").forEach(function(el){
+    const v = getPath(d, el.getAttribute("data-i18n-alt"));
+    if (v != null) el.setAttribute("alt", v);
+  });
+
+  SHOTS.forEach(function(key){
+    document.querySelectorAll('[data-shot="'+key+'"]').forEach(function(img){
+      img.src = "assets/" + lang + "/" + key + ".png";
+    });
+  });
+  const heroImg = document.getElementById("imgHero");
+  if (heroImg) heroImg.src = "assets/" + lang + "/shot_hero.png";
+
+  document.querySelectorAll(".langbar button").forEach(function(b){
+    b.classList.toggle("active", b.dataset.lang === lang);
+  });
+
+  try { localStorage.setItem("mencodeLang", lang); } catch(e){}
+}
+
+function pickInitial(){
+  const p = new URLSearchParams(location.search).get("lang");
+  if (p && LANGS.includes(p)) return p;
+  let stored = null;
+  try { stored = localStorage.getItem("mencodeLang"); } catch(e){}
+  if (stored && LANGS.includes(stored)) return stored;
+  const nav = (navigator.language || "de").slice(0,2).toLowerCase();
+  return LANGS.includes(nav) ? nav : "de";
+}
+
+document.querySelectorAll(".langbar button").forEach(function(b){
+  b.addEventListener("click", function(){ render(b.dataset.lang); });
+});
+
+render(pickInitial());
+</script>
 
 </body>
 </html>
