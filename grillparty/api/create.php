@@ -33,6 +33,13 @@ $base = slugify($title);
 if (mb_strlen($base) < 2) {
     $base = 'party';
 }
+// Namen echter Verzeichnisse sind tabu - sonst zeigt der Kurzlink
+// /grillparty/<slug> auf den Ordner statt auf die Party.
+$reserved = ['api', 'rad', 'data', 'next', 'assets', 'static', 'party', 'admin', 'index'];
+if (in_array($base, $reserved, true)) {
+    $base .= '-fest';
+}
+
 $id = $base;
 for ($attempt = 0; eventExists($id); $attempt++) {
     if ($attempt > 20) {

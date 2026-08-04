@@ -24,8 +24,15 @@ RewriteCond %{REQUEST_FILENAME} -f [OR]
 RewriteCond %{REQUEST_FILENAME} -d
 RewriteRule ^ - [L]
 
-# --- Kurzlink: /grillparty/dennis  ->  /grillparty/p/index.html?e=dennis ---------
-RewriteRule ^([a-z0-9][a-z0-9-]{1,39})/?$ /grillparty/p/index.html?e=$1 [L,QSA]
+# --- Kurzlink: /grillparty/dennis  ->  /grillparty/p/?e=dennis -------------------
+# Bewusst eine echte Weiterleitung (R=302) statt eines internen Rewrites:
+# beim internen Rewrite bliebe die Adresszeile auf /grillparty/dennis stehen,
+# und die Seite liest die Party-ID aus genau dieser Adresszeile - sie fände
+# dann nichts. Der verteilte Link bleibt trotzdem der kurze.
+#
+# Verzeichnisse wie /p, /rad, /api werden von der Regel darüber schon
+# abgefangen und landen hier gar nicht erst.
+RewriteRule ^([a-z0-9][a-z0-9-]{1,39})/?$ /grillparty/p/?e=$1 [R=302,L]
 
 # --- Alles Übrige auf die Startseite der App ------------------------------
 RewriteRule ^ /grillparty/index.html [L,QSA]
