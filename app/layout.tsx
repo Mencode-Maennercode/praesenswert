@@ -1,8 +1,13 @@
 import type { Metadata } from 'next'
-import { Inter } from 'next/font/google'
+import localFont from 'next/font/local'
 import './globals.css'
 
-const inter = Inter({ subsets: ['latin'] })
+const inter = localFont({
+  src: '../public/fonts/Inter-Variable.woff2',
+  weight: '100 900',
+  style: 'normal',
+  display: 'swap',
+})
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://www.praesenzwert.de'),
@@ -565,8 +570,6 @@ export default function RootLayout({
     <html lang="de">
       <head>
         <link rel="manifest" href="/manifest.json" />
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link rel="dns-prefetch" href="https://images.unsplash.com" />
         <meta name="theme-color" content="#1e293b" />
         <meta name="apple-mobile-web-app-capable" content="yes" />
