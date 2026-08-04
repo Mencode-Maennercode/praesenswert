@@ -1,0 +1,9 @@
+# Zweiter Riegel vor dem Datenspeicher (der erste steht in der .htaccess
+# des Wurzelverzeichnisses). Hier liegen Namen und E-Mail-Adressen der Gäste.
+<IfModule mod_authz_core.c>
+    Require all denied
+</IfModule>
+<IfModule !mod_authz_core.c>
+    Order allow,deny
+    Deny from all
+</IfModule>

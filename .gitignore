@@ -27,3 +27,9 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# Grillparty-App (/grillparty): der Datenspeicher enthaelt Namen und
+# E-Mail-Adressen der Gaeste und darf niemals ins Repo. Die .htaccess bleibt
+# drin - sie ist der Schutz und muss mit ausgeliefert werden.
+/grillparty/_data/*
+!/grillparty/_data/.htaccess
