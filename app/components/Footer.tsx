@@ -1,22 +1,11 @@
 'use client'
 
-import { useState } from 'react'
 import Image from 'next/image'
-import LegalModal from './LegalModal'
 
 export default function Footer() {
-  const [modalOpen, setModalOpen] = useState(false)
-  const [modalType, setModalType] = useState<'impressum' | 'datenschutz'>('impressum')
-
-  const openModal = (type: 'impressum' | 'datenschutz') => {
-    setModalType(type)
-    setModalOpen(true)
-  }
-
   return (
-    <>
-      <footer className="bg-brand-navy text-white py-12">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+    <footer className="bg-brand-navy text-white py-12">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
             <div className="text-left relative -mt-16">
               <Image
@@ -71,20 +60,20 @@ export default function Footer() {
               <h4 className="font-bold text-lg mb-4">Rechtliches</h4>
               <ul className="space-y-2">
                 <li>
-                  <button
-                    onClick={() => openModal('impressum')}
-                    className="text-gray-400 hover:text-brand-cyan transition-colors text-left w-full"
+                  <a
+                    href="/impressum"
+                    className="text-gray-400 hover:text-brand-cyan transition-colors text-left w-full inline-block"
                   >
                     Impressum
-                  </button>
+                  </a>
                 </li>
                 <li>
-                  <button
-                    onClick={() => openModal('datenschutz')}
-                    className="text-gray-400 hover:text-brand-cyan transition-colors text-left w-full"
+                  <a
+                    href="/datenschutz"
+                    className="text-gray-400 hover:text-brand-cyan transition-colors text-left w-full inline-block"
                   >
                     Datenschutz
-                  </button>
+                  </a>
                 </li>
               </ul>
             </div>
@@ -95,12 +84,5 @@ export default function Footer() {
           </div>
         </div>
       </footer>
-
-      <LegalModal
-        isOpen={modalOpen}
-        onClose={() => setModalOpen(false)}
-        type={modalType}
-      />
-    </>
   )
 }
