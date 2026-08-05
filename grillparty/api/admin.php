@@ -93,6 +93,63 @@ switch ($action) {
         });
         break;
 
+    case 'updateParticipant':
+        // Der Gastgeber korrigiert einen fremden Eintrag - Tippfehler im Namen,
+        // "Salat" zu "Kartoffelsalat" präzisieren, falsche E-Mail geraderücken.
+        $pid   = clean($body['participantId'] ?? '', 40);
+        $name  = clean($body['name'] ?? '', MAX_NAME);
+        $email = cleanEmail($body['email'] ?? '');
+        $item  = clean($body['item'] ?? '', MAX_ITEM);
+
+        if ($name === '') {
+            fail('Ohne Namen geht es nicht.');
+        }
+        if ($email === '') {
+            fail('Das ist keine gültige E-Mail-Adresse.');
+        }
+
+        $event = withEventLock($id, function (array $e) use ($pid, $name, $email, $item) {
+            $index = null;
+            foreach ($e['participants'] as $i => $p) {
+                if ($p['id'] === $pid) {
+                    $index = $i;
+                    break;
+                }
+            }
+            if ($index === null) {
+                fail('Diesen Eintrag gibt es nicht mehr.', 404);
+            }
+
+            // Zwei Einträge mit derselben Adresse würde join.php beim nächsten
+            // Eintragen zu einem verschmelzen - also hier gar nicht erst zulassen.
+            foreach ($e['participants'] as $i => $p) {
+                if ($i !== $index && strcasecmp($p['email'], $email) === 0) {
+                    fail('Diese E-Mail gehört schon zu einem anderen Eintrag.', 409);
+                }
+            }
+
+            $old = $e['participants'][$index];
+
+            // Nach der Auslosung steckt die Sache in fremden Rädern und in schon
+            // verschickten Mails. Der Name lässt sich weiter korrigieren.
+            if ($e['status'] === 'drawn' && $item !== ($old['item'] ?? '')) {
+                fail('Die Auslosung ist schon gelaufen - die Sachen stecken in den Rädern. Nimm die Auslosung zurück, wenn du daran noch etwas ändern willst.', 409);
+            }
+
+            $e['participants'][$index]['name']  = $name;
+            $e['participants'][$index]['email'] = $email;
+            $e['participants'][$index]['item']  = $item;
+
+            // Nur was öffentlich sichtbar ist, wird auch öffentlich vermerkt -
+            // eine stille E-Mail-Korrektur geht die Liste nichts an.
+            if ($name !== ($old['name'] ?? '') || $item !== ($old['item'] ?? '')) {
+                $e['participants'][$index]['updatedAt'] = date('c');
+                $e['participants'][$index]['editedBy'] = 'admin';
+            }
+            return $e;
+        });
+        break;
+
     case 'removeParticipant':
         $pid = clean($body['participantId'] ?? '', 40);
         $event = withEventLock($id, function (array $e) use ($pid) {
@@ -116,6 +173,22 @@ switch ($action) {
             }
             return $e;
         });
+        break;
+
+    case 'setAiKey':
+        // Der Schlüssel liegt serverseitig in _data/ und wird nie
+        // zurückgegeben - auch nicht an den angemeldeten Admin.
+        $value = trim(is_string($body['value'] ?? null) ? $body['value'] : '');
+        // Google vergibt sowohl "AIza..."- als auch "AQ...."-Schlüssel, also
+        // wird hier nur die Form geprüft, nicht ein bestimmter Anfang.
+        if (!preg_match('/^[A-Za-z0-9_.\-]{20,200}$/', $value)) {
+            fail('Das sieht nicht nach einem Google-AI-Schlüssel aus.');
+        }
+        storeAiKey($value);
+        break;
+
+    case 'clearAiKey':
+        deleteAiKey();
         break;
 
     case 'draw':

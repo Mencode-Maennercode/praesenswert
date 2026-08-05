@@ -48,6 +48,10 @@ $event = withEventLock($id, function (array $event) use ($name, $email, $item, $
             // createdAt bleibt stehen (wann jemand dazukam), updatedAt hält
             // fest, wann der jetzt sichtbare Eintrag entstanden ist.
             $event['participants'][$i]['updatedAt'] = date('c');
+
+            // Hier war der Gast selbst am Werk - ein früheres
+            // "durch Admin geändert" gilt damit nicht mehr.
+            $event['participants'][$i]['editedBy'] = 'self';
             return $event;
         }
     }
