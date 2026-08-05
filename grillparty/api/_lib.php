@@ -421,13 +421,28 @@ function buildWheel(string $assigned, array $unique, array $padding): array
     return secureShuffle($wheel);
 }
 
-/** Öffentliche Sicht: ohne Namen, ohne E-Mail-Adressen. */
+/**
+ * Öffentliche Sicht: mit Namen und Eintragszeit, aber ohne E-Mail-Adressen.
+ *
+ * Der Name steht bewusst dabei - in der Liste soll erkennbar sein, wer schon
+ * dran war. Die E-Mail bleibt draußen: sie dient nur dem Versand des
+ * persönlichen Rad-Links und geht niemanden sonst etwas an.
+ *
+ * `createdAt` fehlt bei sehr alten Einträgen möglicherweise - dann wird
+ * einfach keine Zeit angezeigt, statt dass hier etwas erfunden wird.
+ */
 function publicView(array $event): array
 {
     $items = [];
     foreach ($event['participants'] as $p) {
         if (($p['item'] ?? '') !== '') {
-            $items[] = ['id' => $p['id'], 'item' => $p['item']];
+            $items[] = [
+                'id' => $p['id'],
+                'item' => $p['item'],
+                'name' => $p['name'] ?? '',
+                'createdAt' => $p['createdAt'] ?? '',
+                'updatedAt' => $p['updatedAt'] ?? null,
+            ];
         }
     }
     return [

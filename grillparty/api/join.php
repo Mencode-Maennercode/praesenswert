@@ -45,6 +45,9 @@ $event = withEventLock($id, function (array $event) use ($name, $email, $item, $
         if (strcasecmp($p['email'], $email) === 0) {
             $event['participants'][$i]['name'] = $name;
             $event['participants'][$i]['item'] = $item;
+            // createdAt bleibt stehen (wann jemand dazukam), updatedAt hält
+            // fest, wann der jetzt sichtbare Eintrag entstanden ist.
+            $event['participants'][$i]['updatedAt'] = date('c');
             return $event;
         }
     }
