@@ -1,0 +1,16 @@
+# Zweiter Riegel vor dem Datenspeicher.
+#
+# Der erste steht in der .htaccess des Elternverzeichnisses als
+# RewriteRule ^_data(/|$) - [F,L]. Diese Datei hier greift auch dann noch,
+# wenn mod_rewrite ausfällt oder die übergeordnete Regel verlorengeht.
+#
+# Hier liegen Passwort-Hashes, Gesundheitsdaten, der VAPID-Privatschlüssel
+# und die API-Schlüssel. Ein einziger offener Zugriff wäre nicht reparierbar.
+
+Require all denied
+
+# Fallback für Apache 2.2, falls der Hoster je zurückrüstet.
+<IfModule !mod_authz_core.c>
+    Order allow,deny
+    Deny from all
+</IfModule>
