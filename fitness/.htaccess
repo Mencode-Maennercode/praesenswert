@@ -18,6 +18,13 @@ RewriteBase /fitness/
 # die API-Schlüssel. Ein zweiter Riegel steht in _data/.htaccess.
 RewriteRule ^_data(/|$) - [F,L]
 
+# --- Bausteine sind keine Endpunkte ---------------------------------------
+# api/_lib.php, _words.php, _ai.php, _push.php werden nur eingebunden. Direkt
+# aufgerufen geben sie zwar nichts aus, aber was nie erreichbar sein soll,
+# gehoert auch nicht erreichbar - eine kuenftige Datei koennte weniger
+# harmlos sein.
+RewriteRule ^api/_ - [F,L]
+
 # --- Vorhandene Dateien und Verzeichnisse direkt ausliefern ----------------
 # Damit sind /api/*.php, /liste/ und /datenschutz/ abgedeckt.
 RewriteCond %{REQUEST_FILENAME} -f [OR]
