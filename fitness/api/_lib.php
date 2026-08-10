@@ -439,6 +439,25 @@ function requireUser(array $body): array
 }
 
 /**
+ * Wie requireUser, aber nur für den Eigentümer - das erste angelegte Konto.
+ *
+ * Absichtlich dieselbe Fehlermeldung wie bei einer abgelaufenen Sitzung:
+ * Ob ein Konto besondere Rechte hat, geht niemanden etwas an, der sie nicht
+ * hat.
+ *
+ * @return array{0: string, 1: array}
+ */
+function requireOwner(array $body): array
+{
+    [$uid, $user] = requireUser($body);
+    if (($user['owner'] ?? false) !== true) {
+        usleep(300_000);
+        fail('Nicht erlaubt.', 403, 'verboten');
+    }
+    return [$uid, $user];
+}
+
+/**
  * Hängt bei Bedarf einen frischen Token an die Antwort.
  *
  * Gleitendes Fenster: Solange die App benutzt wird, läuft die Sitzung nie

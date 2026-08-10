@@ -97,12 +97,24 @@ function register(array $body): never
         $uid = 'u_' . bin2hex(random_bytes(8));
         $jetzt = date('c');
 
+        /*
+         * Das erste Konto ist der Eigentümer.
+         *
+         * Grund: Die API-Schlüssel liegen in _data/ und dürfen nie ins Repo -
+         * sie können also nicht mitdeployt werden. Irgendjemand muss sie auf
+         * dem Server ablegen dürfen, und ein zweites Passwortsystem nur dafür
+         * wäre Unfug. Wer die App aufsetzt, meldet sich zuerst an; alle
+         * späteren Konten sind gewöhnliche Nutzer.
+         */
+        $istErster = $index === [];
+
         saveUser($uid, [
             'id' => $uid,
             'name' => $name,
             'nameLower' => $key,
             'hash' => password_hash($pass, PASSWORD_DEFAULT),
             'recoveryHash' => password_hash($code, PASSWORD_DEFAULT),
+            'owner' => $istErster,
             'tokenVersion' => 1,
             'createdAt' => $jetzt,
             'disclaimerAt' => $jetzt,
@@ -289,6 +301,7 @@ function publicUser(string $uid, array $user): array
     return [
         'id' => $uid,
         'name' => (string) ($user['name'] ?? ''),
+        'owner' => (bool) ($user['owner'] ?? false),
         // Der Anker für die gesamte Wegführung der App: ohne Profil geht
         // es ins Onboarding, mit Profil direkt aufs Dashboard.
         'onboarded' => is_array($user['profile'] ?? null),
