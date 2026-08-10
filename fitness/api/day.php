@@ -366,29 +366,3 @@ function wasser(string $uid, array $user, string $datum, array $derived, array $
 
     send(withFreshToken(['ok' => true, 'tag' => oeffentlich($tag)], $uid, $user, $body));
 }
-
-/* -------------------------------------------------------------------- Serie */
-
-/**
- * Zählt aufeinanderfolgende Tage mit mindestens einem Eintrag.
- *
- * Nur der heutige Tag zählt fort. Wer gestern etwas nachträgt, bekommt
- * dafür keine Serie zurück - sonst wäre sie beliebig herstellbar und
- * verlöre genau die Wirkung, wegen der es sie gibt.
- */
-function serieFortschreiben(array $user, string $datum): array
-{
-    $serie = is_array($user['streak'] ?? null) ? $user['streak'] : ['days' => 0, 'last' => null];
-    $letzter = (string) ($serie['last'] ?? '');
-
-    if ($letzter === $datum) {
-        return $user;
-    }
-
-    $gestern = date('Y-m-d', strtotime($datum . ' -1 day'));
-    $serie['days'] = $letzter === $gestern ? (int) $serie['days'] + 1 : 1;
-    $serie['last'] = $datum;
-
-    $user['streak'] = $serie;
-    return $user;
-}
