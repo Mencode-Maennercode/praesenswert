@@ -31,6 +31,7 @@ match ($action) {
     'recover' => recover($body),
     'password' => changePassword($body),
     'abmelden' => logoutEverywhere($body),
+    'loeschen' => loeschen($body),
     default => fail('Unbekannte Aktion.'),
 };
 
@@ -98,15 +99,13 @@ function register(array $body): never
         $jetzt = date('c');
 
         /*
-         * Das erste Konto ist der Eigentümer.
+         * Eigentümer wird, wer sich anmeldet, solange es keinen gibt.
          *
-         * Grund: Die API-Schlüssel liegen in _data/ und dürfen nie ins Repo -
-         * sie können also nicht mitdeployt werden. Irgendjemand muss sie auf
-         * dem Server ablegen dürfen, und ein zweites Passwortsystem nur dafür
-         * wäre Unfug. Wer die App aufsetzt, meldet sich zuerst an; alle
-         * späteren Konten sind gewöhnliche Nutzer.
+         * Nicht schlicht "das erste Konto": Wird das gelöscht, gäbe es
+         * sonst nie wieder einen Eigentümer, und niemand könnte je einen
+         * Schlüssel hinterlegen. So rückt beim nächsten Konto jemand nach.
          */
-        $istErster = $index === [];
+        $istErster = !existiertEigentuemer($index);
 
         saveUser($uid, [
             'id' => $uid,
@@ -284,6 +283,89 @@ function logoutEverywhere(array $body): never
     [$uid, $user] = requireUser($body);
     $user['tokenVersion'] = (int) ($user['tokenVersion'] ?? 1) + 1;
     saveUser($uid, $user);
+    send(['ok' => true]);
+}
+
+/** Gibt es aktuell überhaupt einen Eigentümer? */
+function existiertEigentuemer(array $index): bool
+{
+    foreach ($index as $uid) {
+        if (!is_string($uid)) {
+            continue;
+        }
+        $u = loadUser($uid);
+        if (is_array($u) && ($u['owner'] ?? false) === true) {
+            return true;
+        }
+    }
+    return false;
+}
+
+/* ------------------------------------------------------------------ Löschen */
+
+/**
+ * Konto und alle Daten entfernen.
+ *
+ * Die Datenschutzseite sagt zu, dass auf Wunsch alles verschwindet - und
+ * eine Zusage, die kein Knopf einlöst, ist keine. Gelöscht wird wirklich
+ * alles: Profil, Tage, Gewicht, Wochenpläne, der Eintrag im Namensindex
+ * und der Knoten in den Tagesaggregaten der letzten Wochen.
+ *
+ * Zur Sicherheit mit Passwort - ein versehentlich offenes Handy soll
+ * nicht reichen.
+ */
+function loeschen(array $body): never
+{
+    [$uid, $user] = requireUser($body);
+    rateLimit('loeschen', 5, 3600, $uid);
+
+    $pass = is_string($body['pass'] ?? null) ? $body['pass'] : '';
+    if (!password_verify($pass, (string) $user['hash'])) {
+        usleep(400_000);
+        fail('Passwort stimmt nicht.', 401, 'falsch');
+    }
+
+    withLock('users-index', static function () use ($uid, $user): void {
+        $index = userIndex();
+        unset($index[(string) ($user['nameLower'] ?? '')]);
+        writeJson(USER_INDEX, $index);
+    });
+
+    // Tagesdateien und der ganze Ordner des Nutzers.
+    $tage = DAYS_DIR . '/' . $uid;
+    if (is_dir($tage)) {
+        foreach (glob($tage . '/*') ?: [] as $datei) {
+            @unlink($datei);
+        }
+        @rmdir($tage);
+    }
+    $plaene = PLANS_DIR . '/' . $uid;
+    if (is_dir($plaene)) {
+        foreach (glob($plaene . '/*') ?: [] as $datei) {
+            @unlink($datei);
+        }
+        @rmdir($plaene);
+    }
+
+    @unlink(WEIGHT_DIR . '/' . $uid . '.json');
+    @unlink(userPath($uid));
+
+    // Aus den Tagesaggregaten der letzten sechs Wochen streichen.
+    for ($i = 0; $i < 42; $i++) {
+        $datum = date('Y-m-d', strtotime("-{$i} day"));
+        $datei = FEED_DIR . '/' . $datum . '.json';
+        if (!is_file($datei)) {
+            continue;
+        }
+        withLock('feed-' . $datum, static function () use ($datei, $uid, $datum): void {
+            $feed = readJson($datei, ['date' => $datum, 'users' => []]);
+            if (isset($feed['users'][$uid])) {
+                unset($feed['users'][$uid]);
+                writeJson($datei, $feed);
+            }
+        });
+    }
+
     send(['ok' => true]);
 }
 
