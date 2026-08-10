@@ -13,13 +13,29 @@
 
 declare(strict_types=1);
 
-/*
- * gemini-3.6-flash mit reduziertem "Denken" - dasselbe Modell, das in der
- * Grillparty seit Monaten läuft. Als Konstante, damit ein Wechsel auf ein
- * stärkeres Modell eine Zeile ist.
+/**
+ * Die Modellkette.
+ *
+ * Nicht ein Modell, sondern eine Reihenfolge - und das aus einem
+ * gemessenen Grund: Das kostenlose Kontingent gilt PRO MODELL und ist
+ * knapp. gemini-3.6-flash erlaubt zwanzig Anfragen am Tag. Für eine App,
+ * in der man drei Mahlzeiten fotografiert und dabei Rückfragen beantwortet,
+ * ist das nach einem halben Tag aufgebraucht.
+ *
+ * Läuft eines leer (HTTP 429), rückt das nächste nach. Die Reihenfolge
+ * ist bewusst: erst die schnellen lite-Modelle mit den grössten
+ * Kontingenten, dann die stärkeren als Reserve.
+ *
+ * Gemessene Antwortzeiten (Text, mit Schema):
+ *   3.5-flash-lite 1,2 s | 3.1-flash-lite 4,3 s | 3.5-flash 2,6 s
  */
-const AI_MODEL_FOTO = 'gemini-3.6-flash';
-const AI_MODEL_TEXT = 'gemini-3.6-flash';
+const AI_MODELLE = [
+    'gemini-3.5-flash-lite',
+    'gemini-3.1-flash-lite',
+    'gemini-3.5-flash',
+    'gemini-3-flash-preview',
+    'gemini-2.5-flash-lite',
+];
 const AI_THINKING = 'low';
 const AI_TIMEOUT = 25;      // Sekunden; ein Foto braucht länger als ein Satz
 const AI_DAILY_MAX = 400;   // globale Tagesbremse
@@ -145,60 +161,69 @@ function postJson(string $url, array $payload, array $headers, int $timeout = AI
  */
 function geminiJson(
     string $key,
-    string $model,
     array $teile,
     array $schema,
     string $anweisung,
     ?int &$status = null,
+    ?string &$modell = null,
 ): ?array {
-    $url = "https://generativelanguage.googleapis.com/v1beta/models/{$model}:generateContent";
-    $rumpf = [
-        'systemInstruction' => ['parts' => [['text' => $anweisung]]],
-        'contents' => [['role' => 'user', 'parts' => $teile]],
-        'generationConfig' => [
-            // Erzwungenes Schema statt Prompt-Bitte: Damit kommt garantiert
-            // gültiges JSON zurück, und das Parsen kann nicht scheitern.
-            'responseMimeType' => 'application/json',
-            'responseSchema' => $schema,
-            'thinkingConfig' => ['thinkingLevel' => AI_THINKING],
-            'temperature' => 0.2,
-        ],
-    ];
     $header = ['Content-Type: application/json', 'x-goog-api-key: ' . $key];
 
-    /*
-     * Ein zweiter Versuch.
-     *
-     * Gemessen: rund jeder dritte Aufruf kommt nach einer halben Sekunde
-     * mit einer Absage zurück - kein Zeitüberschreiten, sondern eine
-     * Mengenbegrenzung. Genau dafür ist ein kurzer zweiter Anlauf da.
-     *
-     * NICHT wiederholt wird bei 400, 401 und 403: ein falscher Schlüssel
-     * oder eine kaputte Anfrage wird beim zweiten Mal auch nicht besser,
-     * und der Nutzer wartet dann doppelt so lange auf dieselbe Absage.
-     */
-    for ($versuch = 1; $versuch <= 2; $versuch++) {
-        $antwort = postJson($url, $rumpf, $header);
-        $status = $antwort['status'];
+    foreach (AI_MODELLE as $m) {
+        $url = "https://generativelanguage.googleapis.com/v1beta/models/{$m}:generateContent";
 
-        if ($status >= 200 && $status < 300) {
-            // Ab hier gilt der Aufruf als geglückt - auch wenn das Parsen
-            // gleich noch scheitern sollte.
-            $text = $antwort['daten']['candidates'][0]['content']['parts'][0]['text'] ?? null;
-            if (is_string($text)) {
-                $daten = json_decode($text, true);
-                if (is_array($daten)) {
-                    return $daten;
+        // Zwei Anläufe je Modell: das Denken kostet manche Modelle einen
+        // 400er, weil sie die Einstellung gar nicht kennen.
+        foreach ([true, false] as $mitDenken) {
+            $gen = [
+                // Erzwungenes Schema statt Prompt-Bitte: Damit kommt garantiert
+                // gültiges JSON zurück, und das Parsen kann nicht scheitern.
+                'responseMimeType' => 'application/json',
+                'responseSchema' => $schema,
+                'temperature' => 0.2,
+            ];
+            if ($mitDenken) {
+                $gen['thinkingConfig'] = ['thinkingLevel' => AI_THINKING];
+            }
+
+            $antwort = postJson($url, [
+                'systemInstruction' => ['parts' => [['text' => $anweisung]]],
+                'contents' => [['role' => 'user', 'parts' => $teile]],
+                'generationConfig' => $gen,
+            ], $header);
+
+            $status = $antwort['status'];
+            $modell = $m;
+
+            if ($status >= 200 && $status < 300) {
+                $text = $antwort['daten']['candidates'][0]['content']['parts'][0]['text'] ?? null;
+                if (is_string($text)) {
+                    $daten = json_decode($text, true);
+                    if (is_array($daten)) {
+                        return $daten;
+                    }
                 }
+                // Antwort kam an, war aber unbrauchbar - ein anderes Modell
+                // hilft dagegen nicht.
+                return null;
+            }
+
+            /*
+             * "Thinking level is not supported for this model." - ältere
+             * Modelle kennen die Einstellung nicht. Ohne sie noch einmal,
+             * sonst fiele die halbe Kette wegen einer Zeile Konfiguration aus.
+             */
+            $meldung = (string) ($antwort['daten']['error']['message'] ?? '');
+            if ($status === 400 && $mitDenken && stripos($meldung, 'thinking') !== false) {
+                continue;
+            }
+
+            // Kontingent erschöpft: nächstes Modell. Alles andere ist ein
+            // echter Fehler und wird beim nächsten Modell nicht besser.
+            if ($status === 429) {
+                break;
             }
             return null;
-        }
-
-        if (in_array($status, [400, 401, 403, 404], true)) {
-            return null;
-        }
-        if ($versuch === 1) {
-            usleep(1_200_000);
         }
     }
 

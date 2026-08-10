@@ -120,7 +120,7 @@ function anweisung(array $user, int $offeneFragen): string
 
 function frageGemini(array $user, array $teile, int $offen, ?int &$status = null): ?array
 {
-    return geminiJson(aiKey(), AI_MODEL_TEXT, $teile, schema(), anweisung($user, $offen), $status);
+    return geminiJson(aiKey(), $teile, schema(), anweisung($user, $offen), $status);
 }
 
 /**

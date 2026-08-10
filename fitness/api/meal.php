@@ -137,7 +137,7 @@ function starten(string $uid, array $user, array $body): never
     }
     $teile[] = ['text' => $text !== '' ? $text : 'Was ist auf dem Bild, und wie viele Kalorien hat es?'];
 
-    $roh = geminiJson($key, AI_MODEL_FOTO, $teile, schema(), anweisung($user, MAX_RUECKFRAGEN), $status);
+    $roh = geminiJson($key, $teile, schema(), anweisung($user, MAX_RUECKFRAGEN), $status);
     if ($roh === null) {
         // 429 heisst "gerade zu viele" und lohnt einen zweiten Anlauf
         // gleich. Alles andere lohnt ihn nicht.
@@ -187,7 +187,7 @@ function antworten(string $uid, array $user, array $body): never
     }
     $teile[] = ['text' => "Zusätzliche Angaben der Person:\n- " . implode("\n- ", $s['verlauf'])];
 
-    $roh = geminiJson($key, AI_MODEL_FOTO, $teile, schema(), anweisung($user, $offen), $status);
+    $roh = geminiJson($key, $teile, schema(), anweisung($user, $offen), $status);
     if ($roh === null) {
         $grund = $status === 429 ? 'gebremst' : 'fehler';
         send(withFreshToken(['ok' => true, 'ki' => false, 'grund' => $grund], $uid, $user, $body));
