@@ -40,34 +40,53 @@ match (clean($body['action'] ?? '', 20)) {
 
 /* ------------------------------------------------------------------ Schema */
 
+/**
+ * Eine LISTE von Einträgen, nicht ein einzelner.
+ *
+ * Der Grund: Menschen sagen "Hafer mit Milch, und mittags eine
+ * Reispfanne" in einem Atemzug. Ein Schema mit genau einem Gericht
+ * zwingt das Modell, eines davon wegzulassen oder beide zu einem
+ * Phantasiegericht zu verschmelzen. Beides ist falsch, und beides fällt
+ * erst auf, wenn die Tagesbilanz nicht stimmt.
+ */
 function schema(): array
 {
     return [
         'type' => 'OBJECT',
         'properties' => [
-            'art' => ['type' => 'STRING', 'enum' => ['essen', 'sport', 'unklar']],
-            // Essen
-            'gericht' => ['type' => 'STRING'],
-            'menge' => ['type' => 'STRING'],
-            'kcal' => ['type' => 'INTEGER'],
-            'eiweiss_g' => ['type' => 'NUMBER'],
-            'kohlenhydrate_g' => ['type' => 'NUMBER'],
-            'fett_g' => ['type' => 'NUMBER'],
-            'alternative' => ['type' => 'STRING'],
-            // Sport - die Aktivität ist eine feste Auswahl, kein Freitext.
-            // Damit kann nur ein Schlüssel zurückkommen, den die MET-Tabelle
-            // wirklich kennt.
-            'aktivitaet' => ['type' => 'STRING', 'enum' => array_keys(metTable())],
-            'minuten' => ['type' => 'INTEGER'],
-            // Beides
+            'eintraege' => [
+                'type' => 'ARRAY',
+                'items' => [
+                    'type' => 'OBJECT',
+                    'properties' => [
+                        'art' => ['type' => 'STRING', 'enum' => ['essen', 'sport']],
+                        'gericht' => ['type' => 'STRING'],
+                        'menge' => ['type' => 'STRING'],
+                        'kcal' => ['type' => 'INTEGER'],
+                        'eiweiss_g' => ['type' => 'NUMBER'],
+                        'kohlenhydrate_g' => ['type' => 'NUMBER'],
+                        'fett_g' => ['type' => 'NUMBER'],
+                        'alternative' => ['type' => 'STRING'],
+                        // Feste Auswahl, kein Freitext - so kann nur ein
+                        // Schlüssel kommen, den die MET-Tabelle kennt.
+                        'aktivitaet' => ['type' => 'STRING', 'enum' => array_keys(metTable())],
+                        'minuten' => ['type' => 'INTEGER'],
+                        // "unbekannt" ist ausdrücklich erlaubt - dann fragt
+                        // die App mit vier Knöpfen nach, statt zu raten.
+                        'mahlzeit' => [
+                            'type' => 'STRING',
+                            'enum' => ['fruehstueck', 'mittag', 'abend', 'snack', 'unbekannt'],
+                        ],
+                    ],
+                    'required' => ['art', 'gericht', 'menge', 'kcal', 'eiweiss_g',
+                        'kohlenhydrate_g', 'fett_g', 'alternative', 'aktivitaet', 'minuten', 'mahlzeit'],
+                ],
+            ],
             'konfidenz' => ['type' => 'NUMBER'],
             'rueckfrage' => ['type' => 'STRING'],
             'antwortoptionen' => ['type' => 'ARRAY', 'items' => ['type' => 'STRING']],
         ],
-        'required' => [
-            'art', 'gericht', 'menge', 'kcal', 'eiweiss_g', 'kohlenhydrate_g', 'fett_g',
-            'alternative', 'aktivitaet', 'minuten', 'konfidenz', 'rueckfrage', 'antwortoptionen',
-        ],
+        'required' => ['eintraege', 'konfidenz', 'rueckfrage', 'antwortoptionen'],
     ];
 }
 
@@ -88,10 +107,16 @@ function anweisung(array $user, int $offeneFragen): string
 
         {$profil}
 
-        Setze 'art':
+        WICHTIGSTE REGEL: Nennt jemand MEHRERE Dinge, gib MEHRERE Einträge
+        zurück - einen je Gericht und je Aktivität. "Hafer mit Milch und
+        eine Reis-Gemüsepfanne" sind ZWEI Einträge, nicht einer. Fasse
+        niemals verschiedene Gerichte zu einem zusammen. Beilagen und
+        Getränke, die erkennbar zu einem Gericht gehören, bleiben dagegen
+        beim Gericht.
+
+        Setze 'art' je Eintrag:
         - "essen" bei Mahlzeiten, Getränken, Snacks
         - "sport" bei Bewegung und Training
-        - "unklar", wenn beides oder nichts davon gemeint ist
 
         Bei "essen":
         - 'gericht' ist eine kurze Bezeichnung für eine Liste, ohne Beiwerk.
@@ -100,15 +125,26 @@ function anweisung(array $user, int $offeneFragen): string
         - Bei über 700 kcal nenne in 'alternative' EINEN konkreten Austausch
           mit ungefährer Ersparnis. Sonst bleibt das Feld leer.
         - 'aktivitaet' auf "sonstiges", 'minuten' auf 0.
+        - 'mahlzeit': Nur wenn es im Satz steht ("mittags", "zum Frühstück")
+          oder eindeutig ist. Hafer mit Milch ist Frühstück. Sonst
+          "unbekannt" - die App fragt dann mit vier Knöpfen nach. Rate nicht.
 
         Bei "sport":
         - Ordne der am besten passenden 'aktivitaet' aus der Liste zu.
-        - 'minuten' ist die genannte Dauer. Wurde keine genannt, setze 0 und
-          frage danach - die Dauer ist die einzige Angabe, ohne die nichts geht.
-        - Nährwertfelder auf 0, 'gericht' und 'menge' leer.
+        - 'minuten' ist die genannte Dauer. Wurde keine genannt, setze 0.
+        - Nährwertfelder auf 0, 'gericht' und 'menge' leer, 'mahlzeit' auf
+          "unbekannt".
         - Rechne KEINE Kalorien aus. Das macht der Server.
 
+        Ist gar nichts Essbares und keine Bewegung gemeint, gib eine LEERE
+        Liste zurück.
+
         'konfidenz' ist deine ehrliche Sicherheit von 0 bis 1.
+
+        Rückfragen beziehen sich immer auf ALLE Einträge zusammen. Frage
+        NICHT nach der Mahlzeit - das erledigt die App mit Knöpfen. Frage
+        nur nach Mengen oder Zutaten, wenn es die Schätzung deutlich
+        verbessert.
 
         {$fragen}
 
@@ -227,7 +263,6 @@ function antworten(string $uid, array $user, array $body): never
 
 function paket(string $id, array $roh, array $user, int $offen): array
 {
-    $art = (string) ($roh['art'] ?? 'unklar');
     $frage = $offen > 0 ? clean($roh['rueckfrage'] ?? '', 200) : '';
 
     $optionen = [];
@@ -240,52 +275,69 @@ function paket(string $id, array $roh, array $user, int $offen): array
         }
     }
 
-    $paket = [
+    $tabelle = metTable();
+    $kg = (float) ($user['profile']['weightKg'] ?? 75);
+    $eintraege = [];
+
+    // Höchstens sechs. Wer mehr in einen Satz packt, hat sich vertan -
+    // und eine Liste, die den Bildschirm sprengt, hilft niemandem.
+    foreach (array_slice((array) ($roh['eintraege'] ?? []), 0, 6) as $e) {
+        $art = (string) ($e['art'] ?? '');
+
+        if ($art === 'sport') {
+            $key = (string) ($e['aktivitaet'] ?? '');
+            $met = metFor($key);
+            if ($met === null) {
+                $key = 'sonstiges';
+                $met = metFor('sonstiges') ?? 5.0;
+            }
+            $minuten = max(0, min(600, (int) ($e['minuten'] ?? 0)));
+
+            $eintraege[] = [
+                'art' => 'sport',
+                'activity' => $key,
+                'label' => $tabelle[$key]['label'],
+                'minutes' => $minuten,
+                // Aus der Tabelle gerechnet, nicht vom Modell übernommen.
+                'kcal' => $minuten > 0 ? sportKcal($met, $kg, $minuten) : 0,
+                // Der MET-Wert geht mit, damit die Oberfläche beim
+                // Verschieben der Dauer mit derselben Formel mitrechnet.
+                'met' => $met,
+            ];
+            continue;
+        }
+
+        $titel = clean($e['gericht'] ?? '', 80);
+        if ($titel === '') {
+            continue;
+        }
+
+        $mahlzeit = (string) ($e['mahlzeit'] ?? 'unbekannt');
+        if (!in_array($mahlzeit, ['fruehstueck', 'mittag', 'abend', 'snack'], true)) {
+            $mahlzeit = '';
+        }
+
+        $eintraege[] = [
+            'art' => 'essen',
+            'title' => $titel,
+            'menge' => clean($e['menge'] ?? '', 60),
+            ...klammereNaehrwerte($e),
+            'alternative' => clean($e['alternative'] ?? '', 200),
+            // Leer heisst: Die App fragt mit vier Knöpfen nach.
+            'slot' => $mahlzeit,
+        ];
+    }
+
+    return [
         'ok' => true,
         'ki' => true,
         'sessionId' => $id,
-        'art' => $art,
+        'eintraege' => $eintraege,
         'rueckfrage' => $frage,
         'optionen' => $optionen,
         'offen' => $offen,
         'konfidenz' => max(0.0, min(1.0, (float) ($roh['konfidenz'] ?? 0.5))),
     ];
-
-    if ($art === 'sport') {
-        $key = (string) ($roh['aktivitaet'] ?? '');
-        $met = metFor($key);
-        if ($met === null) {
-            $key = 'sonstiges';
-            $met = metFor('sonstiges') ?? 5.0;
-        }
-
-        $minuten = max(0, min(600, (int) ($roh['minuten'] ?? 0)));
-        $tabelle = metTable();
-        $kg = (float) ($user['profile']['weightKg'] ?? 75);
-
-        $paket['sport'] = [
-            'activity' => $key,
-            'label' => $tabelle[$key]['label'],
-            'minutes' => $minuten,
-            // Aus der Tabelle gerechnet, nicht vom Modell übernommen.
-            'kcal' => $minuten > 0 ? sportKcal($met, $kg, $minuten) : 0,
-            // Der MET-Wert geht mit, damit die Oberfläche beim Verschieben
-            // der Dauer sofort mitrechnen kann - mit derselben Formel.
-            'met' => $met,
-        ];
-        return $paket;
-    }
-
-    $werte = klammereNaehrwerte($roh);
-    $titel = clean($roh['gericht'] ?? '', 80);
-
-    $paket['essen'] = [
-        'title' => $titel !== '' ? $titel : 'Mahlzeit',
-        'menge' => clean($roh['menge'] ?? '', 60),
-        ...$werte,
-        'alternative' => clean($roh['alternative'] ?? '', 200),
-    ];
-    return $paket;
 }
 
 /* ------------------------------------------------------------------ Audio */

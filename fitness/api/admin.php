@@ -45,13 +45,24 @@ function dateiFuer(string $art): string
 
 function status(string $uid, array $user, array $body): never
 {
-    $daten = [];
-    foreach (['gemini' => AI_KEY_FILE, 'pexels' => PEXELS_FILE] as $art => $datei) {
-        $daten[$art] = [
-            'da' => is_file($datei) && trim((string) file_get_contents($datei)) !== '',
-            'seit' => is_file($datei) ? date('c', (int) filemtime($datei)) : null,
-        ];
-    }
+    /*
+     * Gemeldet wird, ob ein Schlüssel WIRKT - nicht, ob eine bestimmte
+     * Datei existiert. Der Gemini-Schlüssel darf auch von der Grillparty
+     * auf demselben Webspace kommen; die Anzeige "fehlt", während die
+     * Fotoerkennung längst läuft, wäre schlicht falsch.
+     */
+    $daten = [
+        'gemini' => [
+            'da' => aiKey() !== '',
+            'quelle' => is_file(AI_KEY_FILE) ? 'eigen' : (aiKey() !== '' ? 'grillparty' : ''),
+            'seit' => is_file(AI_KEY_FILE) ? date('c', (int) filemtime(AI_KEY_FILE)) : null,
+        ],
+        'pexels' => [
+            'da' => pexelsKey() !== '',
+            'quelle' => pexelsKey() !== '' ? 'eigen' : '',
+            'seit' => is_file(PEXELS_FILE) ? date('c', (int) filemtime(PEXELS_FILE)) : null,
+        ],
+    ];
 
     $nutzung = readJson(DATA_DIR . '/ai-usage.json', []);
     $index = userIndex();
