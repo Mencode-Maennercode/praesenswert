@@ -78,17 +78,26 @@ function aiUserBudget(array $user): array
 
 /* --------------------------------------------------------------- Transport */
 
-function postJson(string $url, array $payload, array $headers, int $timeout = AI_TIMEOUT): ?array
+/**
+ * Ein POST mit JSON.
+ *
+ * Gibt Status UND Rumpf zurück, nicht nur "hat geklappt oder nicht". Der
+ * Unterschied entscheidet darüber, ob ein zweiter Versuch sinnvoll ist:
+ * Bei 429 lohnt er sich, bei 403 nie.
+ *
+ * @return array{status: int, daten: ?array}
+ */
+function postJson(string $url, array $payload, array $headers, int $timeout = AI_TIMEOUT): array
 {
     $json = json_encode($payload, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
     if ($json === false) {
-        return null;
+        return ['status' => 0, 'daten' => null];
     }
 
     if (function_exists('curl_init')) {
         $ch = curl_init($url);
         if ($ch === false) {
-            return null;
+            return ['status' => 0, 'daten' => null];
         }
         curl_setopt_array($ch, [
             CURLOPT_RETURNTRANSFER => true,
@@ -101,11 +110,8 @@ function postJson(string $url, array $payload, array $headers, int $timeout = AI
         $raw = curl_exec($ch);
         $status = (int) curl_getinfo($ch, CURLINFO_HTTP_CODE);
         curl_close($ch);
-        if (!is_string($raw) || $status < 200 || $status >= 300) {
-            return null;
-        }
-        $decoded = json_decode($raw, true);
-        return is_array($decoded) ? $decoded : null;
+        $decoded = is_string($raw) ? json_decode($raw, true) : null;
+        return ['status' => $status, 'daten' => is_array($decoded) ? $decoded : null];
     }
 
     // Ohne cURL: derselbe Aufruf über Streams. Langsamer, aber vorhanden.
@@ -117,11 +123,14 @@ function postJson(string $url, array $payload, array $headers, int $timeout = AI
         'ignore_errors' => true,
     ]]);
     $raw = @file_get_contents($url, false, $context);
-    if (!is_string($raw)) {
-        return null;
+    $status = 0;
+    foreach ($http_response_header ?? [] as $zeile) {
+        if (preg_match('#^HTTP/\S+\s+(\d{3})#', $zeile, $t) === 1) {
+            $status = (int) $t[1];
+        }
     }
-    $decoded = json_decode($raw, true);
-    return is_array($decoded) ? $decoded : null;
+    $decoded = is_string($raw) ? json_decode($raw, true) : null;
+    return ['status' => $status, 'daten' => is_array($decoded) ? $decoded : null];
 }
 
 /**
@@ -130,33 +139,143 @@ function postJson(string $url, array $payload, array $headers, int $timeout = AI
  * @param array $teile Inhalt der Anfrage: Text und/oder inline_data
  * @return array|null  null bei jedem Fehler - der Aufrufer weicht dann aus
  */
-function geminiJson(string $key, string $model, array $teile, array $schema, string $anweisung): ?array
-{
+/**
+ * @param int|null $status Letzter HTTP-Status - für eine ehrliche Meldung.
+ *                         429 heisst "gerade zu viele", nicht "kaputt".
+ */
+function geminiJson(
+    string $key,
+    string $model,
+    array $teile,
+    array $schema,
+    string $anweisung,
+    ?int &$status = null,
+): ?array {
     $url = "https://generativelanguage.googleapis.com/v1beta/models/{$model}:generateContent";
-
-    $antwort = postJson(
-        $url,
-        [
-            'systemInstruction' => ['parts' => [['text' => $anweisung]]],
-            'contents' => [['role' => 'user', 'parts' => $teile]],
-            'generationConfig' => [
-                // Erzwungenes Schema statt Prompt-Bitte: Damit kommt garantiert
-                // gültiges JSON zurück, und das Parsen kann nicht scheitern.
-                'responseMimeType' => 'application/json',
-                'responseSchema' => $schema,
-                'thinkingConfig' => ['thinkingLevel' => AI_THINKING],
-                'temperature' => 0.2,
-            ],
+    $rumpf = [
+        'systemInstruction' => ['parts' => [['text' => $anweisung]]],
+        'contents' => [['role' => 'user', 'parts' => $teile]],
+        'generationConfig' => [
+            // Erzwungenes Schema statt Prompt-Bitte: Damit kommt garantiert
+            // gültiges JSON zurück, und das Parsen kann nicht scheitern.
+            'responseMimeType' => 'application/json',
+            'responseSchema' => $schema,
+            'thinkingConfig' => ['thinkingLevel' => AI_THINKING],
+            'temperature' => 0.2,
         ],
-        ['Content-Type: application/json', 'x-goog-api-key: ' . $key],
-    );
+    ];
+    $header = ['Content-Type: application/json', 'x-goog-api-key: ' . $key];
 
-    $text = $antwort['candidates'][0]['content']['parts'][0]['text'] ?? null;
-    if (!is_string($text)) {
-        return null;
+    /*
+     * Ein zweiter Versuch.
+     *
+     * Gemessen: rund jeder dritte Aufruf kommt nach einer halben Sekunde
+     * mit einer Absage zurück - kein Zeitüberschreiten, sondern eine
+     * Mengenbegrenzung. Genau dafür ist ein kurzer zweiter Anlauf da.
+     *
+     * NICHT wiederholt wird bei 400, 401 und 403: ein falscher Schlüssel
+     * oder eine kaputte Anfrage wird beim zweiten Mal auch nicht besser,
+     * und der Nutzer wartet dann doppelt so lange auf dieselbe Absage.
+     */
+    for ($versuch = 1; $versuch <= 2; $versuch++) {
+        $antwort = postJson($url, $rumpf, $header);
+        $status = $antwort['status'];
+
+        if ($status >= 200 && $status < 300) {
+            // Ab hier gilt der Aufruf als geglückt - auch wenn das Parsen
+            // gleich noch scheitern sollte.
+            $text = $antwort['daten']['candidates'][0]['content']['parts'][0]['text'] ?? null;
+            if (is_string($text)) {
+                $daten = json_decode($text, true);
+                if (is_array($daten)) {
+                    return $daten;
+                }
+            }
+            return null;
+        }
+
+        if (in_array($status, [400, 401, 403, 404], true)) {
+            return null;
+        }
+        if ($versuch === 1) {
+            usleep(1_200_000);
+        }
     }
-    $daten = json_decode($text, true);
-    return is_array($daten) ? $daten : null;
+
+    return null;
+}
+
+/* --------------------------------------------------------------- Sitzungen */
+
+/**
+ * Eine Sitzung hält das, was nicht bei jeder Rückfrage erneut hochgeladen
+ * werden soll: das Foto oder die Aufnahme.
+ *
+ * Ohne sie müsste ein 150-KB-Bild bei jeder Antwort erneut über die
+ * Leitung und erneut an Google - dreifache Kosten, dreifache Wartezeit,
+ * auf Mobilfunk deutlich spürbar. Und die Obergrenze von drei Rückfragen
+ * zählt hier der Server; eine Grenze, die der Client zählt, ist keine.
+ */
+const SITZUNG_TTL = 900; // 15 Minuten
+const MAX_RUECKFRAGEN = 3;
+
+function sitzungPfad(string $id): string
+{
+    return AI_DIR . '/' . $id . '.json';
+}
+
+function sitzungNeu(string $uid, array $inhalt): string
+{
+    $id = 's_' . bin2hex(random_bytes(12));
+    writeJson(sitzungPfad($id), [
+        'uid' => $uid,
+        'createdAt' => date('c'),
+        'turns' => 0,
+        'verlauf' => [],
+        ...$inhalt,
+    ]);
+    return $id;
+}
+
+function sitzungLaden(string $id, string $uid): array
+{
+    if (preg_match('/^s_[a-f0-9]{24}$/', $id) !== 1) {
+        fail('Sitzung abgelaufen.', 410, 'sitzung');
+    }
+    $s = readJson(sitzungPfad($id), []);
+    // Die Prüfung auf den Besitzer ist die eigentliche Absicherung: Ohne sie
+    // könnte jeder mit einer geratenen ID fremde Fotos weiteranalysieren.
+    if ($s === [] || ($s['uid'] ?? '') !== $uid) {
+        fail('Sitzung abgelaufen.', 410, 'sitzung');
+    }
+    if (strtotime((string) ($s['createdAt'] ?? '')) < time() - SITZUNG_TTL) {
+        @unlink(sitzungPfad($id));
+        fail('Sitzung abgelaufen.', 410, 'sitzung');
+    }
+    return $s;
+}
+
+function sitzungSpeichern(string $id, array $s): void
+{
+    writeJson(sitzungPfad($id), $s);
+}
+
+/**
+ * Alte Sitzungen wegräumen - gelegentlich statt bei jedem Aufruf.
+ *
+ * Ein Verzeichnis mit ein paar hundert Kilobyte bei jeder Anfrage
+ * durchzugehen lohnt nicht, und die Dateien schaden bis dahin niemandem.
+ */
+function sitzungenAufraeumen(): void
+{
+    if (random_int(1, 25) !== 1) {
+        return;
+    }
+    foreach (glob(AI_DIR . '/*.json') ?: [] as $datei) {
+        if (filemtime($datei) < time() - SITZUNG_TTL) {
+            @unlink($datei);
+        }
+    }
 }
 
 /* ------------------------------------------------------------- Prüfklammer */

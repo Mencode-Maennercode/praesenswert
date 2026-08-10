@@ -30,9 +30,6 @@ if (!is_array($user['derived'] ?? null)) {
     fail('Erst das Onboarding abschließen.', 409, 'kein-profil');
 }
 
-const MAX_RUECKFRAGEN = 3;
-const SITZUNG_TTL = 900; // 15 Minuten
-
 match (clean($body['action'] ?? '', 20)) {
     'start' => starten($uid, $user, $body),
     'answer' => antworten($uid, $user, $body),
@@ -105,48 +102,6 @@ function anweisung(array $user, int $offeneFragen): string
         TEXT;
 }
 
-/* ------------------------------------------------------------- Sitzungen */
-
-function sitzungPfad(string $id): string
-{
-    return AI_DIR . '/' . $id . '.json';
-}
-
-function sitzungLaden(string $id, string $uid): array
-{
-    if (preg_match('/^s_[a-f0-9]{24}$/', $id) !== 1) {
-        fail('Sitzung abgelaufen.', 410, 'sitzung');
-    }
-    $s = readJson(sitzungPfad($id), []);
-    if ($s === [] || ($s['uid'] ?? '') !== $uid) {
-        fail('Sitzung abgelaufen.', 410, 'sitzung');
-    }
-    if (strtotime((string) ($s['createdAt'] ?? '')) < time() - SITZUNG_TTL) {
-        @unlink(sitzungPfad($id));
-        fail('Sitzung abgelaufen.', 410, 'sitzung');
-    }
-    return $s;
-}
-
-/**
- * Alte Sitzungen wegräumen.
- *
- * Gelegentlich statt bei jedem Aufruf: Ein Verzeichnis mit ein paar
- * hundert Kilobyte durchzugehen lohnt nicht bei jeder Anfrage, und die
- * Dateien schaden bis dahin niemandem.
- */
-function sitzungenAufraeumen(): void
-{
-    if (random_int(1, 25) !== 1) {
-        return;
-    }
-    foreach (glob(AI_DIR . '/*.json') ?: [] as $datei) {
-        if (filemtime($datei) < time() - SITZUNG_TTL) {
-            @unlink($datei);
-        }
-    }
-}
-
 /* ---------------------------------------------------------------- Starten */
 
 function starten(string $uid, array $user, array $body): never
@@ -182,20 +137,15 @@ function starten(string $uid, array $user, array $body): never
     }
     $teile[] = ['text' => $text !== '' ? $text : 'Was ist auf dem Bild, und wie viele Kalorien hat es?'];
 
-    $roh = geminiJson($key, AI_MODEL_FOTO, $teile, schema(), anweisung($user, MAX_RUECKFRAGEN));
+    $roh = geminiJson($key, AI_MODEL_FOTO, $teile, schema(), anweisung($user, MAX_RUECKFRAGEN), $status);
     if ($roh === null) {
-        send(withFreshToken(['ok' => true, 'ki' => false, 'grund' => 'fehler'], $uid, $user, $body));
+        // 429 heisst "gerade zu viele" und lohnt einen zweiten Anlauf
+        // gleich. Alles andere lohnt ihn nicht.
+        $grund = $status === 429 ? 'gebremst' : 'fehler';
+        send(withFreshToken(['ok' => true, 'ki' => false, 'grund' => $grund], $uid, $user, $body));
     }
 
-    $id = 's_' . bin2hex(random_bytes(12));
-    writeJson(sitzungPfad($id), [
-        'uid' => $uid,
-        'createdAt' => date('c'),
-        'turns' => 0,
-        'bild' => $bild,
-        'text' => $text,
-        'verlauf' => [],
-    ]);
+    $id = sitzungNeu($uid, ['bild' => $bild, 'text' => $text]);
 
     send(withFreshToken(antwortPaket($id, $roh, MAX_RUECKFRAGEN), $uid, $user, $body));
 }
@@ -237,13 +187,14 @@ function antworten(string $uid, array $user, array $body): never
     }
     $teile[] = ['text' => "Zusätzliche Angaben der Person:\n- " . implode("\n- ", $s['verlauf'])];
 
-    $roh = geminiJson($key, AI_MODEL_FOTO, $teile, schema(), anweisung($user, $offen));
+    $roh = geminiJson($key, AI_MODEL_FOTO, $teile, schema(), anweisung($user, $offen), $status);
     if ($roh === null) {
-        send(withFreshToken(['ok' => true, 'ki' => false, 'grund' => 'fehler'], $uid, $user, $body));
+        $grund = $status === 429 ? 'gebremst' : 'fehler';
+        send(withFreshToken(['ok' => true, 'ki' => false, 'grund' => $grund], $uid, $user, $body));
     }
 
     $s['turns'] = $turns;
-    writeJson(sitzungPfad($id), $s);
+    sitzungSpeichern($id, $s);
 
     send(withFreshToken(antwortPaket($id, $roh, $offen), $uid, $user, $body));
 }
