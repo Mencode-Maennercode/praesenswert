@@ -306,9 +306,43 @@ function keyFromFile(string $file, string $env = ''): string
     return is_file($file) ? trim((string) file_get_contents($file)) : '';
 }
 
+/**
+ * Der Gemini-Schlüssel.
+ *
+ * Drei Quellen, in dieser Reihenfolge:
+ *   1. Umgebungsvariable GEMINI_API_KEY
+ *   2. _data/ai.key dieser App
+ *   3. _data/ai.key der Grillparty auf demselben Webspace
+ *
+ * Punkt 3 ist der Grund, warum hier nichts eingerichtet werden muss: Der
+ * Schlüssel liegt dort seit Monaten, ist per .htaccess dicht und war nie
+ * in einem Repo. Ihn hier fest einzutragen wäre der naheliegende Weg -
+ * und der falsche: Das Deploy-Repo praesenswert ist öffentlich. Ein
+ * Schlüssel im Quelltext stünde damit im Netz, würde von Googles
+ * Suchläufen meist binnen Stunden widerrufen, und bis dahin könnte jeder
+ * auf fremde Rechnung Anfragen stellen.
+ *
+ * Punkt 2 hat trotzdem Vorrang: Wer einen eigenen Schlüssel hinterlegt,
+ * bekommt seinen - und bleibt unabhängig davon, ob die Grillparty noch
+ * dort liegt.
+ */
 function aiKey(): string
 {
-    return keyFromFile(AI_KEY_FILE, 'GEMINI_API_KEY');
+    $eigen = keyFromFile(AI_KEY_FILE, 'GEMINI_API_KEY');
+    if ($eigen !== '') {
+        return $eigen;
+    }
+
+    foreach (['/../../grillparty/_data/ai.key', '/../../grillparty/server/_data/ai.key'] as $rel) {
+        $pfad = __DIR__ . $rel;
+        if (is_file($pfad)) {
+            $wert = trim((string) file_get_contents($pfad));
+            if ($wert !== '') {
+                return $wert;
+            }
+        }
+    }
+    return '';
 }
 
 function pexelsKey(): string

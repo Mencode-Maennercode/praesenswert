@@ -108,6 +108,11 @@ $antwort = [
         'max_execution_time' => ini_get('max_execution_time'),
     ],
     'speicher' => writeTest($dataDir),
+    // Nur ob einer da ist - der Wert selbst wird nie ausgegeben.
+    'gemini' => [
+        'eigen' => is_file($dataDir . '/ai.key'),
+        'nachbar' => is_file(__DIR__ . '/../../grillparty/_data/ai.key'),
+    ],
     'antwortheader' => responseHeaders(),
     'pruefung' => [
         'hinweis' => 'Die beiden folgenden Prüfungen sind nur auf dem echten Server aussagekräftig.',
