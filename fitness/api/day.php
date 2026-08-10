@@ -63,7 +63,50 @@ function holen(string $uid, array $user, string $datum, array $derived, array $b
         'haeufig' => haeufigTop($user),
         'sport' => sportListe(),
         'streak' => $user['streak'] ?? ['days' => 0, 'last' => null],
+        'tageZuWenig' => tageUnterGrundumsatz($uid, $datum, $derived),
     ], $uid, $user, $body));
+}
+
+/**
+ * Wie viele Tage in Folge lag die Bilanz unter dem Grundumsatz?
+ *
+ * Der wichtigste Coach-Hinweis der App hängt daran. Gezählt wird ab
+ * GESTERN rückwärts: Der heutige Tag ist noch nicht vorbei, und wer
+ * morgens nachschaut, läge zwangsläufig darunter.
+ *
+ * Höchstens sieben Dateien - danach ist die Aussage ohnehin klar.
+ */
+function tageUnterGrundumsatz(string $uid, string $datum, array $derived): int
+{
+    $grund = (int) ($derived['bmr'] ?? 0);
+    if ($grund <= 0) {
+        return 0;
+    }
+
+    $zaehler = 0;
+    for ($i = 1; $i <= 7; $i++) {
+        $tag = loadDay($uid, date('Y-m-d', strtotime($datum . " -{$i} day")));
+
+        $ein = 0;
+        foreach ($tag['meals'] as $m) {
+            $ein += (int) ($m['kcal'] ?? 0);
+        }
+        $aus = 0;
+        foreach ($tag['sport'] as $s) {
+            $aus += (int) ($s['kcal'] ?? 0);
+        }
+
+        // Ein Tag ohne jeden Eintrag ist kein Hungertag, sondern ein Tag
+        // ohne Eintrag. Er beendet die Zählung, statt sie hochzutreiben.
+        if ($ein === 0) {
+            break;
+        }
+        if ($ein - $aus >= $grund) {
+            break;
+        }
+        $zaehler++;
+    }
+    return $zaehler;
 }
 
 /** Der Papierkorb geht den Client nichts an - ausser dem letzten Eintrag. */
