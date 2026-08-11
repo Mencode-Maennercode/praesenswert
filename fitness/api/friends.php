@@ -254,13 +254,22 @@ function liste(string $uid, array $user, array $body): never
     $feed = readJson(FEED_DIR . '/' . $heute . '.json', ['users' => []]);
     $knoten = is_array($feed['users'] ?? null) ? $feed['users'] : [];
 
+    /*
+     * Man selbst steht mit in der Liste.
+     *
+     * Ein Vergleich ohne den eigenen Wert ist keiner - man müsste in
+     * einen anderen Reiter wechseln und im Kopf umrechnen. Und die eigene
+     * Sichtbarkeitseinstellung gilt hier nicht: Was man selbst sieht,
+     * geht niemanden sonst etwas an.
+     */
     $eintraege = [];
-    foreach ($freunde as $fid) {
+    foreach ([$uid, ...$freunde] as $fid) {
         $u = loadUser($fid);
         if ($u === null) {
             continue;
         }
-        $sicht = (string) ($u['prefs']['feedVisibility'] ?? 'prozent');
+        $ich = $fid === $uid;
+        $sicht = $ich ? 'prozent' : (string) ($u['prefs']['feedVisibility'] ?? 'prozent');
         if ($sicht === 'aus') {
             continue;
         }
@@ -269,7 +278,8 @@ function liste(string $uid, array $user, array $body): never
 
         $eintraege[] = [
             'id' => $fid,
-            'name' => (string) ($u['name'] ?? ''),
+            'name' => $ich ? 'Du' : (string) ($u['name'] ?? ''),
+            'ich' => $ich,
             'streak' => (int) ($u['streak']['days'] ?? 0),
             'aktiv' => $k !== null,
             // Bei "teilnahme" gibt es nur die Information, DASS jemand
@@ -284,8 +294,10 @@ function liste(string $uid, array $user, array $body): never
         ];
     }
 
-    // Wer heute schon etwas gemacht hat, steht oben.
-    usort($eintraege, static fn($a, $b) => [$b['aktiv'], $b['mahlzeiten']] <=> [$a['aktiv'], $a['mahlzeiten']]);
+    // Man selbst immer oben - das ist der Bezugswert, gegen den man liest.
+    // Darunter, wer heute schon etwas gemacht hat.
+    usort($eintraege, static fn($a, $b) => [$b['ich'], $b['aktiv'], $b['mahlzeiten']]
+        <=> [$a['ich'], $a['aktiv'], $a['mahlzeiten']]);
 
     $offen = [];
     foreach ($d['requests'] as $r) {
