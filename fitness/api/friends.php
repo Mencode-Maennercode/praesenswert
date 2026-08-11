@@ -294,10 +294,25 @@ function liste(string $uid, array $user, array $body): never
         ];
     }
 
-    // Man selbst immer oben - das ist der Bezugswert, gegen den man liest.
-    // Darunter, wer heute schon etwas gemacht hat.
-    usort($eintraege, static fn($a, $b) => [$b['ich'], $b['aktiv'], $b['mahlzeiten']]
-        <=> [$a['ich'], $a['aktiv'], $a['mahlzeiten']]);
+    /*
+     * Der niedrigste Tageswert steht oben, wer nichts eingetragen hat
+     * ganz unten.
+     *
+     * Wichtig ist die zweite Hälfte: Ein leerer Tag ist KEIN Wert von
+     * null. Wer nichts eingetragen hat, hat nicht nichts gegessen - er
+     * hätte sonst automatisch den ersten Platz, und die Liste würde
+     * genau das Gegenteil dessen belohnen, wozu sie da ist.
+     */
+    usort($eintraege, static function (array $a, array $b): int {
+        if ($a['aktiv'] !== $b['aktiv']) {
+            return $a['aktiv'] ? -1 : 1;
+        }
+        // Bei "nur Teilnahme" gibt es keinen Prozentwert - solche
+        // Einträge stehen hinter denen mit Zahl, aber vor den leeren.
+        $pa = $a['pctNet'] ?? 1000;
+        $pb = $b['pctNet'] ?? 1000;
+        return $pa <=> $pb;
+    });
 
     $offen = [];
     foreach ($d['requests'] as $r) {
@@ -363,26 +378,84 @@ function woche(string $uid, array $user, array $body): never
             continue;
         }
         $w = $werte[$fid] ?? ['tage' => 0, 'summePct' => 0];
+        $gewicht = gewichtsWoche($fid);
+
         $liste[] = [
             'id' => $fid,
-            'name' => (string) ($u['name'] ?? ''),
+            'name' => $fid === $uid ? 'Du' : (string) ($u['name'] ?? ''),
             'ich' => $fid === $uid,
             'tage' => $w['tage'],
             'schnittPct' => $w['tage'] > 0 ? (int) round($w['summePct'] / $w['tage']) : null,
+            // Absolut UND als Anteil vom Körpergewicht: Ein Kilo bei 58 kg
+            // ist etwas anderes als ein Kilo bei 95 kg. Erst der Anteil
+            // macht die Zeilen vergleichbar.
+            'kg' => $gewicht['kg'],
+            'kgPct' => $gewicht['pct'],
         ];
     }
 
-    // Erst Beständigkeit, dann Nähe zum eigenen Ziel.
+    /*
+     * Niedrigster Wochenschnitt oben, wer nichts eingetragen hat unten.
+     *
+     * Wieder: Ein Tag ohne Eintrag ist kein Nullwert. Wer gar nichts
+     * erfasst, steht hinten - nicht vorn.
+     */
     usort($liste, static function (array $a, array $b): int {
-        if ($a['tage'] !== $b['tage']) {
-            return $b['tage'] <=> $a['tage'];
+        $aLeer = $a['tage'] === 0;
+        $bLeer = $b['tage'] === 0;
+        if ($aLeer !== $bLeer) {
+            return $aLeer ? 1 : -1;
         }
-        $da = $a['schnittPct'] === null ? 999 : abs(100 - $a['schnittPct']);
-        $db = $b['schnittPct'] === null ? 999 : abs(100 - $b['schnittPct']);
-        return $da <=> $db;
+        return ($a['schnittPct'] ?? 1000) <=> ($b['schnittPct'] ?? 1000);
     });
 
     send(withFreshToken(['ok' => true, 'liste' => $liste], $uid, $user, $body));
+}
+
+/**
+ * Gewichtsveränderung der letzten sieben Tage.
+ *
+ * Verglichen wird der letzte Wert der Woche mit dem letzten Wert DAVOR -
+ * nicht mit dem ersten der Woche. Sonst hinge das Ergebnis daran, an
+ * welchem Wochentag jemand zufällig zuerst auf die Waage gestiegen ist.
+ *
+ * Weitergegeben wird nur die Differenz, nie das Gewicht selbst. Wie
+ * schwer jemand ist, geht niemanden etwas an; wie viel sich verändert
+ * hat, ist der Punkt der Liste.
+ *
+ * @return array{kg: float|null, pct: float|null}
+ */
+function gewichtsWoche(string $uid): array
+{
+    $d = readJson(WEIGHT_DIR . '/' . $uid . '.json', ['points' => []]);
+    $punkte = is_array($d['points'] ?? null) ? $d['points'] : [];
+    if (count($punkte) < 2) {
+        return ['kg' => null, 'pct' => null];
+    }
+
+    usort($punkte, static fn($a, $b) => strcmp((string) $a['d'], (string) $b['d']));
+    $grenze = date('Y-m-d', strtotime('-7 day'));
+
+    $davor = null;
+    $jetzt = null;
+    foreach ($punkte as $p) {
+        if ((string) $p['d'] <= $grenze) {
+            $davor = (float) $p['kg'];
+        } else {
+            $jetzt = (float) $p['kg'];
+        }
+    }
+
+    // Ohne Messung vor dem Fenster gibt es keinen Bezug - dann lieber
+    // nichts anzeigen als eine Zahl, die etwas anderes bedeutet.
+    if ($davor === null || $jetzt === null || $davor <= 0) {
+        return ['kg' => null, 'pct' => null];
+    }
+
+    return [
+        'kg' => round($jetzt - $davor, 1),
+        'pct' => round(($jetzt - $davor) / $davor * 100, 1),
+    ];
 }
 
 /* ------------------------------------------------------------------ Kudos */

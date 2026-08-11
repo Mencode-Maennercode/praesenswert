@@ -350,7 +350,18 @@ function planAusRoh(array $gerichte, array $prefs, array $user): array
         ];
     }
 
-    usort($out, static fn($a, $b) => [$a['tag'], $a['mahlzeit']] <=> [$b['tag'], $b['mahlzeit']]);
+    /*
+     * Nach Tag, dann nach Tagesablauf - NICHT alphabetisch.
+     *
+     * Sortiert man die Mahlzeit als Text, steht "abend" vor "fruehstueck"
+     * und "mittag". Der Plan liest sich dann rückwärts, und niemand
+     * versteht sofort warum.
+     */
+    $reihenfolge = ['fruehstueck' => 0, 'mittag' => 1, 'abend' => 2, 'snack' => 3];
+    usort($out, static function (array $a, array $b) use ($reihenfolge): int {
+        return [$a['tag'], $reihenfolge[$a['mahlzeit']] ?? 9]
+            <=> [$b['tag'], $reihenfolge[$b['mahlzeit']] ?? 9];
+    });
     return ['gerichte' => $out];
 }
 
