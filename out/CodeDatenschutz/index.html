@@ -168,6 +168,7 @@ const T = {
     ],
     imprintTitle:"Impressum / Anbieter",
     imprint:"Angaben gemäß § 5 DDG (Digitale-Dienste-Gesetz)<br><br><strong>Anbieter der Apps WomenCode &amp; MenCode</strong><br>Dennis Heidenreich<br>Josef-Martin-Weg 4<br>53501 Grafschaft, Deutschland<br>E-Mail: <a href='mailto:kontakt@praesenzwert.de'>kontakt@praesenzwert.de</a><br><br>Verantwortlich für den Inhalt: Dennis Heidenreich, Anschrift wie oben.",
+    imprintLink:"Impressum",sitePrivacyLink:"Datenschutz (Website)",
     footer:"Diese Erklärung gilt für WomenCode und MenCode. · Die deutsche Fassung ist rechtlich maßgeblich."
   },
 
@@ -192,6 +193,7 @@ const T = {
     ],
     imprintTitle:"Provider / Imprint",
     imprint:"Information pursuant to § 5 DDG (German Digital Services Act)<br><br><strong>Provider of the apps WomenCode &amp; MenCode</strong><br>Dennis Heidenreich<br>Josef-Martin-Weg 4<br>53501 Grafschaft, Germany<br>Email: <a href='mailto:kontakt@praesenzwert.de'>kontakt@praesenzwert.de</a><br><br>Responsible for content: Dennis Heidenreich, address as above.",
+    imprintLink:"Imprint",sitePrivacyLink:"Privacy (website)",
     footer:"This policy applies to WomenCode and MenCode. · The German version is the legally binding one."
   },
 
@@ -216,6 +218,7 @@ const T = {
     ],
     imprintTitle:"Éditeur / Mentions légales",
     imprint:"Informations conformément au § 5 DDG (loi allemande sur les services numériques)<br><br><strong>Éditeur des applications WomenCode &amp; MenCode</strong><br>Dennis Heidenreich<br>Josef-Martin-Weg 4<br>53501 Grafschaft, Allemagne<br>E-mail : <a href='mailto:kontakt@praesenzwert.de'>kontakt@praesenzwert.de</a><br><br>Responsable du contenu : Dennis Heidenreich, adresse ci-dessus.",
+    imprintLink:"Mentions légales",sitePrivacyLink:"Confidentialité (site)",
     footer:"Cette politique s’applique à WomenCode et MenCode. · La version allemande fait juridiquement foi."
   },
 
@@ -240,6 +243,7 @@ const T = {
     ],
     imprintTitle:"Titular / Aviso legal",
     imprint:"Información según el § 5 DDG (Ley alemana de servicios digitales)<br><br><strong>Titular de las apps WomenCode &amp; MenCode</strong><br>Dennis Heidenreich<br>Josef-Martin-Weg 4<br>53501 Grafschaft, Alemania<br>Correo: <a href='mailto:kontakt@praesenzwert.de'>kontakt@praesenzwert.de</a><br><br>Responsable del contenido: Dennis Heidenreich, dirección arriba indicada.",
+    imprintLink:"Aviso legal",sitePrivacyLink:"Privacidad (web)",
     footer:"Esta política se aplica a WomenCode y MenCode. · La versión alemana es la jurídicamente vinculante."
   },
 
@@ -264,6 +268,7 @@ const T = {
     ],
     imprintTitle:"Aanbieder / Colofon",
     imprint:"Gegevens conform § 5 DDG (Duitse wet digitale diensten)<br><br><strong>Aanbieder van de apps WomenCode &amp; MenCode</strong><br>Dennis Heidenreich<br>Josef-Martin-Weg 4<br>53501 Grafschaft, Duitsland<br>E-mail: <a href='mailto:kontakt@praesenzwert.de'>kontakt@praesenzwert.de</a><br><br>Verantwoordelijk voor de inhoud: Dennis Heidenreich, adres als boven.",
+    imprintLink:"Colofon",sitePrivacyLink:"Privacy (website)",
     footer:"Deze verklaring geldt voor WomenCode en MenCode. · De Duitse versie is juridisch bindend."
   }
 };
@@ -289,7 +294,7 @@ function render(lang){
   document.getElementById("content").innerHTML = html;
 
   document.getElementById("footer").innerHTML =
-    `${d.footer}<br><a href="/">praesenzwert.de</a>`;
+    `${d.footer}<br><a href="/impressum">${d.imprintLink}</a> · <a href="/datenschutz">${d.sitePrivacyLink}</a> · <a href="/">praesenzwert.de</a>`;
 
   document.querySelectorAll(".langbar button").forEach(b=>{
     b.classList.toggle("active", b.dataset.lang===lang);
