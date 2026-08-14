@@ -291,6 +291,10 @@ function liste(string $uid, array $user, array $body): never
             'abnahmePct' => $ab['pct'],
             'messungen' => $ab['messungen'],
             'seit' => $ab['seit'],
+            // Von wo nach wo - und der Weg dazwischen als kleine Kurve.
+            'startKg' => $ab['startKg'],
+            'jetztKg' => $ab['jetztKg'],
+            'verlauf' => $ab['verlauf'],
             'streak' => (int) ($u['streak']['days'] ?? 0),
             'aktiv' => $k !== null,
             // Bei "teilnahme" gibt es nur die Information, DASS jemand
@@ -476,7 +480,8 @@ function abnahme(string $uid): array
     }
 
     if ($punkte === []) {
-        return ['pct' => null, 'messungen' => 0, 'seit' => null];
+        return ['pct' => null, 'messungen' => 0, 'seit' => null,
+            'startKg' => null, 'jetztKg' => null, 'verlauf' => []];
     }
 
     usort($punkte, static fn($a, $b) => strcmp((string) $a['d'], (string) $b['d']));
@@ -484,13 +489,28 @@ function abnahme(string $uid): array
     $jetzt = (float) $punkte[count($punkte) - 1]['kg'];
 
     if ($start <= 0) {
-        return ['pct' => null, 'messungen' => count($punkte), 'seit' => null];
+        return ['pct' => null, 'messungen' => count($punkte), 'seit' => null,
+            'startKg' => null, 'jetztKg' => null, 'verlauf' => []];
     }
+
+    /*
+     * Nur die Kilogramm-Werte, höchstens dreissig, die jüngsten zuletzt.
+     * Mehr braucht eine daumennagelgrosse Kurve nicht - und je weniger
+     * über die Leitung geht, desto schneller lädt eine Liste mit vielen
+     * Freunden.
+     */
+    $verlauf = array_map(
+        static fn($p) => round((float) $p['kg'], 1),
+        array_slice($punkte, -30),
+    );
 
     return [
         'pct' => round(($start - $jetzt) / $start * 100, 1),
         'messungen' => count($punkte),
         'seit' => (string) $punkte[0]['d'],
+        'startKg' => round($start, 1),
+        'jetztKg' => round($jetzt, 1),
+        'verlauf' => $verlauf,
     ];
 }
 
