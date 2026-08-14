@@ -43,6 +43,41 @@ function punkte(string $uid): array
     return $liste;
 }
 
+/**
+ * Räumt Punkte weg, die nie eine Wiegung waren.
+ *
+ * Bis zu dieser Fassung schrieb jedes Speichern des Profils einen Punkt
+ * mit der Quelle "profil". Bei jemandem, der sein Ziel dreimal geändert
+ * hat, standen dadurch drei Wiegungen in der Kurve, die es nie gab.
+ *
+ * Behalten wird der ERSTE solche Punkt - das ist das Startgewicht aus
+ * dem Onboarding und der Bezugswert der ganzen Prozentrechnung. Alles
+ * von Hand Eingetragene bleibt unangetastet.
+ *
+ * Läuft bei jedem Zugriff, tut aber nach dem ersten Mal nichts mehr.
+ */
+function bereinige(string $uid): array
+{
+    $liste = punkte($uid);
+
+    $sauber = [];
+    $startGesehen = false;
+    foreach ($liste as $p) {
+        if (($p['src'] ?? '') === 'profil') {
+            if ($startGesehen) {
+                continue;
+            }
+            $startGesehen = true;
+        }
+        $sauber[] = $p;
+    }
+
+    if (count($sauber) !== count($liste)) {
+        writeJson(pfad($uid), ['points' => $sauber]);
+    }
+    return $sauber;
+}
+
 function hinzufuegen(string $uid, array $user, array $body): never
 {
     rateLimit('weight', 40, 600, $uid);
@@ -52,7 +87,7 @@ function hinzufuegen(string $uid, array $user, array $body): never
     $datum = validDate($body['datum'] ?? null) ?: dayKey($startStunde);
 
     $liste = withLock('weight-' . $uid, static function () use ($uid, $kg, $datum): array {
-        $liste = punkte($uid);
+        $liste = bereinige($uid);
         $gefunden = false;
 
         foreach ($liste as $i => $p) {
@@ -94,7 +129,7 @@ function auflisten(string $uid, array $user, array $body): never
 {
     send(withFreshToken([
         'ok' => true,
-        'punkte' => punkte($uid),
+        'punkte' => withLock('weight-' . $uid, static fn(): array => bereinige($uid)),
         'zielKg' => $user['profile']['targetKg'] ?? null,
     ], $uid, $user, $body));
 }

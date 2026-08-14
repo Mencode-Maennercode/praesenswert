@@ -104,6 +104,19 @@ function speichern(string $uid, array $user, array $body): never
     ], $uid, $user, $body));
 }
 
+/**
+ * Legt den ersten Punkt der Gewichtskurve an - und NUR den.
+ *
+ * Vorher schrieb diese Funktion bei jedem Speichern des Profils einen
+ * Punkt für den heutigen Tag. Wer sein Ziel oder Aktivitätsniveau
+ * änderte, erzeugte damit eine "Wiegung", die nie stattgefunden hat -
+ * und die Rangliste zählte sie mit.
+ *
+ * Eine Wiegung ist etwas, das auf einer Waage passiert. Das Gewicht im
+ * Profil ist eine Angabe, kein Messvorgang. Ab dem zweiten Speichern
+ * bleibt die Kurve deshalb unberührt; wer sich wiegt, trägt das im
+ * Verlauf ein.
+ */
 function setzeStartgewicht(string $uid, float $kg): void
 {
     withLock('weight-' . $uid, static function () use ($uid, $kg): void {
@@ -111,17 +124,14 @@ function setzeStartgewicht(string $uid, float $kg): void
         $punkte = readJson($datei, ['points' => []]);
         $liste = is_array($punkte['points'] ?? null) ? $punkte['points'] : [];
 
-        $heute = date('Y-m-d');
-        foreach ($liste as $i => $punkt) {
-            if (($punkt['d'] ?? '') === $heute) {
-                $liste[$i] = ['d' => $heute, 'kg' => $kg, 'src' => 'profil'];
-                writeJson($datei, ['points' => $liste]);
-                return;
-            }
+        // Schon ein Punkt da? Dann ist das hier nicht der Anfang.
+        if ($liste !== []) {
+            return;
         }
 
-        $liste[] = ['d' => $heute, 'kg' => $kg, 'src' => 'profil'];
-        writeJson($datei, ['points' => $liste]);
+        writeJson($datei, [
+            'points' => [['d' => date('Y-m-d'), 'kg' => $kg, 'src' => 'profil']],
+        ]);
     });
 }
 

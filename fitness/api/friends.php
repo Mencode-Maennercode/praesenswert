@@ -453,7 +453,28 @@ function woche(string $uid, array $user, array $body): never
 function abnahme(string $uid): array
 {
     $d = readJson(WEIGHT_DIR . '/' . $uid . '.json', ['points' => []]);
-    $punkte = is_array($d['points'] ?? null) ? $d['points'] : [];
+    $roh = is_array($d['points'] ?? null) ? $d['points'] : [];
+
+    /*
+     * Nur echte Wiegungen zählen.
+     *
+     * Aus einer früheren Fassung stammen Punkte mit der Quelle "profil",
+     * die bei jedem Speichern des Profils entstanden. Der erste davon ist
+     * das Startgewicht und gehört dazu; alle weiteren waren nie eine
+     * Wiegung und dürfen die Zählung nicht aufblähen.
+     */
+    $punkte = [];
+    $startGesehen = false;
+    foreach ($roh as $p) {
+        if (($p['src'] ?? '') === 'profil') {
+            if ($startGesehen) {
+                continue;
+            }
+            $startGesehen = true;
+        }
+        $punkte[] = $p;
+    }
+
     if ($punkte === []) {
         return ['pct' => null, 'messungen' => 0, 'seit' => null];
     }
