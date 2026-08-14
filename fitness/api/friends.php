@@ -286,6 +286,13 @@ function liste(string $uid, array $user, array $body): never
             // eingetragen hat - keine Zahl.
             'pctIn' => $sicht === 'prozent' && $k ? (int) ($k['pctIn'] ?? 0) : null,
             'pctNet' => $sicht === 'prozent' && $k ? (int) ($k['pctNet'] ?? 0) : null,
+            // Das Ergebnis gegen das eigene Tagesziel - die Zahl, die zählt.
+            'pctZiel' => $sicht === 'prozent' && $k && isset($k['pctZiel'])
+                ? (int) $k['pctZiel']
+                : null,
+            'sportListe' => $sicht === 'prozent' && is_array($k['sportListe'] ?? null)
+                ? array_slice($k['sportListe'], 0, 3)
+                : [],
             'mahlzeiten' => $k ? (int) ($k['meals'] ?? 0) : 0,
             'sport' => $k ? (int) ($k['sports'] ?? 0) : 0,
             'letztes' => $sicht === 'prozent' && $k ? ($k['last'] ?? null) : null,
@@ -307,11 +314,10 @@ function liste(string $uid, array $user, array $body): never
         if ($a['aktiv'] !== $b['aktiv']) {
             return $a['aktiv'] ? -1 : 1;
         }
-        // Bei "nur Teilnahme" gibt es keinen Prozentwert - solche
-        // Einträge stehen hinter denen mit Zahl, aber vor den leeren.
-        $pa = $a['pctNet'] ?? 1000;
-        $pb = $b['pctNet'] ?? 1000;
-        return $pa <=> $pb;
+        // Sortiert wird nach dem Ergebnis gegen das eigene Ziel, nicht
+        // nach der Aufnahme. Bei "nur Teilnahme" gibt es keinen Wert -
+        // solche Einträge stehen hinter denen mit Zahl, vor den leeren.
+        return ($a['pctZiel'] ?? 1000) <=> ($b['pctZiel'] ?? 1000);
     });
 
     $offen = [];

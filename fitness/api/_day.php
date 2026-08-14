@@ -149,8 +149,19 @@ function updateFeed(string $uid, array $user, array $tag): void
             unset($feed['users'][$uid]);
         } else {
             $tdee = max(1, (int) ($user['derived']['tdee'] ?? 1));
+            $ziel = max(1, (int) ($user['derived']['goalKcal'] ?? $tdee));
             $in = (int) $tag['sums']['in'];
             $out = (int) $tag['sums']['out'];
+
+            // Welche Bewegung war dabei? Nur die Bezeichnung und die
+            // Dauer - die Kalorienzahl bleibt beim Besitzer.
+            $sport = [];
+            foreach ($tag['sport'] as $s) {
+                $sport[] = [
+                    'label' => (string) ($s['label'] ?? ''),
+                    'min' => (int) ($s['minutes'] ?? 0),
+                ];
+            }
 
             $knoten = [
                 'name' => (string) ($user['name'] ?? ''),
@@ -159,8 +170,18 @@ function updateFeed(string $uid, array $user, array $tag): void
                 // Absolute Zahlen verlassen den eigenen Datensatz nie.
                 'pctIn' => (int) round($in / $tdee * 100),
                 'pctNet' => (int) round(($in - $out) / $tdee * 100),
+                /*
+                 * Das Ergebnis des Tages: wie weit jemand vom EIGENEN
+                 * Tagesziel entfernt ist. Negativ heisst darunter.
+                 *
+                 * Das ist die Zahl, die zählt - "80 % vom Bedarf" sagt
+                 * nichts darüber, ob jemand sein Ziel getroffen hat, weil
+                 * das Ziel bei jedem woanders liegt.
+                 */
+                'pctZiel' => (int) round((($in - $out) - $ziel) / $ziel * 100),
                 'meals' => count($tag['meals']),
                 'sports' => count($tag['sport']),
+                'sportListe' => $sport,
                 'updatedAt' => date('c'),
             ];
 
