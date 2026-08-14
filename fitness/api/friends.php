@@ -275,11 +275,22 @@ function liste(string $uid, array $user, array $body): never
         }
 
         $k = is_array($knoten[$fid] ?? null) ? $knoten[$fid] : null;
+        $ab = abnahme($fid);
 
         $eintraege[] = [
             'id' => $fid,
             'name' => $ich ? 'Du' : (string) ($u['name'] ?? ''),
             'ich' => $ich,
+            /*
+             * Der Wert, um den es hier geht - und der einzige, der für
+             * ALLE sichtbar ist, unabhängig von der Sichtbarkeits-
+             * einstellung. Wer sich verbindet, macht mit; ein
+             * Wettbewerb, bei dem die Hälfte ihre Zahl verbirgt, ist
+             * keiner.
+             */
+            'abnahmePct' => $ab['pct'],
+            'messungen' => $ab['messungen'],
+            'seit' => $ab['seit'],
             'streak' => (int) ($u['streak']['days'] ?? 0),
             'aktiv' => $k !== null,
             // Bei "teilnahme" gibt es nur die Information, DASS jemand
@@ -310,14 +321,20 @@ function liste(string $uid, array $user, array $body): never
      * hätte sonst automatisch den ersten Platz, und die Liste würde
      * genau das Gegenteil dessen belohnen, wozu sie da ist.
      */
+    /*
+     * Platz eins hat, wer am meisten Prozent abgenommen hat.
+     *
+     * Wer noch keine zweite Messung hat, steht unten - nicht bei null
+     * Prozent mittendrin. Eine fehlende Messung ist keine Nullabnahme,
+     * und wer sich nie wiegt, soll nicht zwischen denen stehen, die es tun.
+     */
     usort($eintraege, static function (array $a, array $b): int {
-        if ($a['aktiv'] !== $b['aktiv']) {
-            return $a['aktiv'] ? -1 : 1;
+        $aHat = $a['abnahmePct'] !== null && $a['messungen'] > 1;
+        $bHat = $b['abnahmePct'] !== null && $b['messungen'] > 1;
+        if ($aHat !== $bHat) {
+            return $aHat ? -1 : 1;
         }
-        // Sortiert wird nach dem Ergebnis gegen das eigene Ziel, nicht
-        // nach der Aufnahme. Bei "nur Teilnahme" gibt es keinen Wert -
-        // solche Einträge stehen hinter denen mit Zahl, vor den leeren.
-        return ($a['pctZiel'] ?? 1000) <=> ($b['pctZiel'] ?? 1000);
+        return ($b['abnahmePct'] ?? -999) <=> ($a['abnahmePct'] ?? -999);
     });
 
     $offen = [];
@@ -416,6 +433,44 @@ function woche(string $uid, array $user, array $body): never
     });
 
     send(withFreshToken(['ok' => true, 'liste' => $liste], $uid, $user, $body));
+}
+
+/**
+ * Wie viel Prozent hat jemand seit dem Start abgenommen?
+ *
+ * Bezug ist die ERSTE Messung - beim Onboarding wird sie automatisch
+ * angelegt, es gibt sie also für jeden ab dem ersten Tag.
+ *
+ * Prozent statt Kilo, aus demselben Grund wie überall in dieser App:
+ * Drei Kilo bei 58 kg sind ein anderer Erfolg als drei Kilo bei 110 kg.
+ * Nur der Anteil macht zwei Menschen vergleichbar.
+ *
+ * Positiv heisst abgenommen. Das ist umgekehrt zur Rechenrichtung, aber
+ * es ist die Richtung, in der Menschen denken: "Ich habe 4 % geschafft."
+ *
+ * @return array{pct: float|null, messungen: int, seit: string|null}
+ */
+function abnahme(string $uid): array
+{
+    $d = readJson(WEIGHT_DIR . '/' . $uid . '.json', ['points' => []]);
+    $punkte = is_array($d['points'] ?? null) ? $d['points'] : [];
+    if ($punkte === []) {
+        return ['pct' => null, 'messungen' => 0, 'seit' => null];
+    }
+
+    usort($punkte, static fn($a, $b) => strcmp((string) $a['d'], (string) $b['d']));
+    $start = (float) $punkte[0]['kg'];
+    $jetzt = (float) $punkte[count($punkte) - 1]['kg'];
+
+    if ($start <= 0) {
+        return ['pct' => null, 'messungen' => count($punkte), 'seit' => null];
+    }
+
+    return [
+        'pct' => round(($start - $jetzt) / $start * 100, 1),
+        'messungen' => count($punkte),
+        'seit' => (string) $punkte[0]['d'],
+    ];
 }
 
 /**
