@@ -1,135 +1,110 @@
 'use client'
 
-import { motion } from 'framer-motion'
-import { Monitor, Palette, FileText, Mail, MapPin, X } from 'lucide-react'
+import { Monitor, Palette, FileText, Mail, MapPin, Minus } from 'lucide-react'
+import Section from './Section'
+import Reveal from '../motion/Reveal'
 
-const servicesIncluded = [
+/**
+ * Leistungen.
+ *
+ * Die Gegenueberstellung "enthalten / nicht enthalten" bleibt inhaltlich
+ * erhalten, weil sie das ehrlichste Stueck der Seite ist: sie sagt vor dem
+ * Erstgespraech, wo die Leistung aufhoert.
+ *
+ * Farblich ist die Trennung reine Funktion, kein Dekor - was enthalten ist,
+ * steht auf einer Glasflaeche mit Cyan-Symbol; was nicht enthalten ist, ist
+ * durchgehend abgesenkt. Kein roter Block, keine Warnfarbe: es ist keine
+ * Warnung, sondern eine Abgrenzung.
+ */
+
+const enthalten = [
   {
     icon: Monitor,
-    title: 'Technische Umsetzung',
-    description: 'Erstellung von Websites mit modernen Web-Frameworks und Templates. Die technische Basis ist solide und auf Informationsdarstellung ausgelegt.',
+    titel: 'Technische Umsetzung',
+    text: 'Die Website entsteht mit aktuellen Web-Frameworks und bewährten Templates. Solide Basis, schnelle Ladezeiten, sauber ausgeliefert.',
   },
   {
     icon: Palette,
-    title: 'Struktur & Design',
-    description: 'Klare Seitenstruktur und ansprechendes Design für die Unternehmenspräsentation. Anpassung an die Markenfarben und das Logo.',
+    titel: 'Struktur & Design',
+    text: 'Klare Seitenstruktur und ein Auftritt, der zum Betrieb passt — abgestimmt auf vorhandene Markenfarben und das Logo.',
   },
   {
     icon: FileText,
-    title: 'Content-Integration',
-    description: 'Integration der bereitgestellten Inhalte (Texte, Bilder, Unternehmensdaten) strukturiert in die Website.',
+    titel: 'Inhalte einpflegen',
+    text: 'Texte, Bilder und Unternehmensdaten werden strukturiert eingebaut, statt einfach untereinander gekippt.',
   },
   {
     icon: Mail,
-    title: 'Kontaktformulare',
-    description: 'Einfache Kontaktmöglichkeiten für Kunden – technisch umgesetzt und funktional eingebunden.',
+    titel: 'Kontaktwege',
+    text: 'Formular, Telefon, WhatsApp — technisch eingebunden und funktionsgeprüft, damit Anfragen auch wirklich ankommen.',
   },
   {
     icon: MapPin,
-    title: 'Google Business Profile',
-    description: 'Optional: Einrichtung und Pflege des Google Business Profils auf Basis der bereitgestellten Daten.',
+    titel: 'Google Business Profil',
+    text: 'Auf Wunsch Einrichtung und Pflege des Profils, damit der Betrieb auch in der lokalen Suche und in Karten auftaucht.',
   },
 ]
 
-const servicesNotIncluded = [
+const nichtEnthalten = [
   {
-    icon: X,
-    title: 'Online-Shops',
-    description: 'Keine E-Commerce-Lösungen, Zahlungsabwicklung oder Warenwirtschaftssysteme.',
+    titel: 'Online-Shops',
+    text: 'Keine E-Commerce-Systeme, keine Zahlungsabwicklung, keine Warenwirtschaft.',
   },
   {
-    icon: X,
-    title: 'Benutzer-Logins',
-    description: 'Keine geschützten Bereiche, Mitgliederverwaltung oder Nutzerdatenbanken.',
+    titel: 'Benutzer-Logins',
+    text: 'Keine geschützten Bereiche, keine Mitgliederverwaltung, keine Nutzerdatenbanken.',
   },
   {
-    icon: X,
-    title: 'Individuelle Software',
-    description: 'Keine maßgeschneiderte Programmierung oder komplexe Webanwendungen.',
+    titel: 'Individuelle Software',
+    text: 'Keine maßgeschneiderte Programmierung und keine komplexen Webanwendungen auf Zuruf.',
   },
   {
-    icon: X,
-    title: 'Rechtliche Beratung',
-    description: 'Keine Rechtsberatung, DSGVO-Garantien oder Haftung für rechtliche Inhalte. Rechtliche Texte werden vom Auftraggeber bereitgestellt.',
+    titel: 'Rechtliche Beratung',
+    text: 'Keine Rechtsberatung und keine DSGVO-Garantien. Rechtstexte kommen vom Auftraggeber.',
   },
 ]
 
 export default function ServicesSection() {
   return (
-    <section id="leistungen" className="py-24 bg-white">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-          className="text-center mb-16"
-        >
-          <h2 className="text-4xl sm:text-5xl font-bold text-brand-navy mb-4">
-            Was ich anbiete
-          </h2>
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-            Klare Leistungen für informative Unternehmenswebsites
-          </p>
-        </motion.div>
-
-        <div className="mb-12">
-          <h3 className="text-2xl font-bold text-brand-navy mb-8 text-center">
-            Das ist enthalten:
-          </h3>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {servicesIncluded.map((service, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.6, delay: index * 0.1 }}
-                whileHover={{ y: -10, scale: 1.02 }}
-                className="bg-gradient-to-br from-brand-light to-white p-8 rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 border border-brand-cyan/20"
-              >
-                <div className="bg-brand-cyan/10 w-16 h-16 rounded-2xl flex items-center justify-center mb-6">
-                  <service.icon className="w-8 h-8 text-brand-cyan" />
-                </div>
-                <h3 className="text-xl font-bold text-brand-navy mb-4">
-                  {service.title}
-                </h3>
-                <p className="text-gray-600 leading-relaxed">
-                  {service.description}
-                </p>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-
-        <div>
-          <h3 className="text-2xl font-bold text-brand-navy mb-8 text-center">
-            Das ist nicht enthalten:
-          </h3>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-6xl mx-auto">
-            {servicesNotIncluded.map((service, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.6, delay: index * 0.1 }}
-                className="bg-gray-50 p-6 rounded-xl border-2 border-gray-200"
-              >
-                <div className="bg-gray-200 w-12 h-12 rounded-xl flex items-center justify-center mb-4">
-                  <service.icon className="w-6 h-6 text-gray-500" />
-                </div>
-                <h3 className="text-lg font-bold text-gray-800 mb-3">
-                  {service.title}
-                </h3>
-                <p className="text-gray-600 text-sm leading-relaxed">
-                  {service.description}
-                </p>
-              </motion.div>
-            ))}
-          </div>
-        </div>
+    <Section
+      id="leistungen"
+      nummer="01"
+      augenbraue="Leistungen"
+      titel="Was drin ist — und was nicht."
+      einleitung="Informative Websites für Betriebe und Vereine, zum Festpreis. Damit im Erstgespräch niemand aneinander vorbeiredet, steht hier beides: der Leistungsumfang und seine Grenze."
+    >
+      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        {enthalten.map((leistung, i) => (
+          <Reveal key={leistung.titel} verzoegerung={i * 0.06}>
+            <article className="pane pane-hover h-full rounded-2xl p-7 hover:-translate-y-1">
+              <div className="mb-6 flex h-12 w-12 items-center justify-center rounded-xl bg-cyan/12 ring-1 ring-cyan/25">
+                <leistung.icon className="h-5 w-5 text-cyan-400" />
+              </div>
+              <h3 className="mb-3 text-lg font-semibold text-mist">{leistung.titel}</h3>
+              <p className="text-sm leading-relaxed text-mist/60">{leistung.text}</p>
+            </article>
+          </Reveal>
+        ))}
       </div>
-    </section>
+
+      <Reveal verzoegerung={0.1}>
+        <div className="mt-16 border-t border-mist/10 pt-12">
+          <h3 className="mb-8 text-xs uppercase tracking-[0.25em] text-mist/40">
+            Nicht enthalten
+          </h3>
+          <div className="grid gap-x-10 gap-y-7 sm:grid-cols-2">
+            {nichtEnthalten.map((punkt) => (
+              <div key={punkt.titel} className="flex gap-4">
+                <Minus className="mt-1 h-4 w-4 flex-shrink-0 text-mist/25" />
+                <div>
+                  <h4 className="mb-1.5 font-medium text-mist/70">{punkt.titel}</h4>
+                  <p className="text-sm leading-relaxed text-mist/40">{punkt.text}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </Reveal>
+    </Section>
   )
 }

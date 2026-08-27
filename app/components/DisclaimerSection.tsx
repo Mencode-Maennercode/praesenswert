@@ -1,134 +1,87 @@
 'use client'
 
-import { motion } from 'framer-motion'
-import { AlertCircle, FileText, Shield, Users } from 'lucide-react'
+import { AlertCircle, FileText, Shield, Users, Layers } from 'lucide-react'
+import Section from './Section'
+import Reveal from '../motion/Reveal'
+
+/**
+ * Rechtliche Hinweise.
+ *
+ * Bewusst der leiseste Abschnitt der Seite: kein Ember, kein Effekt, gedeckte
+ * Textfarben. Ember bedeutet auf dieser Seite "hier kann gehandelt werden" -
+ * hier soll niemand handeln, hier soll jemand nachlesen. Ein aufgeregt
+ * gestalteter Haftungshinweis wirkt ausserdem defensiv; ein ruhiger wirkt
+ * souveraen.
+ */
+
+const punkte = [
+  {
+    icon: FileText,
+    titel: 'Rechtliche Texte',
+    text: 'Impressum, Datenschutzerklärung und alle rechtlich relevanten Texte stellt der Auftraggeber bereit. Ich übernehme dafür weder Rechtsberatung noch Haftung.',
+  },
+  {
+    icon: Shield,
+    titel: 'Keine Garantien',
+    text: 'Es gibt keine Sicherheitsaudits, keine DSGVO-Garantie und keine Zusicherung eines fehlerfreien Betriebs. Gearbeitet wird nach bestem Wissen, aber ohne rechtliche oder technische Zusicherung.',
+  },
+  {
+    icon: Users,
+    titel: 'Verantwortung',
+    text: 'Für die Richtigkeit aller gelieferten Inhalte, Bilder und Angaben ist der Auftraggeber verantwortlich. Auch die rechtliche Konformität der fertigen Website liegt bei ihm.',
+  },
+  {
+    icon: Layers,
+    titel: 'Leistungsumfang',
+    text: 'Die Leistung ist die technische Umsetzung informativer Websites. Keine Shops, keine Benutzer-Logins, keine komplexen Webanwendungen.',
+  },
+]
 
 export default function DisclaimerSection() {
   return (
-    <section id="hinweise" className="py-24 bg-gray-50">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-          className="text-center mb-12 sm:mb-16"
-        >
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-brand-navy mb-3 sm:mb-4">
-            Rechtliche Klarheit
-          </h2>
-          <p className="text-lg sm:text-xl text-gray-600 max-w-3xl mx-auto px-4">
-            Transparente Informationen zu Leistungsumfang und Verantwortlichkeiten
-          </p>
-        </motion.div>
-
-        <div className="max-w-4xl mx-auto">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-            className="bg-white border-2 border-brand-cyan/30 rounded-2xl p-6 sm:p-8 mb-6 sm:mb-8"
-          >
-            <div className="flex flex-col sm:flex-row items-start gap-4 mb-6">
-              <div className="bg-brand-cyan/10 p-3 rounded-xl flex-shrink-0 mx-auto sm:mx-0">
-                <AlertCircle className="w-8 h-8 text-brand-cyan" />
-              </div>
-              <div className="text-center sm:text-left">
-                <h3 className="text-xl sm:text-2xl font-bold text-brand-navy mb-3 sm:mb-4">
-                  Wichtiger Hinweis
-                </h3>
-                <p className="text-gray-700 leading-relaxed mb-4 text-base sm:text-base">
-                  Erstellung von informativen Unternehmenswebsites als technische Dienstleistung. 
-                  Das Angebot umfasst die Website-Erstellung mit modernen Frameworks, Templates und CMS-Systemen.
-                </p>
-                <p className="text-gray-700 leading-relaxed font-semibold text-base sm:text-base">
-                  Es handelt sich nicht um Programmierung, Softwareentwicklung oder IT-Beratung im klassischen Sinne. 
-                  Es wird keine individuelle Softwareentwicklung angeboten.
-                </p>
-              </div>
+    <Section
+      id="hinweise"
+      nummer="06"
+      augenbraue="Hinweise"
+      titel="Wo meine Leistung aufhört."
+      einleitung="Lieber vorher gelesen als hinterher geklärt. Diese Abgrenzung ist Teil des Angebots, nicht das Kleingedruckte dazu."
+    >
+      <Reveal>
+        <div className="max-w-3xl rounded-2xl border border-cyan/20 bg-cyan/[0.04] p-7 sm:p-9">
+          <div className="flex gap-5">
+            <AlertCircle className="mt-0.5 h-6 w-6 flex-shrink-0 text-cyan-400" />
+            <div>
+              <h3 className="mb-4 text-lg font-semibold text-mist">
+                Was ich anbiete — und was das nicht ist
+              </h3>
+              <p className="mb-4 leading-relaxed text-mist/65">
+                Ich erstelle informative Websites für Unternehmen und Vereine als
+                technische Dienstleistung, auf Basis moderner Frameworks,
+                Templates und CMS-Systeme.
+              </p>
+              <p className="font-medium leading-relaxed text-mist/80">
+                Das ist keine Individualsoftware-Entwicklung und keine
+                IT-Beratung im klassischen Sinn. Maßgeschneiderte Programmierung
+                gehört ausdrücklich nicht zum Angebot.
+              </p>
             </div>
-          </motion.div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
-            <motion.div
-              initial={{ opacity: 0, x: -30 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: 0.2 }}
-              className="bg-white p-4 sm:p-6 rounded-xl border border-gray-200"
-            >
-              <div className="flex flex-col sm:flex-row items-start gap-3 mb-4">
-                <FileText className="w-6 h-6 text-brand-cyan flex-shrink-0 mt-1 mx-auto sm:mx-0" />
-                <div className="text-center sm:text-left">
-                  <h4 className="font-bold text-brand-navy mb-2 text-base sm:text-base">Rechtliche Texte</h4>
-                  <p className="text-gray-600 text-sm sm:text-sm leading-relaxed">
-                    Impressum, Datenschutzerklärung und alle rechtlich relevanten Texte werden vom Auftraggeber bereitgestellt. 
-                    Es wird keine Rechtsberatung oder Haftung für rechtliche Inhalte übernommen.
-                  </p>
-                </div>
-              </div>
-            </motion.div>
-
-            <motion.div
-              initial={{ opacity: 0, x: 30 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: 0.3 }}
-              className="bg-white p-4 sm:p-6 rounded-xl border border-gray-200"
-            >
-              <div className="flex flex-col sm:flex-row items-start gap-3 mb-4">
-                <Shield className="w-6 h-6 text-brand-cyan flex-shrink-0 mt-1 mx-auto sm:mx-0" />
-                <div className="text-center sm:text-left">
-                  <h4 className="font-bold text-brand-navy mb-2 text-base sm:text-base">Keine Garantien</h4>
-                  <p className="text-gray-600 text-sm sm:text-sm leading-relaxed">
-                    Es werden keine Sicherheitsaudits, DSGVO-Garantien oder Gewährleistungen für fehlerfreien Betrieb angeboten. 
-                    Die Website wird nach bestem Wissen erstellt, aber ohne rechtliche oder technische Zusicherungen.
-                  </p>
-                </div>
-              </div>
-            </motion.div>
-
-            <motion.div
-              initial={{ opacity: 0, x: -30 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: 0.4 }}
-              className="bg-white p-4 sm:p-6 rounded-xl border border-gray-200"
-            >
-              <div className="flex flex-col sm:flex-row items-start gap-3 mb-4">
-                <Users className="w-6 h-6 text-brand-cyan flex-shrink-0 mt-1 mx-auto sm:mx-0" />
-                <div className="text-center sm:text-left">
-                  <h4 className="font-bold text-brand-navy mb-2 text-base sm:text-base">Verantwortung</h4>
-                  <p className="text-gray-600 text-sm sm:text-sm leading-relaxed">
-                    Der Auftraggeber ist verantwortlich für die Richtigkeit aller bereitgestellten Inhalte, Bilder und Informationen. 
-                    Die rechtliche Konformität der Website liegt in der Verantwortung des Auftraggebers.
-                  </p>
-                </div>
-              </div>
-            </motion.div>
-
-            <motion.div
-              initial={{ opacity: 0, x: 30 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: 0.5 }}
-              className="bg-white p-4 sm:p-6 rounded-xl border border-gray-200"
-            >
-              <div className="flex flex-col sm:flex-row items-start gap-3 mb-4">
-                <FileText className="w-6 h-6 text-brand-cyan flex-shrink-0 mt-1 mx-auto sm:mx-0" />
-                <div className="text-center sm:text-left">
-                  <h4 className="font-bold text-brand-navy mb-2 text-base sm:text-base">Leistungsumfang</h4>
-                  <p className="text-gray-600 text-sm sm:text-sm leading-relaxed">
-                    Die Leistung umfasst die technische Umsetzung informativer Unternehmenswebsites. 
-                    Keine Shops, keine Benutzer-Logins, keine komplexen Webanwendungen.
-                  </p>
-                </div>
-              </div>
-            </motion.div>
           </div>
         </div>
+      </Reveal>
+
+      <div className="mt-6 grid max-w-3xl gap-x-10 gap-y-8 sm:grid-cols-2">
+        {punkte.map((punkt, i) => (
+          <Reveal key={punkt.titel} verzoegerung={i * 0.05}>
+            <div className="flex gap-4">
+              <punkt.icon className="mt-1 h-4 w-4 flex-shrink-0 text-mist/30" />
+              <div>
+                <h4 className="mb-2 font-medium text-mist/80">{punkt.titel}</h4>
+                <p className="text-sm leading-relaxed text-mist/45">{punkt.text}</p>
+              </div>
+            </div>
+          </Reveal>
+        ))}
       </div>
-    </section>
+    </Section>
   )
 }

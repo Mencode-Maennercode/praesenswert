@@ -1,15 +1,14 @@
 import type { NextConfig } from 'next'
 
 const nextConfig: NextConfig = {
+  // Die Seite wird als statische Dateien auf Apache ausgeliefert (siehe
+  // .htaccess und contact.php) - der Export darf nicht wegfallen.
   output: 'export',
   images: {
+    // Ohne Node-Server gibt es keine Bildoptimierung zur Laufzeit.
     unoptimized: true,
-    remotePatterns: [
-      {
-        protocol: 'https',
-        hostname: 'images.unsplash.com',
-      },
-    ],
+    // Kein remotePatterns mehr: das fremde Unsplash-Hero ist raus, alle Bilder
+    // liegen jetzt im eigenen Verzeichnis.
   },
 }
 

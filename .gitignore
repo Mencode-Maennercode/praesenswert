@@ -28,6 +28,12 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
+# Rohmaterial der Motion-Sequenz: der Seedance-Clip und sein Startbild, rund
+# 33 MB. Ausgeliefert wird nur die daraus geschnittene Bildsequenz unter
+# /public/motion - die liegt im Repo. Das Rohmaterial wird nur gebraucht, wenn
+# die Sequenz neu geschnitten werden soll, und gehoert nicht in die Historie.
+/motion-source
+
 # Grillparty-App (/grillparty): der Datenspeicher enthaelt Namen und
 # E-Mail-Adressen der Gaeste und darf niemals ins Repo. Die .htaccess bleibt
 # drin - sie ist der Schutz und muss mit ausgeliefert werden.

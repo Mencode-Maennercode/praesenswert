@@ -4,24 +4,58 @@
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
+    /*
+     * Die beiden Stopps des durchlaufenden Farbgusses. GradientGround schreibt
+     * sie beim Scrollen fort; die Werte hier sind der Zustand ganz oben auf der
+     * Seite und muessen mit GUSS[0] in app/motion/GradientGround.tsx
+     * uebereinstimmen, sonst blitzt beim ersten Bild die falsche Farbe auf.
+     */
+    --guss-oben: #0e1626;
+    --guss-unten: #1a2745;
   }
 
   html {
-    scroll-behavior: smooth;
-    overflow-x: hidden;
+    /*
+     * Kein scroll-behavior: smooth - das uebernimmt Lenis. Beides gleichzeitig
+     * laesst Ankerspruenge gegeneinander arbeiten und ruckelt.
+     */
+
+    /*
+     * clip, nicht hidden. overflow-x: hidden setzt overflow-y implizit auf
+     * auto und macht das Element damit zu einem Scroll-Container - und
+     * position: sticky richtet sich dann nach diesem Container statt nach dem
+     * Fenster. Die klebenden Abschnitte (Leitmotiv, Referenzen-Bahn,
+     * Produktstapel) kleben dann schlicht nicht mehr. clip schneidet ohne
+     * Scroll-Container ab und laesst sticky in Ruhe.
+     */
+    overflow-x: clip;
     width: 100%;
-    max-width: 100vw;
+    /* Anker landen nicht unter der fixierten Kopfzeile */
+    scroll-padding-top: 6rem;
   }
 
   body {
-    @apply bg-white text-gray-900;
-    font-feature-settings: "rlig" 1, "calt" 1;
-    overflow-x: hidden;
+    @apply text-mist;
+    background-color: #0e1626;
+    font-feature-settings: 'rlig' 1, 'calt' 1;
+    overflow-x: clip;
     width: 100%;
-    max-width: 100vw;
     position: relative;
+  }
+
+  /*
+   * Auf dem dunklen Guss ist die Standard-Auswahlfarbe des Browsers
+   * unleserlich.
+   */
+  ::selection {
+    background: #e8734c;
+    color: #0e1626;
+  }
+
+  :focus-visible {
+    outline: 2px solid #e8734c;
+    outline-offset: 3px;
+    border-radius: 2px;
   }
 }
 
@@ -29,27 +63,61 @@
   .text-balance {
     text-wrap: balance;
   }
+
+  /*
+   * Glasflaeche. Auf dem Guss darf nichts einen eigenen Farbblock setzen -
+   * Tiefe entsteht nur ueber Transparenz, Haarlinie und Unschaerfe.
+   */
+  .pane {
+    background: rgba(232, 244, 246, 0.045);
+    border: 1px solid rgba(232, 244, 246, 0.11);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+  }
+
+  .pane-hover {
+    transition: background-color 0.4s cubic-bezier(0.22, 1, 0.36, 1),
+      border-color 0.4s cubic-bezier(0.22, 1, 0.36, 1),
+      transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .pane-hover:hover {
+    background: rgba(232, 244, 246, 0.075);
+    border-color: rgba(232, 244, 246, 0.2);
+  }
 }
 
-/* iPad portrait fix: show mobile menu instead of cramped desktop nav */
+/*
+ * Reduzierte Bewegung: die Seite muss ohne jede Animation vollstaendig lesbar
+ * bleiben. Das Leitmotiv wird zum Standbild, der Guss friert auf seinem
+ * Anfangswert ein.
+ */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* iPad Hochformat: Mobilmenue statt gequetschter Desktop-Navigation */
 @media (min-width: 768px) and (max-width: 1024px) and (orientation: portrait) {
-  /* Hide desktop navigation and button */
   nav.md\:flex {
     display: none !important;
   }
-  
-  /* Hide desktop "Jetzt starten" button container */
-  .md\:block:has(a[href="#kontakt"]) {
+
+  .md\:block:has(a[href='#kontakt']) {
     display: none !important;
   }
-  
-  /* Show hamburger menu button */
+
   button.md\:hidden {
     display: block !important;
   }
-  
-  /* Show mobile menu overlay when open */
-  .md\:hidden[class*="fixed"] {
+
+  .md\:hidden[class*='fixed'] {
     display: block !important;
   }
 }

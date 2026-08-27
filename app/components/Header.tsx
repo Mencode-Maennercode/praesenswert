@@ -1,223 +1,197 @@
 'use client'
 
+import { useEffect, useState } from 'react'
 import Image from 'next/image'
-import { useState, useEffect } from 'react'
-import { Menu, X, Home, Briefcase, Settings, Info, Mail, Star, Boxes, HelpCircle } from 'lucide-react'
-import { motion, AnimatePresence } from 'framer-motion'
+import { AnimatePresence, motion } from 'framer-motion'
+import { Menu, X } from 'lucide-react'
+
+/**
+ * Kopfzeile.
+ *
+ * Ueber dem Leitmotiv bleibt sie durchsichtig - eine Leiste ueber dem
+ * Hero-Bild wuerde die Aufnahme zerschneiden. Erst wenn der Hero durchgelaufen
+ * ist, legt sich Glas darunter.
+ *
+ * Die Fortschrittslinie ganz oben ist der einzige Ember-Akzent, der die ganze
+ * Seite ueber sichtbar bleibt: sie zeigt Handlung im woertlichen Sinn, naemlich
+ * die eigene Bewegung durch die Seite.
+ */
+
+const punkte = [
+  { href: '#leistungen', text: 'Leistungen' },
+  { href: '#arbeitsweise', text: 'Arbeitsweise' },
+  { href: '#referenzen', text: 'Referenzen' },
+  { href: '#produkte', text: 'Produkte' },
+  { href: '#faq', text: 'FAQ' },
+  { href: '#hinweise', text: 'Hinweise' },
+]
 
 export default function Header() {
-  const [isScrolled, setIsScrolled] = useState(false)
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
-  const [scrollY, setScrollY] = useState(0)
+  const [gelegt, setGelegt] = useState(false)
+  const [fortschritt, setFortschritt] = useState(0)
+  const [menueOffen, setMenueOffen] = useState(false)
 
   useEffect(() => {
-    const handleScroll = () => {
-      const currentScrollY = window.scrollY
-      setIsScrolled(currentScrollY > 50)
-      setScrollY(currentScrollY)
+    let angefordert = 0
+
+    const messen = () => {
+      angefordert = 0
+      const wurzel = document.documentElement
+      const scrollbar = wurzel.scrollHeight - window.innerHeight
+      setGelegt(window.scrollY > window.innerHeight * 0.9)
+      setFortschritt(scrollbar > 0 ? (window.scrollY / scrollbar) * 100 : 0)
     }
-    window.addEventListener('scroll', handleScroll)
-    return () => window.removeEventListener('scroll', handleScroll)
+
+    const beiScroll = () => {
+      if (angefordert) return
+      angefordert = requestAnimationFrame(messen)
+    }
+
+    messen()
+    window.addEventListener('scroll', beiScroll, { passive: true })
+    window.addEventListener('resize', beiScroll, { passive: true })
+    return () => {
+      if (angefordert) cancelAnimationFrame(angefordert)
+      window.removeEventListener('scroll', beiScroll)
+      window.removeEventListener('resize', beiScroll)
+    }
   }, [])
 
-  // Lock body scroll when mobile menu is open
+  // Hintergrund festhalten, solange das Mobilmenue offen ist.
   useEffect(() => {
-    if (isMobileMenuOpen) {
-      document.body.style.overflow = 'hidden'
-    } else {
-      document.body.style.overflow = ''
-    }
+    document.body.style.overflow = menueOffen ? 'hidden' : ''
     return () => {
       document.body.style.overflow = ''
     }
-  }, [isMobileMenuOpen])
-
-  // Calculate logo visibility in header
-  const logoOpacity = scrollY > 350 ? Math.min(1, (scrollY - 350) * 0.02) : 0
-  const logoScale = scrollY > 350 ? Math.min(1.2, 0.8 + (scrollY - 350) * 0.003) : 0.8
+  }, [menueOffen])
 
   return (
-    <header
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        isScrolled ? 'bg-white/95 backdrop-blur-md shadow-lg' : 'bg-transparent'
-      }`}
-    >
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-20">
-          <div className="flex-shrink-0 relative">
-            {/* Brain logo that appears when scrolling */}
-            <div 
-              className="transition-all duration-300"
-              style={{
-                opacity: logoOpacity,
-                transform: `scale(${logoScale})`,
-                filter: scrollY > 350 ? 'invert(0.9) sepia(1) saturate(8) hue-rotate(210deg) brightness(0.7)' : 'invert(1)'
-              }}
-            >
-              <Image
-                src="/Gehirn_Transparent.png"
-                alt="PräsenzWert Logo"
-                width={420}
-                height={210}
-                className="h-40 w-auto"
-              />
-            </div>
-          </div>
+    <header className="fixed inset-x-0 top-0 z-40">
+      <div
+        aria-hidden
+        className={`absolute inset-0 border-b transition-all duration-500 ease-brand ${
+          gelegt
+            ? 'border-mist/10 bg-ink/70 backdrop-blur-xl'
+            : 'border-transparent bg-transparent'
+        }`}
+      />
 
-          <nav className="hidden md:flex space-x-8">
-            <a
-              href="#home"
-              className="text-brand-navy hover:text-brand-cyan transition-colors font-medium"
-            >
-              Home
-            </a>
-            <a
-              href="#leistungen"
-              className="text-brand-navy hover:text-brand-cyan transition-colors font-medium"
-            >
-              Leistungen
-            </a>
-            <a
-              href="#arbeitsweise"
-              className="text-brand-navy hover:text-brand-cyan transition-colors font-medium"
-            >
-              Arbeitsweise
-            </a>
-            <a
-              href="#referenzen"
-              className="text-brand-navy hover:text-brand-cyan transition-colors font-medium"
-            >
-              Referenzen
-            </a>
-            <a
-              href="#produkte"
-              className="text-brand-navy hover:text-brand-cyan transition-colors font-medium"
-            >
-              Produkte
-            </a>
-            <a
-              href="#faq"
-              className="text-brand-navy hover:text-brand-cyan transition-colors font-medium"
-            >
-              FAQ
-            </a>
-            <a
-              href="#hinweise"
-              className="text-brand-navy hover:text-brand-cyan transition-colors font-medium"
-            >
-              Hinweise
-            </a>
-            <a
-              href="#kontakt"
-              className="text-brand-navy hover:text-brand-cyan transition-colors font-medium"
-            >
-              Kontakt
-            </a>
+      {/* Lesefortschritt */}
+      <div
+        aria-hidden
+        className="absolute inset-x-0 top-0 h-px origin-left bg-ember/70"
+        style={{ transform: `scaleX(${fortschritt / 100})` }}
+      />
+
+      <div className="container relative mx-auto px-5 sm:px-6 lg:px-8">
+        <div className="flex h-20 items-center justify-between">
+          <a href="#home" className="flex items-center gap-3" aria-label="PräsenzWert, zum Seitenanfang">
+            <AnimatePresence>
+              {gelegt && (
+                <motion.span
+                  initial={{ opacity: 0, scale: 0.7 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0, scale: 0.7 }}
+                  transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
+                >
+                  <Image
+                    src="/logo-mark.png"
+                    alt=""
+                    width={128}
+                    height={128}
+                    className="h-10 w-10 object-contain sm:h-11 sm:w-11"
+                  />
+                </motion.span>
+              )}
+            </AnimatePresence>
+            <span className="text-base font-semibold tracking-tight text-mist sm:text-lg">
+              Präsenz<span className="text-cyan-400">Wert</span>
+            </span>
+          </a>
+
+          <nav className="hidden items-center gap-7 md:flex">
+            {punkte.map((punkt) => (
+              <a
+                key={punkt.href}
+                href={punkt.href}
+                className="text-sm text-mist/65 transition-colors duration-300 ease-brand hover:text-mist"
+              >
+                {punkt.text}
+              </a>
+            ))}
           </nav>
 
           <div className="hidden md:block">
             <a
               href="#kontakt"
-              className="bg-brand-cyan text-white px-6 py-3 rounded-lg font-semibold hover:bg-brand-navy transition-all duration-300 shadow-lg hover:shadow-xl"
+              className="rounded-full bg-ember px-5 py-2.5 text-sm font-semibold text-ink transition-colors duration-300 ease-brand hover:bg-ember-600"
             >
-              Jetzt starten
+              Anfragen
             </a>
           </div>
 
           <button
-            className="md:hidden text-brand-navy"
-            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+            type="button"
+            className="text-mist md:hidden"
+            onClick={() => setMenueOffen(true)}
+            aria-label="Menü öffnen"
+            aria-expanded={menueOffen}
           >
-            {isMobileMenuOpen ? <X size={28} /> : <Menu size={28} />}
+            <Menu size={24} />
           </button>
         </div>
       </div>
 
       <AnimatePresence>
-        {isMobileMenuOpen && (
+        {menueOffen && (
           <>
             <motion.div
               initial={{ opacity: 0 }}
-              animate={{ opacity: 0.4 }}
+              animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              transition={{ duration: 0.2 }}
-              className="md:hidden fixed inset-0 bg-black z-40"
-              onClick={() => setIsMobileMenuOpen(false)}
+              transition={{ duration: 0.25 }}
+              className="fixed inset-0 z-40 bg-ink/80 backdrop-blur-sm md:hidden"
+              onClick={() => setMenueOffen(false)}
             />
-            <motion.aside
+            <motion.div
               initial={{ x: '100%' }}
               animate={{ x: 0 }}
               exit={{ x: '100%' }}
-              transition={{ duration: 0.25, ease: 'easeOut' }}
-              className="md:hidden fixed top-0 right-0 h-[85vh] w-[300px] bg-white shadow-2xl z-50 border-l border-gray-200 rounded-l-3xl"
+              transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
+              className="fixed inset-y-0 right-0 z-50 flex w-[86vw] max-w-sm flex-col border-l border-mist/10 bg-ink px-7 py-6 md:hidden"
             >
-              <div className="flex items-center justify-end h-16 px-5 border-b border-gray-200">
+              <div className="mb-10 flex justify-end">
                 <button
-                  onClick={() => setIsMobileMenuOpen(false)}
-                  className="text-gray-600 hover:text-brand-navy"
+                  type="button"
+                  onClick={() => setMenueOffen(false)}
                   aria-label="Menü schließen"
+                  className="text-mist/60"
                 >
                   <X size={24} />
                 </button>
               </div>
-              <nav className="px-5 py-4">
-                <ul className="space-y-1">
-                  <li>
-                    <a href="#home" className="flex items-center gap-3 rounded-md px-3 py-3 text-gray-800 hover:bg-gray-50" onClick={() => setIsMobileMenuOpen(false)}>
-                      <Home size={20} className="text-brand-cyan" />
-                      <span>Home</span>
-                    </a>
-                  </li>
-                  <li>
-                    <a href="#leistungen" className="flex items-center gap-3 rounded-md px-3 py-3 text-gray-800 hover:bg-gray-50" onClick={() => setIsMobileMenuOpen(false)}>
-                      <Briefcase size={20} className="text-brand-cyan" />
-                      <span>Leistungen</span>
-                    </a>
-                  </li>
-                  <li>
-                    <a href="#arbeitsweise" className="flex items-center gap-3 rounded-md px-3 py-3 text-gray-800 hover:bg-gray-50" onClick={() => setIsMobileMenuOpen(false)}>
-                      <Settings size={20} className="text-brand-cyan" />
-                      <span>Arbeitsweise</span>
-                    </a>
-                  </li>
-                  <li>
-                    <a href="#referenzen" className="flex items-center gap-3 rounded-md px-3 py-3 text-gray-800 hover:bg-gray-50" onClick={() => setIsMobileMenuOpen(false)}>
-                      <Star size={20} className="text-brand-cyan" />
-                      <span>Referenzen</span>
-                    </a>
-                  </li>
-                  <li>
-                    <a href="#produkte" className="flex items-center gap-3 rounded-md px-3 py-3 text-gray-800 hover:bg-gray-50" onClick={() => setIsMobileMenuOpen(false)}>
-                      <Boxes size={20} className="text-brand-cyan" />
-                      <span>Produkte</span>
-                    </a>
-                  </li>
-                  <li>
-                    <a href="#faq" className="flex items-center gap-3 rounded-md px-3 py-3 text-gray-800 hover:bg-gray-50" onClick={() => setIsMobileMenuOpen(false)}>
-                      <HelpCircle size={20} className="text-brand-cyan" />
-                      <span>FAQ</span>
-                    </a>
-                  </li>
-                  <li>
-                    <a href="#hinweise" className="flex items-center gap-3 rounded-md px-3 py-3 text-gray-800 hover:bg-gray-50" onClick={() => setIsMobileMenuOpen(false)}>
-                      <Info size={20} className="text-brand-cyan" />
-                      <span>Hinweise</span>
-                    </a>
-                  </li>
-                  <li>
-                    <a href="#kontakt" className="flex items-center gap-3 rounded-md px-3 py-3 text-gray-800 hover:bg-gray-50" onClick={() => setIsMobileMenuOpen(false)}>
-                      <Mail size={20} className="text-brand-cyan" />
-                      <span>Kontakt</span>
-                    </a>
-                  </li>
-                </ul>
+
+              <nav className="flex flex-col gap-1">
+                {[{ href: '#home', text: 'Start' }, ...punkte].map((punkt) => (
+                  <a
+                    key={punkt.href}
+                    href={punkt.href}
+                    onClick={() => setMenueOffen(false)}
+                    className="border-b border-mist/[0.07] py-4 text-lg text-mist/80"
+                  >
+                    {punkt.text}
+                  </a>
+                ))}
               </nav>
-              <div className="mt-auto px-5 pb-6">
-                <a href="#kontakt" className="block w-full text-center rounded-lg bg-brand-cyan text-white font-semibold py-3 hover:bg-brand-navy transition-colors" onClick={() => setIsMobileMenuOpen(false)}>
-                  Jetzt starten
-                </a>
-              </div>
-            </motion.aside>
+
+              <a
+                href="#kontakt"
+                onClick={() => setMenueOffen(false)}
+                className="mt-auto rounded-full bg-ember px-6 py-3.5 text-center font-semibold text-ink"
+              >
+                Anfragen
+              </a>
+            </motion.div>
           </>
         )}
       </AnimatePresence>

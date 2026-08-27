@@ -1,97 +1,99 @@
 'use client'
 
-import { motion } from 'framer-motion'
-import { Layers, Wrench, Sparkles, Clock } from 'lucide-react'
+import { useRef } from 'react'
+import { motion, useScroll, useTransform } from 'framer-motion'
+import { Layers, Wrench, Sparkles, Gauge } from 'lucide-react'
+import Section from './Section'
+import Reveal from '../motion/Reveal'
 
-const workingMethod = [
+/**
+ * Arbeitsweise.
+ *
+ * Die Punkte haengen an einer senkrechten Linie, die sich beim Scrollen fuellt.
+ * Das ist der einzige Ort auf der Seite, an dem Bewegung etwas erklaert statt
+ * nur zu schmuecken: die Arbeitsweise ist ein Ablauf, und die Linie zeigt ihn
+ * als Ablauf.
+ */
+
+const arbeitsweise = [
   {
     icon: Layers,
-    title: 'Moderne Templates',
-    description: 'Nutzung bewährter Web-Frameworks und Templates als technische Grundlage. Das ermöglicht eine effiziente Umsetzung und faire Preise.',
+    titel: 'Bewährte Grundlage',
+    text: 'Aktuelle Web-Frameworks und erprobte Templates als technische Basis. Das spart die Zeit, die sonst in Grundlagenarbeit ginge — und genau diese Zeit ist es, die eine Website teuer macht.',
   },
   {
     icon: Wrench,
-    title: 'Standard-Systeme',
-    description: 'Die technische Umsetzung erfolgt mit etablierten CMS-Systemen und Tools. Keine maßgeschneiderte Programmierung, sondern solide Standardlösungen.',
+    titel: 'Standard statt Sonderweg',
+    text: 'Umgesetzt wird mit etablierten Systemen und Werkzeugen. Keine Eigenentwicklung, die niemand außer mir warten kann, sondern Lösungen, die auch in fünf Jahren noch verständlich sind.',
   },
   {
     icon: Sparkles,
-    title: 'KI-unterstützte Workflows',
-    description: 'Einsatz moderner, KI-gestützter Werkzeuge, um Arbeitsabläufe zu optimieren und Kosten niedrig zu halten.',
+    titel: 'KI-gestützte Abläufe',
+    text: 'Moderne, KI-gestützte Werkzeuge übernehmen die wiederkehrenden Schritte. Der Aufwand sinkt, der Preis sinkt mit — die Entscheidungen trifft weiterhin ein Mensch.',
   },
   {
-    icon: Clock,
-    title: 'Fokus auf Effizienz',
-    description: 'Durch den Einsatz von Standardlösungen kann schnell und kostengünstig gearbeitet werden – ideal für informative Unternehmenswebsites.',
+    icon: Gauge,
+    titel: 'Effizienz als Preisargument',
+    text: 'Weil mit Standardlösungen gearbeitet wird, geht es schnell und bleibt günstig. Genau das macht eine ordentliche Website für einen kleinen Betrieb überhaupt erst bezahlbar.',
   },
 ]
 
 export default function BenefitsSection() {
+  const liste = useRef<HTMLDivElement>(null)
+
+  const { scrollYProgress } = useScroll({
+    target: liste,
+    offset: ['start 75%', 'end 65%'],
+  })
+  const fuellung = useTransform(scrollYProgress, [0, 1], ['0%', '100%'])
+
   return (
-    <section id="arbeitsweise" className="py-24 bg-gradient-to-br from-brand-navy to-[#0f1b33] relative overflow-hidden">
-      <div className="absolute inset-0 opacity-10">
-        <div className="absolute top-0 right-0 w-96 h-96 bg-brand-cyan rounded-full filter blur-3xl"></div>
-        <div className="absolute bottom-0 left-0 w-96 h-96 bg-blue-500 rounded-full filter blur-3xl"></div>
-      </div>
-
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-          className="text-center mb-16"
+    <Section
+      id="arbeitsweise"
+      nummer="02"
+      augenbraue="Arbeitsweise"
+      titel="Warum es günstig ist, ohne billig zu sein."
+      einleitung="Der Preis kommt nicht daher, dass weniger Sorgfalt hineingeht, sondern daher, dass keine Zeit in Dinge fließt, die schon gelöst sind."
+    >
+      <div ref={liste} className="relative max-w-3xl">
+        {/* Die Bahn liegt hinter den Punkten; die Fuellung waechst mit dem Scroll. */}
+        <div
+          aria-hidden
+          className="absolute bottom-2 left-[27px] top-2 w-px bg-mist/12 sm:left-[31px]"
         >
-          <h2 className="text-4xl sm:text-5xl font-bold text-white mb-4">
-            So arbeite ich
-          </h2>
-          <p className="text-xl text-gray-300 max-w-3xl mx-auto">
-            Effizient, transparent und mit modernen Werkzeugen
-          </p>
-        </motion.div>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto">
-          {workingMethod.map((benefit, index) => (
-            <motion.div
-              key={index}
-              initial={{ opacity: 0, x: index % 2 === 0 ? -30 : 30 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: index * 0.1 }}
-              className="bg-white/10 backdrop-blur-lg border border-white/20 p-8 rounded-2xl hover:bg-white/15 transition-all duration-300"
-            >
-              <div className="flex items-start gap-4">
-                <div className="bg-brand-cyan/20 p-3 rounded-xl flex-shrink-0">
-                  <benefit.icon className="w-8 h-8 text-brand-cyan" />
-                </div>
-                <div>
-                  <h3 className="text-2xl font-bold text-white mb-3">
-                    {benefit.title}
-                  </h3>
-                  <p className="text-gray-300 leading-relaxed">
-                    {benefit.description}
-                  </p>
-                </div>
-              </div>
-            </motion.div>
-          ))}
+          <motion.div style={{ height: fuellung }} className="w-px bg-cyan/60" />
         </div>
 
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6, delay: 0.4 }}
-          className="mt-16 text-center"
-        >
-          <div className="bg-white/10 backdrop-blur-lg border border-white/20 rounded-2xl p-8 max-w-3xl mx-auto">
-            <p className="text-gray-300 text-lg leading-relaxed">
-              <span className="text-brand-cyan font-semibold">Wichtig:</span> Erstellung der technischen Umsetzung der Website. 
-              Die Verantwortung für Inhalte, rechtliche Texte (Impressum, Datenschutz) und rechtliche Konformität liegt beim Auftraggeber.
-            </p>
-          </div>
-        </motion.div>
+        <div className="space-y-12">
+          {arbeitsweise.map((schritt, i) => (
+            <Reveal key={schritt.titel} verzoegerung={i * 0.05}>
+              <div className="flex gap-6 sm:gap-8">
+                <div className="relative z-10 flex h-14 w-14 flex-shrink-0 items-center justify-center rounded-full border border-mist/12 bg-ink/80 backdrop-blur sm:h-16 sm:w-16">
+                  <schritt.icon className="h-5 w-5 text-cyan-400" />
+                </div>
+                <div className="pt-3">
+                  <h3 className="mb-3 text-xl font-semibold text-mist sm:text-2xl">
+                    {schritt.titel}
+                  </h3>
+                  <p className="leading-relaxed text-mist/60">{schritt.text}</p>
+                </div>
+              </div>
+            </Reveal>
+          ))}
+        </div>
       </div>
-    </section>
+
+      <Reveal verzoegerung={0.1}>
+        <div className="pane mt-16 max-w-3xl rounded-2xl p-7 sm:p-9">
+          <p className="leading-relaxed text-mist/70">
+            <span className="font-semibold text-cyan-400">Zur Einordnung:</span>{' '}
+            Meine Leistung ist die technische Umsetzung der Website. Die
+            Verantwortung für die Inhalte, für Impressum und Datenschutz und für
+            die rechtliche Konformität bleibt beim Auftraggeber — dafür bekommt
+            er von mir vorab gesagt, was dafür nötig ist.
+          </p>
+        </div>
+      </Reveal>
+    </Section>
   )
 }

@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import localFont from 'next/font/local'
 import './globals.css'
+import { faqs } from './content/faq'
 
 const inter = localFont({
   src: '../public/fonts/Inter-Variable.woff2',
@@ -144,7 +145,7 @@ export const metadata: Metadata = {
   other: {
     'ai:indexing': 'enabled',
     'ai:crawling': 'allowed',
-    'ai:summary': 'PräsenzWert ist eine kleine, persönliche Webagentur für günstige, professionelle Websites – spezialisiert auf kleine Firmen und Vereine in der Eifel, in Köln, Bonn, im Ahrtal und am Rhein. Faire Festpreise schon bei kleinem Budget, moderne Umsetzung sowie lokale SEO- und KI-Suchmaschinen-Optimierung. Zusätzlich: eigene Software-Produkte (Vereins-Wahlen-App, Fotobox-Vermietung mit KI, digitales Bestellsystem, Android-App MännerCode).',
+    'ai:summary': 'PräsenzWert ist eine kleine, persönliche Webagentur für günstige, professionelle Websites – spezialisiert auf kleine Firmen und Vereine in der Eifel, in Köln, Bonn, im Ahrtal und am Rhein. Faire Festpreise schon bei kleinem Budget, moderne Umsetzung sowie lokale SEO- und KI-Suchmaschinen-Optimierung. Zusätzlich: eigene Software-Produkte (Vereins-Wahlen-App, Fotobox-Vermietung mit KI, digitales Bestellsystem, Android-Apps MenCode und WomenCode).',
     'ai:context': 'Webagentur / Webdesign, Zielgruppe kleine Firmen und Vereine mit kleinem Budget, Region NRW & Rheinland-Pfalz: Köln, Bonn, Rhein-Sieg, Euskirchen, Eifel, Ahrtal, Grafschaft, Bad Neuenahr-Ahrweiler, Remagen, Sinzig, Adenau, Koblenz. Leistungen: günstige Unternehmenswebsites, Vereinswebsites, lokale SEO, KI-Optimierung, Google Business Profil, Fotobox mieten mit KI, App- und Web-App-Entwicklung.',
     'ai:audience': 'Kleine Unternehmen, Selbstständige, Handwerker, Praxen und Vereine mit begrenztem Budget',
     'ai:pricing': 'Faire, transparente Festpreise – auch für kleine Budgets geeignet',
@@ -224,6 +225,7 @@ const organizationSchema = {
     'https://www.ag-solar.net/',
     'https://manuela-rosenkranz.de/',
     'https://play.google.com/store/apps/details?id=app.heidenreich.maennercode',
+    'https://play.google.com/store/apps/details?id=app.heidenreich.womencode',
   ],
 }
 
@@ -356,72 +358,15 @@ const faqSchema = {
   '@context': 'https://schema.org',
   '@type': 'FAQPage',
   '@id': 'https://www.praesenzwert.de/#faq',
-  mainEntity: [
-    {
-      '@type': 'Question',
-      name: 'Was kostet eine Website bei PräsenzWert?',
-      acceptedAnswer: {
-        '@type': 'Answer',
-        text: 'PräsenzWert ist auf günstige, faire Festpreise spezialisiert – gerade für kleine Firmen und Vereine mit begrenztem Budget. Du bekommst vorab ein transparentes Angebot ohne versteckte Kosten. So ist eine professionelle Homepage schon mit kleinem Budget möglich.',
-      },
-    },
-    {
-      '@type': 'Question',
-      name: 'Macht ihr auch günstige Websites für Vereine?',
-      acceptedAnswer: {
-        '@type': 'Answer',
-        text: 'Ja. Vereine sind eine meiner Kern-Zielgruppen. Ich erstelle moderne, übersichtliche Vereinswebsites zu einem fairen Preis – ideal für Sportvereine, Karnevalsvereine, Fördervereine und kleine Organisationen in Köln, Bonn, der Eifel und am Rhein.',
-      },
-    },
-    {
-      '@type': 'Question',
-      name: 'In welchen Regionen ist PräsenzWert tätig?',
-      acceptedAnswer: {
-        '@type': 'Answer',
-        text: 'Mein Schwerpunkt liegt im Raum Köln, Bonn, Eifel, Ahrtal und Rhein – inklusive Euskirchen, Rhein-Sieg-Kreis, Bad Münstereifel, Bad Neuenahr-Ahrweiler, Remagen, Sinzig und Umgebung. Termine vor Ort sind in der Region problemlos möglich, die Zusammenarbeit funktioniert aber auch komplett digital.',
-      },
-    },
-    {
-      '@type': 'Question',
-      name: 'Bekomme ich auch in Köln oder Bonn eine günstige Website?',
-      acceptedAnswer: {
-        '@type': 'Answer',
-        text: 'Ja. Als kleine, persönliche Webagentur arbeite ich ohne teuren Agentur-Overhead – dadurch sind professionelle Websites in Köln und Bonn deutlich günstiger als bei großen Anbietern, bei gleichbleibender Qualität.',
-      },
-    },
-    {
-      '@type': 'Question',
-      name: 'Werden die Websites für Google und KI-Suchmaschinen optimiert?',
-      acceptedAnswer: {
-        '@type': 'Answer',
-        text: 'Ja. Jede Website wird technisch SEO-optimiert ausgeliefert (semantisches HTML, strukturierte Daten / Schema.org, Sitemap, schnelle Ladezeiten) und ist explizit für KI-Crawler wie GPTBot, ChatGPT, ClaudeBot, PerplexityBot und Google-Extended freigegeben – damit du auch in ChatGPT, Perplexity & Co. gefunden wirst.',
-      },
-    },
-    {
-      '@type': 'Question',
-      name: 'Wie läuft ein Website-Projekt ab?',
-      acceptedAnswer: {
-        '@type': 'Answer',
-        text: 'Zuerst ein unverbindliches Erstgespräch, dann ein transparentes Festpreis-Angebot. Nach deiner Freigabe setze ich die Website mit modernen Tools und KI-gestützten Workflows effizient um – das hält die Kosten niedrig und die Umsetzung schnell.',
-      },
-    },
-    {
-      '@type': 'Question',
-      name: 'Bietet ihr auch eine Fotobox zum Mieten an?',
-      acceptedAnswer: {
-        '@type': 'Answer',
-        text: 'Ja. Neben Websites vermiete ich eine moderne Fotobox mit KI-Effekten, lustigen Filtern, Sofort-Druck und einer Online-Fotodatenbank – für Hochzeiten, Geburtstage, Firmenfeiern und Vereinsfeste. In der Regel deutlich günstiger als klassische Fotobox-Anbieter.',
-      },
-    },
-    {
-      '@type': 'Question',
-      name: 'Welche Referenzen gibt es?',
-      acceptedAnswer: {
-        '@type': 'Answer',
-        text: 'Aktuelle Referenzen sind u. a. AG Solar GmbH (Photovoltaik & Wallboxen, Grafschaft/Ahr/Rhein), SR Automation (Automatisierungstechnik) und die Praxis Manuela Rosenkranz (Bad Neuenahr-Ahrweiler). In Arbeit sind Websites für die Realschule Am Heimbach (Bonn), die Hebammen am Marienhospital Bonn und den Möhnenverein Nierendorf.',
-      },
-    },
-  ],
+  // Aus derselben Quelle wie der sichtbare FAQ-Abschnitt. Weichen Schema und
+  // Anzeige voneinander ab, verwirft Google die Rich Results der ganzen Seite -
+  // frueher standen die Texte hier ein zweites Mal und mussten von Hand
+  // synchron gehalten werden.
+  mainEntity: faqs.map((eintrag) => ({
+    '@type': 'Question',
+    name: eintrag.frage,
+    acceptedAnswer: { '@type': 'Answer', text: eintrag.antwort },
+  })),
 }
 
 const portfolioSchema = {
@@ -548,12 +493,29 @@ const softwareProductsSchema = {
       position: 4,
       item: {
         '@type': 'MobileApplication',
-        name: 'MännerCode',
+        name: 'MenCode',
         applicationCategory: 'LifestyleApplication',
         operatingSystem: 'Android',
-        description: 'App für eine starke Beziehung: Der Mann erhält jeden Tag eine kleine Tagesaufgabe – eine gute Tat für seine Partnerin. Mit Punkten, Streaks und sichtbarem Fortschritt.',
+        description: 'App für eine starke Beziehung: Er bekommt jeden Tag eine kleine Mission für seine Partnerin. Mit Punkten, Serien und sichtbarem Fortschritt.',
+        // Die Paket-ID ist historisch (die App hiess frueher MaennerCode) und
+        // darf nicht geaendert werden - sie ist die Adresse im Play Store.
         installUrl: 'https://play.google.com/store/apps/details?id=app.heidenreich.maennercode',
         url: 'https://play.google.com/store/apps/details?id=app.heidenreich.maennercode',
+        offers: { '@type': 'Offer', priceCurrency: 'EUR', price: '0', availability: 'https://schema.org/InStock' },
+        creator: { '@id': 'https://www.praesenzwert.de/#organization' },
+      },
+    },
+    {
+      '@type': 'ListItem',
+      position: 5,
+      item: {
+        '@type': 'MobileApplication',
+        name: 'WomenCode',
+        applicationCategory: 'LifestyleApplication',
+        operatingSystem: 'Android',
+        description: 'Das Gegenstück zu MenCode: Sie bekommt jeden Tag eine kleine Mission für ihren Partner. Gleiche Mechanik, gespiegelte Perspektive, mit Punkten und Serien.',
+        installUrl: 'https://play.google.com/store/apps/details?id=app.heidenreich.womencode',
+        url: 'https://play.google.com/store/apps/details?id=app.heidenreich.womencode',
         offers: { '@type': 'Offer', priceCurrency: 'EUR', price: '0', availability: 'https://schema.org/InStock' },
         creator: { '@id': 'https://www.praesenzwert.de/#organization' },
       },
@@ -570,8 +532,10 @@ export default function RootLayout({
     <html lang="de">
       <head>
         <link rel="manifest" href="/manifest.json" />
-        <link rel="dns-prefetch" href="https://images.unsplash.com" />
-        <meta name="theme-color" content="#1e293b" />
+        {/* Die Seite laedt nichts mehr von fremden Hosts - das Hero-Bild kommt
+            aus dem eigenen Verzeichnis, die Schrift liegt lokal. Deshalb sind
+            hier keine Preconnects mehr noetig. */}
+        <meta name="theme-color" content="#0E1626" />
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
         <meta name="apple-mobile-web-app-title" content="PräsenzWert" />

@@ -1,88 +1,86 @@
-'use client'
-
 import Image from 'next/image'
+
+/**
+ * Fusszeile.
+ *
+ * Kein eigener Hintergrund - der Farbguss laeuft bis zur letzten Zeile durch
+ * und endet dort, wo er angefangen hat. Nur eine Haarlinie trennt sie ab.
+ */
+
+const seite = [
+  { href: '#leistungen', text: 'Leistungen' },
+  { href: '#arbeitsweise', text: 'Arbeitsweise' },
+  { href: '#referenzen', text: 'Referenzen' },
+  { href: '#produkte', text: 'Produkte' },
+  { href: '#faq', text: 'FAQ' },
+  { href: '#kontakt', text: 'Kontakt' },
+]
+
+const produkte = [
+  { href: '/bestell-bar', text: 'Bestell-System' },
+  { href: '/mencode', text: 'MenCode' },
+  { href: '/womencode', text: 'WomenCode' },
+]
+
+const rechtliches = [
+  { href: '/impressum', text: 'Impressum' },
+  { href: '/datenschutz', text: 'Datenschutz' },
+]
 
 export default function Footer() {
   return (
-    <footer className="bg-brand-navy text-white py-12">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
-            <div className="text-left relative -mt-16">
+    <footer className="relative border-t border-mist/10 pb-12 pt-20">
+      <div className="container mx-auto px-5 sm:px-6 lg:px-8">
+        <div className="grid gap-12 sm:grid-cols-2 lg:grid-cols-4">
+          <div className="lg:col-span-1">
+            <div className="mb-5 flex items-center gap-2.5">
               <Image
-                src="/Gehirn_Transparent.png"
-                alt="PräsenzWert Logo"
-                width={180}
-                height={60}
-                className="h-56 w-auto brightness-0 invert block object-contain -ml-14"
+                src="/logo-mark.png"
+                alt=""
+                width={96}
+                height={96}
+                className="h-10 w-10 object-contain"
               />
-              <p className="text-gray-400 leading-relaxed absolute bottom-[-8px] sm:bottom-14 left-0 right-0 bg-brand-navy/80 p-2">
-                Unternehmenswebsites für kleine und mittelständische Betriebe & Organisationen in der Region Rhein · Ahr · Eifel.
-              </p>
+              <span className="font-semibold tracking-tight text-mist">
+                Präsenz<span className="text-cyan-400">Wert</span>
+              </span>
             </div>
-
-            <div>
-              <h4 className="font-bold text-lg mb-4">Quick Links</h4>
-              <ul className="space-y-2">
-                <li>
-                  <a href="#home" className="text-gray-400 hover:text-brand-cyan transition-colors">
-                    Home
-                  </a>
-                </li>
-                <li>
-                  <a href="#leistungen" className="text-gray-400 hover:text-brand-cyan transition-colors">
-                    Leistungen
-                  </a>
-                </li>
-                <li>
-                  <a href="#arbeitsweise" className="text-gray-400 hover:text-brand-cyan transition-colors">
-                    Arbeitsweise
-                  </a>
-                </li>
-                <li>
-                  <a href="#referenzen" className="text-gray-400 hover:text-brand-cyan transition-colors">
-                    Referenzen
-                  </a>
-                </li>
-                <li>
-                  <a href="#hinweise" className="text-gray-400 hover:text-brand-cyan transition-colors">
-                    Hinweise
-                  </a>
-                </li>
-                <li>
-                  <a href="#kontakt" className="text-gray-400 hover:text-brand-cyan transition-colors">
-                    Kontakt
-                  </a>
-                </li>
-              </ul>
-            </div>
-
-            <div>
-              <h4 className="font-bold text-lg mb-4">Rechtliches</h4>
-              <ul className="space-y-2">
-                <li>
-                  <a
-                    href="/impressum"
-                    className="text-gray-400 hover:text-brand-cyan transition-colors text-left w-full inline-block"
-                  >
-                    Impressum
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="/datenschutz"
-                    className="text-gray-400 hover:text-brand-cyan transition-colors text-left w-full inline-block"
-                  >
-                    Datenschutz
-                  </a>
-                </li>
-              </ul>
-            </div>
+            <p className="max-w-xs text-sm leading-relaxed text-mist/45">
+              Günstige, professionelle Websites für kleine Firmen und Vereine
+              zwischen Eifel, Ahr, Rhein, Köln und Bonn.
+            </p>
           </div>
 
-          <div className="border-t border-gray-700 pt-8 pb-[60px] sm:pt-8 sm:pb-8 text-center text-gray-400">
-            <p>&copy; {new Date().getFullYear()} PräsenzWert. Alle Rechte vorbehalten.</p>
-          </div>
+          {[
+            { titel: 'Seite', punkte: seite },
+            { titel: 'Produkte', punkte: produkte },
+            { titel: 'Rechtliches', punkte: rechtliches },
+          ].map((spalte) => (
+            <div key={spalte.titel}>
+              <h3 className="mb-5 text-xs uppercase tracking-[0.25em] text-mist/35">
+                {spalte.titel}
+              </h3>
+              <ul className="space-y-3">
+                {spalte.punkte.map((punkt) => (
+                  <li key={punkt.href}>
+                    <a
+                      href={punkt.href}
+                      className="text-sm text-mist/55 transition-colors duration-300 ease-brand hover:text-ember"
+                    >
+                      {punkt.text}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
         </div>
-      </footer>
+
+        <div className="mt-16 flex flex-col gap-3 border-t border-mist/10 pt-8 text-sm text-mist/35 sm:flex-row sm:items-center sm:justify-between">
+          <p>&copy; {new Date().getFullYear()} PräsenzWert</p>
+          <p>Josef-Martin-Weg 4 · 53501 Grafschaft</p>
+        </div>
+      </div>
+    </footer>
   )
 }
