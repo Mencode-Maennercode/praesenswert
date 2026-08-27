@@ -240,7 +240,7 @@ export default function PortfolioSection() {
         style={{ height: `calc(100vh + ${Math.round(weg * 0.85)}px)` }}
       >
         <div className="sticky top-0 flex h-screen items-center overflow-hidden">
-          <motion.div ref={bahn} style={{ x: schub }} className="flex gap-5 pl-8 pr-16">
+          <motion.div ref={bahn} style={{ x: schub }} className="flex gap-5 pl-8 pr-16" suppressHydrationWarning>
             {projekte.map((projekt) => (
               // Feste Kartenhoehe. Ohne sie richtet sich die Reihe nach der
               // laengsten Karte, und die ragt dann oben und unten aus dem

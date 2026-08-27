@@ -1,4 +1,4 @@
-import type { Metadata } from 'next'
+import type { Metadata, Viewport } from 'next'
 import localFont from 'next/font/local'
 import './globals.css'
 import { faqs } from './content/faq'
@@ -9,6 +9,14 @@ const inter = localFont({
   style: 'normal',
   display: 'swap',
 })
+
+// viewportFit: 'cover' macht env(safe-area-inset-*) erst nutzbar - sonst
+// bleibt das Mobilmenue auf iPhones mit Home-Indicator ohne Bodenabstand.
+export const viewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  viewportFit: 'cover',
+}
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://www.praesenzwert.de'),

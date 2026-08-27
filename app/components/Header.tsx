@@ -109,7 +109,7 @@ export default function Header() {
             </span>
           </a>
 
-          <nav className="hidden items-center gap-7 md:flex">
+          <nav className="hidden items-center gap-7 lg:flex">
             {punkte.map((punkt) => (
               <a
                 key={punkt.href}
@@ -121,7 +121,7 @@ export default function Header() {
             ))}
           </nav>
 
-          <div className="hidden md:block">
+          <div className="hidden lg:block">
             <a
               href="#kontakt"
               className="rounded-full bg-ember px-5 py-2.5 text-sm font-semibold text-ink transition-colors duration-300 ease-brand hover:bg-ember-600"
@@ -132,7 +132,7 @@ export default function Header() {
 
           <button
             type="button"
-            className="text-mist md:hidden"
+            className="text-mist lg:hidden"
             onClick={() => setMenueOffen(true)}
             aria-label="Menü öffnen"
             aria-expanded={menueOffen}
@@ -150,7 +150,7 @@ export default function Header() {
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               transition={{ duration: 0.25 }}
-              className="fixed inset-0 z-40 bg-ink/80 backdrop-blur-sm md:hidden"
+              className="fixed inset-0 z-40 bg-ink/80 backdrop-blur-sm lg:hidden"
               onClick={() => setMenueOffen(false)}
             />
             <motion.div
@@ -158,7 +158,7 @@ export default function Header() {
               animate={{ x: 0 }}
               exit={{ x: '100%' }}
               transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
-              className="fixed inset-y-0 right-0 z-50 flex w-[86vw] max-w-sm flex-col border-l border-mist/10 bg-ink px-7 py-6 md:hidden"
+              className="fixed inset-y-0 right-0 z-50 flex w-[86vw] max-w-sm flex-col border-l border-mist/10 bg-ink px-7 pb-[max(1.5rem,env(safe-area-inset-bottom))] pt-[max(1.5rem,env(safe-area-inset-top))] lg:hidden"
             >
               <div className="mb-10 flex justify-end">
                 <button

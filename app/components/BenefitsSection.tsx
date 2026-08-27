@@ -61,7 +61,7 @@ export default function BenefitsSection() {
           aria-hidden
           className="absolute bottom-2 left-[27px] top-2 w-px bg-mist/12 sm:left-[31px]"
         >
-          <motion.div style={{ height: fuellung }} className="w-px bg-cyan/60" />
+          <motion.div style={{ height: fuellung }} className="w-px bg-cyan/60" suppressHydrationWarning />
         </div>
 
         <div className="space-y-12">

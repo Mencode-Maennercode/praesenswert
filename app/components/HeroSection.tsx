@@ -53,6 +53,7 @@ export default function HeroSection() {
         <motion.div
           style={{ opacity: textDeckung, y: textHub }}
           className="absolute inset-0 flex items-center justify-center px-5 sm:px-8"
+          suppressHydrationWarning
         >
           <div className="w-full max-w-4xl text-center">
             <motion.div
@@ -109,6 +110,7 @@ export default function HeroSection() {
         <motion.div
           style={{ opacity: hinweisDeckung }}
           className="pointer-events-none absolute inset-x-0 bottom-8 flex justify-center"
+          suppressHydrationWarning
         >
           <span className="flex flex-col items-center gap-2 text-xs uppercase tracking-[0.25em] text-mist/45">
             Scrollen
