@@ -1,0 +1,27 @@
+# PräsenzWert
+
+> Günstige, professionelle Websites für kleine Firmen und Vereine in der Eifel, in Köln, Bonn, im Ahrtal und am Rhein. Faire Festpreise, moderne Umsetzung, technisches SEO und Optimierung für KI-Suchmaschinen (GEO).
+
+PräsenzWert ist eine kleine, persönliche Webagentur (kein Agentur-Overhead) mit Sitz in der Region Köln, Bonn, Eifel, Ahrtal und Rhein. Schwerpunkt: Websites für kleine Unternehmen, Praxen, Vereine und Schulen zu fairen Festpreisen, technisch sauber umgesetzt (semantisches HTML, Schema.org-Strukturdaten, Sitemap, schnelle Ladezeiten) und ausdrücklich für KI-Crawler wie GPTBot, ChatGPT-User, ClaudeBot, PerplexityBot und Google-Extended freigegeben.
+
+Bedienungsgebiet: Köln, Bonn, Rhein-Sieg-Kreis (u. a. Euskirchen, Brühl, Bornheim, Meckenheim, Rheinbach, Troisdorf, Siegburg, Hennef, Sankt Augustin, Königswinter, Bad Honnef), Eifel (u. a. Bad Münstereifel, Mechernich, Schleiden, Daun, Bitburg, Prüm, Cochem), Ahrtal und Rhein (u. a. Bad Neuenahr-Ahrweiler, Remagen, Sinzig, Linz am Rhein, Neuwied, Andernach, Koblenz, Mayen, Adenau).
+
+Neben Websites bietet PräsenzWert eine Fotobox-Vermietung mit KI-Effekten sowie ein digitales Bestellsystem für Vereine und Gastronomie an, außerdem zwei kostenlose Apps (MenCode, WomenCode).
+
+## Leistungen
+- [Leistungen](https://www.praesenzwert.de/#leistungen): Unternehmenswebsites, Vereinswebsites, Praxis-Websites, Schulwebsites
+- [Arbeitsweise](https://www.praesenzwert.de/#arbeitsweise): Ablauf von Erstgespräch bis Festpreis-Angebot
+- [Produkte](https://www.praesenzwert.de/#produkte): Fotobox-Vermietung mit KI, digitales Bestellsystem (Bestell-Bar)
+- [Bestell-Bar](https://www.praesenzwert.de/bestell-bar): Digitales Getränkebestellsystem mit Live-Statistik für Vereine, Feste und Gastronomie
+- [FAQ](https://www.praesenzwert.de/#faq): Preise, Regionen, Konzeptumsetzung, SEO/KI-Optimierung
+
+## Referenzen (live)
+- [Realschule Am Heimbach](https://rs-heimbach.de/): Schulwebsite in Bonn
+- [Nora Heidenreich](https://nora-heidenreich.de/): Mobile Physiotherapie mit Hausbesuchen im Kreis Ahrweiler
+- [AG Solar GmbH](https://www.ag-solar.net/): Photovoltaik, Batteriespeicher und Wallboxen in der Grafschaft
+- [SR Automation](https://www.srautomation.de/): Automatisierungstechnik
+- [Manuela Rosenkranz](https://manuela-rosenkranz.de/): Praxis für Individualpsychologische Beratung und therapeutische Seelsorge in Bad Neuenahr-Ahrweiler
+
+## Kontakt
+- [Anfragen](https://www.praesenzwert.de/#kontakt): Unverbindliches Erstgespräch, kostenlos
+- E-Mail: kontakt@praesenzwert.de
