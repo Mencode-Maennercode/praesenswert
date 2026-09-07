@@ -60,6 +60,6 @@ export const faqs: FaqEintrag[] = [
   {
     frage: 'Welche Referenzen gibt es?',
     antwort:
-      'Aktuelle Referenzen sind u. a. AG Solar GmbH (Photovoltaik & Wallboxen, Grafschaft/Ahr/Rhein), SR Automation (Automatisierungstechnik) und die Praxis Manuela Rosenkranz (Bad Neuenahr-Ahrweiler). In Arbeit sind Websites für die Realschule Am Heimbach (Bonn), die Hebammen am Marienhospital Bonn, die mobile Physiotherapie Nora Heidenreich (Kreis Ahrweiler) und den Möhnenverein Nierendorf.',
+      'Online sind u. a. die Realschule Am Heimbach (Bonn), die mobile Physiotherapie Nora Heidenreich (Kreis Ahrweiler), AG Solar GmbH (Photovoltaik & Wallboxen, Grafschaft/Ahr/Rhein), SR Automation (Automatisierungstechnik) und die Praxis Manuela Rosenkranz (Bad Neuenahr-Ahrweiler). In Arbeit sind Websites für die Hebammen am Marienhospital Bonn und den Möhnenverein Nierendorf.',
   },
 ]

@@ -229,8 +229,10 @@ const organizationSchema = {
   ],
   knowsAbout: ['Webdesign', 'Website Entwicklung', 'günstige Websites', 'Vereinswebsites', 'Unternehmenswebsites KMU', 'SEO', 'Lokale SEO', 'KI-Suchmaschinen-Optimierung (GEO)', 'Google Business Profil', 'Digitale Präsenz', 'Fotobox-Vermietung mit KI', 'App-Entwicklung', 'Web-App-Entwicklung'],
   sameAs: [
-    'https://www.srautomation.de/',
+    'https://rs-heimbach.de/',
+    'https://nora-heidenreich.de/',
     'https://www.ag-solar.net/',
+    'https://www.srautomation.de/',
     'https://manuela-rosenkranz.de/',
     'https://play.google.com/store/apps/details?id=app.heidenreich.maennercode',
     'https://play.google.com/store/apps/details?id=app.heidenreich.womencode',
@@ -388,6 +390,28 @@ const portfolioSchema = {
       position: 1,
       item: {
         '@type': 'CreativeWork',
+        name: 'Städtische Realschule Am Heimbach',
+        url: 'https://rs-heimbach.de/',
+        about: 'Schulwebsite für die Städtische Realschule Am Heimbach in Bonn',
+        creator: { '@id': 'https://www.praesenzwert.de/#organization' },
+      },
+    },
+    {
+      '@type': 'ListItem',
+      position: 2,
+      item: {
+        '@type': 'CreativeWork',
+        name: 'Nora Heidenreich – Mobile Physiotherapie',
+        url: 'https://nora-heidenreich.de/',
+        about: 'Website für eine mobile Physiotherapie mit Hausbesuchen im Kreis Ahrweiler, Schwerpunkt Neurologie',
+        creator: { '@id': 'https://www.praesenzwert.de/#organization' },
+      },
+    },
+    {
+      '@type': 'ListItem',
+      position: 3,
+      item: {
+        '@type': 'CreativeWork',
         name: 'AG Solar GmbH',
         url: 'https://www.ag-solar.net/',
         about: 'Unternehmenswebsite für Photovoltaik, Batteriespeicher und Wallboxen in der Grafschaft, Ahr und Rhein',
@@ -396,7 +420,7 @@ const portfolioSchema = {
     },
     {
       '@type': 'ListItem',
-      position: 2,
+      position: 4,
       item: {
         '@type': 'CreativeWork',
         name: 'SR Automation',
@@ -407,7 +431,7 @@ const portfolioSchema = {
     },
     {
       '@type': 'ListItem',
-      position: 3,
+      position: 5,
       item: {
         '@type': 'CreativeWork',
         name: 'Manuela Rosenkranz – Praxis für Individualpsychologische Beratung',
@@ -418,17 +442,7 @@ const portfolioSchema = {
     },
     {
       '@type': 'ListItem',
-      position: 4,
-      item: {
-        '@type': 'CreativeWork',
-        name: 'Städtische Realschule Am Heimbach',
-        about: 'Schulwebsite für die Städtische Realschule Am Heimbach in Bonn (in Arbeit, geplant Juni 2026)',
-        creator: { '@id': 'https://www.praesenzwert.de/#organization' },
-      },
-    },
-    {
-      '@type': 'ListItem',
-      position: 5,
+      position: 6,
       item: {
         '@type': 'CreativeWork',
         name: 'Hebammen am Marienhospital Bonn',
@@ -438,7 +452,7 @@ const portfolioSchema = {
     },
     {
       '@type': 'ListItem',
-      position: 6,
+      position: 7,
       item: {
         '@type': 'CreativeWork',
         name: 'Möhnenverein Nierendorf e.V.',
