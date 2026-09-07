@@ -31,6 +31,22 @@ type Projekt = {
 
 const projekte: Projekt[] = [
   {
+    name: 'Realschule Am Heimbach',
+    url: 'https://rs-heimbach.de/',
+    status: 'live',
+    statusText: 'Live',
+    text: 'Schulwebsite für die Städtische Realschule Am Heimbach in Bonn. Der Schwerpunkt liegt darauf, dass Eltern und Schülerinnen und Schüler Termine, Formulare und Ansprechpartner ohne Umweg finden.',
+    tags: ['Schulwebsite', 'Bildung', 'Bonn'],
+  },
+  {
+    name: 'Nora Heidenreich',
+    url: 'https://nora-heidenreich.de/',
+    status: 'live',
+    statusText: 'Live',
+    text: 'Auftritt für eine mobile Physiotherapie im Kreis Ahrweiler: Hausbesuche für Privatpatienten und Selbstzahler, Schwerpunkt Neurologie. Die Seite muss vor allem eines können — verständlich sein, auch für Angehörige.',
+    tags: ['Praxis-Website', 'Physiotherapie', 'Kreis Ahrweiler'],
+  },
+  {
     name: 'AG Solar GmbH',
     url: 'https://www.ag-solar.net/',
     status: 'live',
@@ -59,25 +75,11 @@ const projekte: Projekt[] = [
     tags: ['Praxis-Website', 'Beratung & Seelsorge', 'Kundenkonzept 1:1'],
   },
   {
-    name: 'Realschule Am Heimbach',
-    status: 'arbeit',
-    statusText: 'In Arbeit',
-    text: 'Schulwebsite für die Städtische Realschule Am Heimbach in Bonn. Der Schwerpunkt liegt darauf, dass Eltern und Schülerinnen und Schüler Termine, Formulare und Ansprechpartner ohne Umweg finden.',
-    tags: ['Schulwebsite', 'Bildung', 'Bonn'],
-  },
-  {
     name: 'Hebammen am Marienhospital',
     status: 'arbeit',
     statusText: 'In Arbeit',
     text: 'Informationsseite für die Hebammen am Marienhospital Bonn. Vertrauensvoller Auftritt für werdende Eltern, mit klaren Angeboten und einem einfachen Weg zur Kontaktaufnahme.',
     tags: ['Praxis-Website', 'Gesundheit & Geburt', 'Bonn'],
-  },
-  {
-    name: 'Nora Heidenreich',
-    status: 'arbeit',
-    statusText: 'In Arbeit',
-    text: 'Auftritt für eine mobile Physiotherapie im Kreis Ahrweiler: Hausbesuche für Privatpatienten und Selbstzahler, Schwerpunkt Neurologie. Die Seite muss vor allem eines können — verständlich sein, auch für Angehörige.',
-    tags: ['Praxis-Website', 'Physiotherapie', 'Kreis Ahrweiler'],
   },
   {
     name: 'Möhnenverein Nierendorf',
