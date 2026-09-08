@@ -4,12 +4,13 @@ const nextConfig: NextConfig = {
   // Die Seite wird als statische Dateien auf Apache ausgeliefert (siehe
   // .htaccess und contact.php) - der Export darf nicht wegfallen.
   output: 'export',
-  // Erzeugt fuer jede Route ein echtes Verzeichnis mit index.html statt einer
-  // <route>.html-Datei. Voraussetzung dafuer, dass die .htaccess-Regel
-  // "existierende Datei/Verzeichnis direkt ausliefern" neue Unterseiten wie
-  // /leistungen/ erkennt, statt sie faelschlich ueber den SPA-Fallback laufen
-  // zu lassen.
-  trailingSlash: true,
+  // WICHTIG: trailingSlash NICHT aktivieren. Das wandelt bestehende Routen
+  // wie bestell-bar.html in bestell-bar/index.html um (Datei -> Verzeichnis).
+  // Am 08.09.2026 hat genau dieser Typwechsel den netcup-Git-Deploy fuer
+  // /bestell-bar/ und die neue /leistungen/-Seite zum Stillstand gebracht
+  // (.htaccess wurde uebernommen, die neuen Verzeichnisse aber nicht -- die
+  // Seiten lieferten 301 statt 200). Neue Next-Routen muessen ohne
+  // trailingSlash auskommen, siehe /leistungen fuer das Muster.
   images: {
     // Ohne Node-Server gibt es keine Bildoptimierung zur Laufzeit.
     unoptimized: true,

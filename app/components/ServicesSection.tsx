@@ -109,7 +109,7 @@ export default function ServicesSection() {
 
       <Reveal verzoegerung={0.15}>
         <Link
-          href="/leistungen/"
+          href="/leistungen"
           className="mt-10 inline-flex items-center gap-2 text-sm font-medium text-cyan-400 hover:text-cyan-300 transition-colors"
         >
           Ausführliche Leistungsseite

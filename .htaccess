@@ -16,11 +16,18 @@ RewriteCond %{REQUEST_FILENAME} -f [OR]
 RewriteCond %{REQUEST_FILENAME} -d
 RewriteRule ^ - [L]
 
-# Alle bekannten Next-Routen sind bereits echte Dateien/Verzeichnisse und
-# wurden oben durchgereicht. Eine unbekannte URL lieferte hier bisher per
+# Saubere URLs ohne Dateiendung auf die passende .html-Datei mappen. Next
+# exportiert z.B. "leistungen.html", intern wird aber ueberall auf
+# "/leistungen" (ohne Endung) verlinkt -- das betraf schon vorher /bestell-bar
+# und lief bisher unbemerkt ins Leere (siehe unten).
+RewriteCond %{REQUEST_FILENAME}.html -f
+RewriteRule ^(.*)$ $1.html [L]
+
+# Alles andere ist eine unbekannte URL. Vorher lieferte hier ein
 # SPA-Fallback Status 200 mit dem Inhalt der Startseite aus -- Google konnte
-# dadurch beliebige Phantom-Pfade als Duplikate indexieren. Stattdessen
-# per 301 auf die Startseite umleiten.
+# dadurch beliebige Phantom-Pfade als Duplikate indexieren, und echte interne
+# Links wie /bestell-bar landeten unbemerkt auf der Startseite statt auf der
+# Zielseite. Jetzt ehrlich per 301 auf die Startseite umleiten.
 RewriteCond %{REQUEST_URI} !^/$
 RewriteRule ^ / [R=301,L]
 

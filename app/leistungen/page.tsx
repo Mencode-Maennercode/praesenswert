@@ -13,7 +13,7 @@ export const metadata: Metadata = {
   description:
     'Was in einer Website von PräsenzWert enthalten ist — und was nicht: technische Umsetzung, Struktur & Design, Inhalte, Kontaktwege, Google Business Profil. Faire Festpreise für kleine Firmen und Vereine in Eifel, Köln, Bonn und am Rhein.',
   alternates: {
-    canonical: 'https://www.praesenzwert.de/leistungen/',
+    canonical: 'https://www.praesenzwert.de/leistungen',
   },
 }
 
