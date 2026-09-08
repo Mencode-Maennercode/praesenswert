@@ -16,8 +16,13 @@ RewriteCond %{REQUEST_FILENAME} -f [OR]
 RewriteCond %{REQUEST_FILENAME} -d
 RewriteRule ^ - [L]
 
-# Alle anderen Anfragen zu index.html (Next.js Client-Side Routing)
-RewriteRule ^ /index.html [L,QSA]
+# Alle bekannten Next-Routen sind bereits echte Dateien/Verzeichnisse und
+# wurden oben durchgereicht. Eine unbekannte URL lieferte hier bisher per
+# SPA-Fallback Status 200 mit dem Inhalt der Startseite aus -- Google konnte
+# dadurch beliebige Phantom-Pfade als Duplikate indexieren. Stattdessen
+# per 301 auf die Startseite umleiten.
+RewriteCond %{REQUEST_URI} !^/$
+RewriteRule ^ / [R=301,L]
 
 # Security Headers
 <IfModule mod_headers.c>

@@ -1,6 +1,7 @@
 'use client'
 
-import { Monitor, Palette, FileText, Mail, MapPin, Minus } from 'lucide-react'
+import Link from 'next/link'
+import { Monitor, Palette, FileText, Mail, MapPin, Minus, ArrowRight } from 'lucide-react'
 import Section from './Section'
 import Reveal from '../motion/Reveal'
 
@@ -104,6 +105,16 @@ export default function ServicesSection() {
             ))}
           </div>
         </div>
+      </Reveal>
+
+      <Reveal verzoegerung={0.15}>
+        <Link
+          href="/leistungen/"
+          className="mt-10 inline-flex items-center gap-2 text-sm font-medium text-cyan-400 hover:text-cyan-300 transition-colors"
+        >
+          Ausführliche Leistungsseite
+          <ArrowRight size={16} />
+        </Link>
       </Reveal>
     </Section>
   )
