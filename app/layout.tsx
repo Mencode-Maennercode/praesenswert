@@ -595,7 +595,9 @@ export default function RootLayout({
             Consent-Banner noetig. IP-Anonymisierung ist serverseitig aktiv. */}
         <script
           dangerouslySetInnerHTML={{
-            __html: `var _paq = window._paq = window._paq || [];
+            __html: `(function(){
+if (location.hostname === 'localhost' || location.hostname === '127.0.0.1') return;
+var _paq = window._paq = window._paq || [];
 _paq.push(['disableCookies']);
 _paq.push(['trackPageView']);
 _paq.push(['enableLinkTracking']);
@@ -605,6 +607,7 @@ _paq.push(['enableLinkTracking']);
   _paq.push(['setSiteId', '1']);
   var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
   g.async=true; g.src=u+'matomo.js'; s.parentNode.insertBefore(g,s);
+})();
 })();`,
           }}
         />
