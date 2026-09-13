@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="refresh" content="0;url=https://play.google.com/store/apps/details?id=app.heidenreich.maennercode">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>MenCode im Play Store</title>
+<meta name="description" content="MenCode jetzt im Google Play Store öffnen.">
+<meta name="robots" content="noindex, follow">
+<link rel="canonical" href="https://praesenzwert.de/app-mencode">
+<link rel="icon" href="/mencode/assets/logo.png" type="image/png">
+<meta name="theme-color" content="#111417">
+<meta property="og:type" content="website">
+<meta property="og:title" content="MenCode – Beziehung stärken">
+<meta property="og:description" content="Jeden Tag 1 Mission für eine stärkere Beziehung. Kein Konto, kein Tracking.">
+<meta property="og:url" content="https://praesenzwert.de/app-mencode">
+<meta property="og:image" content="https://praesenzwert.de/mencode/assets/logo.png">
+<style>
+  :root{
+    --ink:#0e1114; --card:#1b2126; --card2:#222a30;
+    --line:#2b333a;
+    --gold:#d4a84f; --gold-bright:#ebc06a;
+    --hi:#eceef0; --mid:#9ba6ae;
+    --sans:"Segoe UI",system-ui,-apple-system,Roboto,Helvetica,Arial,sans-serif;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0;height:100%}
+  body{
+    background:
+      radial-gradient(1100px 600px at 50% -10%, #1c232a 0%, rgba(28,35,42,0) 60%),
+      radial-gradient(900px 500px at 90% 10%, rgba(212,168,79,.14) 0%, rgba(212,168,79,0) 55%),
+      var(--ink);
+    color:var(--hi);
+    font-family:var(--sans);
+    min-height:100vh;
+    display:flex;align-items:center;justify-content:center;
+    -webkit-font-smoothing:antialiased;
+  }
+  .card{
+    max-width:360px;width:calc(100% - 48px);
+    background:linear-gradient(180deg,var(--card2),var(--card));
+    border:1px solid var(--line);border-radius:20px;
+    padding:36px 28px;text-align:center;
+  }
+  img.logo{width:84px;height:84px;object-fit:contain;filter:drop-shadow(0 6px 18px rgba(0,0,0,.45));margin-bottom:18px}
+  h1{font-size:20px;margin:0 0 8px;letter-spacing:.02em}
+  p{color:var(--mid);font-size:14.5px;line-height:1.55;margin:0 0 24px}
+  .spinner{
+    width:22px;height:22px;margin:0 auto 20px;
+    border:3px solid var(--line);border-top-color:var(--gold);
+    border-radius:50%;animation:spin .8s linear infinite;
+  }
+  @keyframes spin{to{transform:rotate(360deg)}}
+  a.btn{
+    display:inline-block;width:100%;
+    background:linear-gradient(180deg,var(--gold-bright),var(--gold));color:#1b1405;
+    border-radius:12px;padding:13px 18px;font-weight:700;letter-spacing:.02em;
+    text-decoration:none;font-size:15px;
+  }
+  .fallback{margin-top:16px;font-size:12.5px;color:var(--mid)}
+</style>
+</head>
+<body>
+  <div class="card">
+    <img class="logo" src="/mencode/assets/logo.png" alt="MenCode" onerror="this.style.display='none'">
+    <div class="spinner"></div>
+    <h1>MenCode wird geöffnet …</h1>
+    <p>Du wirst zum Google&nbsp;Play&nbsp;Store weitergeleitet.</p>
+    <a class="btn" href="https://play.google.com/store/apps/details?id=app.heidenreich.maennercode" rel="noopener">Jetzt im Play Store öffnen</a>
+    <p class="fallback">Öffnet sich nichts automatisch? Tippe oben auf den Button.</p>
+  </div>
+  <script>
+    location.replace("https://play.google.com/store/apps/details?id=app.heidenreich.maennercode");
+  </script>
+</body>
+</html>
