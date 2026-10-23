@@ -1,1 +1,0 @@
-import{a as e,i as t,n,r,t as i}from"./layout-DieA-uP2.js";var a={renderer:e,...t,...n,...r,...i};export{a as default};

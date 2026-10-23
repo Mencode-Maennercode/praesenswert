@@ -1,0 +1,1 @@
+import"./preload-helper-BLKG5KyT.js";import{Rt as e}from"./is-ref-object-DruI2cuh.js";import{c as t,t as n}from"./mount-EuOcs7zo.js";import{t as r}from"./QrCode.es-CRAX4nlx.js";var i=e();n((0,i.jsx)(t,{icon:(0,i.jsx)(r,{size:44}),title:`Bestellsystem`,children:`Bitte den QR-Code an deinem Tisch scannen. Personal öffnet den Link vom Veranstalter.`}));
