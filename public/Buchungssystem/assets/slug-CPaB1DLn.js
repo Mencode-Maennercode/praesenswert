@@ -1,0 +1,1 @@
+function e(e){return e.toLowerCase().replace(/ä/g,`ae`).replace(/ö/g,`oe`).replace(/ü/g,`ue`).replace(/ß/g,`ss`).replace(/[^a-z0-9]+/g,`-`).replace(/^-+|-+$/g,``).slice(0,40)||`x`}function t(e,t){let n=new Set(t);if(!n.has(e))return e;for(let t=2;;t++){let r=`${e.slice(0,36)}-${t}`;if(!n.has(r))return r}}export{t as n,e as t};

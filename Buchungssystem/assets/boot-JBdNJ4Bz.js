@@ -1,0 +1,1 @@
+function e(e){if(document.visibilityState===`hidden`)return e();let t=document.getElementById(`bokeh-shell`);(t?t.decode().catch(()=>{}):Promise.resolve()).then(()=>requestAnimationFrame(()=>setTimeout(e,0)))}export{e as t};

@@ -1,0 +1,1 @@
+var e=e=>!1;export{e as t};

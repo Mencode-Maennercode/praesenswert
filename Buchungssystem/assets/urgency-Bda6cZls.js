@@ -1,0 +1,1 @@
+function e(e,t){let n=t-e;return n>=36e4?`late`:n>=18e4?`warn`:`calm`}function t(e,t){let n=Math.max(0,Math.floor((t-e)/1e3));return`${Math.floor(n/60)}:${String(n%60).padStart(2,`0`)}`}export{e as n,t};

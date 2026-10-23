@@ -1,0 +1,1 @@
+var e=new Intl.NumberFormat(`de-DE`,{style:`currency`,currency:`EUR`});function t(t){return e.format(t/100)}function n(e){let t=e.replace(/€|\s/g,``).replace(`,`,`.`);if(!/^\d{1,5}(\.\d{1,2})?$/.test(t))return null;let[n,r=``]=t.split(`.`);return Number(n)*100+Number(r.padEnd(2,`0`))}function r(e,t){return Math.round(e*t/1e3)}export{n,r,t};
