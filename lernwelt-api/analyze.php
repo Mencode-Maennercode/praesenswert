@@ -50,16 +50,16 @@ $anweisung = <<<TEXT
     TEXT;
 $eingabe = json_encode($daten, JSON_UNESCAPED_UNICODE) . ($vorher !== '' ? "\nNotiz der letzten Auswertung: $vorher" : '');
 
-$roh = geminiJson([['text' => $eingabe]], [
-    'type' => 'OBJECT',
+$roh = aiJson([textTeil($eingabe)], [
+    'type' => 'object',
     'properties' => [
-        'note' => ['type' => 'STRING'],
-        'focus' => ['type' => 'ARRAY', 'items' => ['type' => 'STRING']],
-        'parentText' => ['type' => 'STRING'],
-        'kidPraise' => ['type' => 'STRING'],
+        'note' => ['type' => 'string'],
+        'focus' => ['type' => 'array', 'items' => ['type' => 'string']],
+        'parentText' => ['type' => 'string'],
+        'kidPraise' => ['type' => 'string'],
     ],
-    'required' => ['note', 'focus', 'parentText'],
-    'propertyOrdering' => ['note', 'focus', 'parentText', 'kidPraise'],
+    'required' => ['note', 'focus', 'parentText', 'kidPraise'],
+    'additionalProperties' => false,
 ], $anweisung);
 
 $bekannt = array_column($mastery, 'skillId');

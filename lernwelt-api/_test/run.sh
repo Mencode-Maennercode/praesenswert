@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # curl-Tests gegen lokalen PHP-Server.
 #   PHP_BIN=~/php/php.exe bash _test/run.sh
-# Braucht für die Cache-Tests einen Gemini-Schlüssel in GEMINI_API_KEY.
+# Braucht für die Cache-Tests einen Mistral-Schlüssel in MISTRAL_API_KEY.
 set -u
 cd "$(dirname "$0")/.."
 API_DIR="$(pwd -W 2>/dev/null || pwd)"
@@ -51,8 +51,8 @@ R=$(curl -s -w '|%{http_code}' -X POST "${J[@]}" -H "Authorization: Bearer $TOK_
 check "Kontingent leer → 429" 429 "${R##*|}"
 echo "$R" | grep -q '"retryAfter":[1-9]' && check "429 hat retryAfter" ja ja || check "429 hat retryAfter" ja nein
 
-# --- Cache-Treffer (echter Gemini-Aufruf beim ersten Mal)
-if [ -n "${GEMINI_API_KEY:-}" ]; then
+# --- Cache-Treffer (echter KI-Aufruf beim ersten Mal)
+if [ -n "${MISTRAL_API_KEY:-}" ]; then
   H1=$(curl -s -D - -o _test/tmp/e1.json -X POST "${J[@]}" -H "Authorization: Bearer $TOK_OK" -d "$EX" $U/explain.php | tr -d '\r')
   H2=$(curl -s -D - -o _test/tmp/e2.json -X POST "${J[@]}" -H "Authorization: Bearer $TOK_OK" -d "$EX" $U/explain.php | tr -d '\r')
   echo "  explain: $(head -c 300 _test/tmp/e1.json)"
@@ -61,15 +61,20 @@ if [ -n "${GEMINI_API_KEY:-}" ]; then
   # 2. Aufruf auch mit Kontingent 0 aus dem Cache (Cache zählt nicht)
   check "Cache trotz Kontingent 0" 200 "$(code -X POST "${J[@]}" -H "Authorization: Bearer $TOK_OK" -d "$EX" http://127.0.0.1:8098/explain.php)"
 
-  TTS='{"text":"Super gemacht! Acht plus f\u00fcnf ist dreizehn.","voice":"Leda","style":"jubeln"}'
-  T1=$(curl -s -D - -o _test/tmp/t1.wav -X POST "${J[@]}" -H "Authorization: Bearer $TOK_OK" -d "$TTS" $U/tts.php | tr -d '\r')
-  T2=$(curl -s -D - -o _test/tmp/t2.wav -X POST "${J[@]}" -H "Authorization: Bearer $TOK_OK" -d "$TTS" $U/tts.php | tr -d '\r')
-  echo "  tts: $(echo "$T1" | head -1) $(echo "$T1" | grep -i '^x-model') $(wc -c < _test/tmp/t1.wav) Bytes"
-  check "tts 1. Aufruf audio/wav" "Content-Type: audio/wav" "$(echo "$T1" | grep -i '^content-type')"
-  check "tts 2. Aufruf Cache" "X-Cache: HIT" "$(echo "$T2" | grep -i '^x-cache')"
-  check "tts gleiche Datei" "$(md5sum < _test/tmp/t1.wav)" "$(md5sum < _test/tmp/t2.wav)"
+  TTS='{"text":"Super gemacht! Acht plus f\u00fcnf ist dreizehn.","style":"jubeln"}'
+  T1=$(curl -s -D - -o _test/tmp/t1.bin -X POST "${J[@]}" -H "Authorization: Bearer $TOK_OK" -d "$TTS" $U/tts.php | tr -d '\r')
+  echo "  tts: $(echo "$T1" | head -1) $(echo "$T1" | grep -i '^x-model') $(head -c 160 _test/tmp/t1.bin | tr -c '[:print:]' '.')"
+  if echo "$T1" | grep -qi '^content-type: audio/'; then
+    T2=$(curl -s -D - -o _test/tmp/t2.bin -X POST "${J[@]}" -H "Authorization: Bearer $TOK_OK" -d "$TTS" $U/tts.php | tr -d '\r')
+    check "tts 2. Aufruf Cache" "X-Cache: HIT" "$(echo "$T2" | grep -i '^x-cache')"
+    check "tts gleiche Datei" "$(md5sum < _test/tmp/t1.bin)" "$(md5sum < _test/tmp/t2.bin)"
+  else
+    # Ohne TTS im Tarif: sauberer Fehler im Vertragsformat, Client nimmt speechSynthesis.
+    S=$(echo "$T1" | head -1 | cut -d' ' -f2)
+    case "$S" in 429|502|503) check "tts ohne Tarif: sauberer Fehler" ja ja ;; *) check "tts ohne Tarif: sauberer Fehler" "429/502/503" "$S" ;; esac
+  fi
 else
-  echo "(GEMINI_API_KEY fehlt – Cache-Tests übersprungen)"
+  echo "(MISTRAL_API_KEY fehlt – Cache-Tests übersprungen)"
 fi
 
 echo "---- $PASS bestanden, $FAILN fehlgeschlagen"

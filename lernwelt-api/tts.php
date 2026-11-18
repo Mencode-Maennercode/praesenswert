@@ -1,26 +1,19 @@
 <?php
 /**
- * tts.php – Gemini-TTS, deutsche kindliche Stimme. Liefert audio/wav (kein JSON).
+ * tts.php – Sprachausgabe über Mistral (Voxtral TTS). Liefert Audio (kein JSON).
  * Jeder Satz wird nur einmal bezahlt: Audio-Cache als Dateien in _data/tts/.
  * Bei 429/5xx nutzt der Client speechSynthesis.
+ *
+ * Stimme: `voice` = Mistral-Voice-ID (UUID); sonst die deutsche Standardstimme
+ * „Heidi“. Eine echte Kinderstimme bietet Mistral nicht an. `style` ändert
+ * die Ausgabe nicht (Voxtral kennt keine Stilanweisung).
  */
 
 declare(strict_types=1);
 require __DIR__ . '/_lib.php';
 require __DIR__ . '/_ai.php';
 
-/** Vorgefertigte Gemini-Stimmen; Standard: Leda (jugendlich). */
-const STIMMEN = [
-    'Zephyr', 'Puck', 'Charon', 'Kore', 'Fenrir', 'Leda', 'Orus', 'Aoede', 'Callirrhoe', 'Autonoe',
-    'Enceladus', 'Iapetus', 'Umbriel', 'Algieba', 'Despina', 'Erinome', 'Algenib', 'Rasalgethi',
-    'Laomedeia', 'Achernar', 'Alnilam', 'Schedar', 'Gacrux', 'Pulcherrima', 'Achird',
-    'Zubenelgenubi', 'Vindemiatrix', 'Sadachbia', 'Sadaltager', 'Sulafat',
-];
-const STIL = [
-    'erklaeren' => 'ruhig, langsam und deutlich, geduldig erklärend',
-    'jubeln' => 'fröhlich, begeistert und lebhaft',
-    'ermutigen' => 'warm, freundlich und ermutigend',
-];
+const STIMME_STANDARD = '01a0f318-4ae8-7446-a3e4-45aa092940b2'; // Heidi, de, weiblich
 
 cors();
 $uid = requireUser();
@@ -30,31 +23,26 @@ $text = clean($b['text'] ?? '', 400);
 if ($text === '') {
     fail('text fehlt.');
 }
-$stimme = 'Leda';
-foreach (STIMMEN as $s) {
-    if (strcasecmp($s, (string) ($b['voice'] ?? '')) === 0) {
-        $stimme = $s;
-    }
-}
-$stil = is_string($b['style'] ?? null) && isset(STIL[$b['style']]) ? $b['style'] : 'erklaeren';
+$voice = (string) ($b['voice'] ?? '');
+$stimme = preg_match('/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/', $voice) === 1 ? $voice : STIMME_STANDARD;
 
-$hash = hash('sha256', "v1|$stimme|$stil|$text");
-$datei = DATA_DIR . '/tts/' . substr($hash, 0, 2) . "/$hash.wav";
+$hash = hash('sha256', "mistral|$stimme|$text");
+$basis = DATA_DIR . '/tts/' . substr($hash, 0, 2) . "/$hash";
 
-if (is_file($datei)) {
+$treffer = glob("$basis.*") ?: [];
+if ($treffer !== []) {
     header('X-Cache: HIT');
-    $wav = (string) file_get_contents($datei);
+    $mime = str_ends_with($treffer[0], '.wav') ? 'audio/wav' : 'audio/mpeg';
+    $audio = (string) file_get_contents($treffer[0]);
 } else {
     budgetBuchen($uid, 'tts');
-    $prompt = 'Lies den folgenden deutschen Text für ein Grundschulkind vor – mit heller, kindlicher, '
-        . 'freundlicher Stimme, ' . STIL[$stil] . ", in klarem Hochdeutsch:\n" . $text;
-    $wav = geminiTts($prompt, $stimme);
-    ensureDir(dirname($datei));
-    file_put_contents($datei, $wav, LOCK_EX);
+    [$audio, $mime] = aiTts($text, $stimme);
+    ensureDir(dirname($basis));
+    file_put_contents($basis . ($mime === 'audio/wav' ? '.wav' : '.mp3'), $audio, LOCK_EX);
     header('X-Cache: MISS');
 }
 
-header('Content-Type: audio/wav');
-header('Content-Length: ' . strlen($wav));
+header('Content-Type: ' . $mime);
+header('Content-Length: ' . strlen($audio));
 header('Cache-Control: private, max-age=31536000, immutable');
-echo $wav;
+echo $audio;

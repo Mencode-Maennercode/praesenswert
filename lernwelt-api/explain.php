@@ -8,7 +8,7 @@ declare(strict_types=1);
 require __DIR__ . '/_lib.php';
 require __DIR__ . '/_ai.php';
 
-const EXPLAIN_VERSION = 'v1'; // erhöhen, wenn sich die Anweisung ändert → Cache neu
+const EXPLAIN_VERSION = 'v2-mistral'; // erhöhen, wenn sich die Anweisung ändert → Cache neu
 
 cors();
 $uid = requireUser();
@@ -51,14 +51,14 @@ $eingabe = "Kompetenz: {$req['skillId']}\n"
     . ($req['misconception'] ? "Vermutete Fehlvorstellung: {$req['misconception']}\n" : '')
     . "Aufgabe: {$req['task']}\nAntwort des Kindes: {$req['answer']}\nRichtig: {$req['correct']}";
 
-$roh = geminiJson([['text' => $eingabe]], [
-    'type' => 'OBJECT',
+$roh = aiJson([textTeil($eingabe)], [
+    'type' => 'object',
     'properties' => [
-        'speech' => ['type' => 'STRING'],
-        'steps' => ['type' => 'ARRAY', 'items' => ['type' => 'STRING']],
+        'speech' => ['type' => 'string'],
+        'steps' => ['type' => 'array', 'items' => ['type' => 'string']],
     ],
     'required' => ['speech', 'steps'],
-    'propertyOrdering' => ['speech', 'steps'],
+    'additionalProperties' => false,
 ], $anweisung);
 
 $speech = clean($roh['speech'] ?? '', 400);

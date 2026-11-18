@@ -66,7 +66,7 @@ if ($bilder === [] || count($bilder) > 4) {
 $teile = [];
 foreach ($bilder as $roh) {
     [$daten, $mime] = pruefeBild($roh);
-    $teile[] = ['inline_data' => ['mime_type' => $mime, 'data' => $daten]];
+    $teile[] = bildTeil($daten, $mime);
 }
 $grade = grade($b['grade'] ?? 0);
 $fach = isset($b['subject']) ? subject($b['subject']) : null;
@@ -84,25 +84,27 @@ $anweisung = <<<TEXT
     - 'words': Lern-/Übungswörter von der Seite (max. 40), korrekt geschrieben.
     - 'examples': bis zu 10 Beispielaufgaben als Klartext, wie sie auf der Seite stehen.
     - 'uncertain': alles, was du nicht sicher zuordnen kannst (kurz), damit der Admin es prüft.
+    Nimm NUR, was tatsächlich auf den Bildern steht – nichts erfinden oder ergänzen. Ist kein Schulbuch
+    oder Arbeitsblatt zu sehen, lass 'skills', 'words' und 'examples' leer und schreibe das in 'uncertain'.
     TEXT;
 if ($fach !== null) {
-    $teile[] = ['text' => "Fach laut Admin: $fach"];
+    $teile[] = textTeil("Fach laut Admin: $fach");
 }
 if ($notiz !== '') {
-    $teile[] = ['text' => "Hinweis des Admins: $notiz"];
+    $teile[] = textTeil("Hinweis des Admins: $notiz");
 }
-$teile[] = ['text' => 'Werte die Seite(n) aus.'];
+$teile[] = textTeil('Werte die Seite(n) aus.');
 
-$liste = ['type' => 'ARRAY', 'items' => ['type' => 'STRING']];
-$roh = geminiJson($teile, [
-    'type' => 'OBJECT',
+$liste = ['type' => 'array', 'items' => ['type' => 'string']];
+$roh = aiJson($teile, [
+    'type' => 'object',
     'properties' => [
-        'title' => ['type' => 'STRING'],
-        'subject' => ['type' => 'STRING', 'enum' => ['mathe', 'deutsch']],
+        'title' => ['type' => 'string'],
+        'subject' => ['type' => 'string', 'enum' => ['mathe', 'deutsch']],
         'skills' => $liste, 'words' => $liste, 'examples' => $liste, 'uncertain' => $liste,
     ],
     'required' => ['title', 'subject', 'skills', 'words', 'examples', 'uncertain'],
-    'propertyOrdering' => ['title', 'subject', 'skills', 'words', 'examples', 'uncertain'],
+    'additionalProperties' => false,
 ], $anweisung, KETTE_BILD, 0.2);
 
 $strings = fn (string $feld, int $n, int $len) => array_values(array_unique(array_filter(array_map(
