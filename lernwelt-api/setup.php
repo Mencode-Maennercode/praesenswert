@@ -18,12 +18,9 @@ if (!hash_equals(SETUP_HASH, hash('sha256', (string) ($_SERVER['HTTP_X_SETUP_SEC
     usleep(random_int(300_000, 600_000));
     fail('Nicht erlaubt.', 403);
 }
-$datei = DATA_DIR . '/mistral.key';
-if (is_file($datei)) {
-    fail('Schlüssel liegt bereits.', 409);
-}
+$datei = DATA_DIR . '/mistral.key'; // überschreibt (Geheimnis schützt)
 $key = (string) (jsonBody(1000)['key'] ?? '');
-if (preg_match('/^[A-Za-z0-9]{20,100}$/', $key) !== 1) {
+if (preg_match('/^[A-Za-z0-9_.-]{20,200}$/', $key) !== 1) {
     fail('Schlüssel ungültig.');
 }
 ensureDir(DATA_DIR);
