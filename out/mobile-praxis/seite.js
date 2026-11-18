@@ -8,6 +8,16 @@
   const kopfSetzen = () => kopf.classList.toggle('kopf--fest', scrollY > 12)
   addEventListener('scroll', kopfSetzen, { passive: true }); kopfSetzen()
 
+  // Module: antippen schaltet um, die Zahl zählt mit.
+  const module = [...document.querySelectorAll('.modul')]
+  const zahl = document.getElementById('modul-zahl')
+  const zaehle = () => { if (zahl) zahl.textContent = String(module.filter((m) => m.getAttribute('aria-pressed') === 'true').length) }
+  module.forEach((m) => m.addEventListener('click', () => {
+    m.setAttribute('aria-pressed', String(m.getAttribute('aria-pressed') !== 'true'))
+    zaehle()
+  }))
+  zaehle()
+
   // Ein Tag: der sichtbare Schritt bestimmt das Bild auf der Bühne.
   const buehne = document.getElementById('buehne')
   const schritte = [...document.querySelectorAll('.schritt')]
@@ -27,7 +37,21 @@
   // Bilder der Bühne vorladen, damit der Wechsel nicht flackert.
   schritte.forEach((s) => { const i = new Image(); i.src = `img/${s.dataset.bild}.jpg` })
 
-  // Arbeitsweisen: drei Reiter, ein Bild.
+  // Kalender und Unterschrift spielen ab, sobald sie zu sehen sind – und noch einmal, wenn man wiederkommt.
+  const abspielen = (el, dauer) => {
+    if (!el || ruhig) return
+    let laeuft = false
+    new IntersectionObserver((e) => e.forEach((x) => {
+      if (!x.isIntersecting || laeuft) return
+      laeuft = true
+      el.classList.remove('laeuft'); void el.offsetWidth; el.classList.add('laeuft')
+      setTimeout(() => { laeuft = false }, dauer)
+    }), { threshold: 0.55 }).observe(el)
+  }
+  abspielen(document.getElementById('schreibtisch'), 9000)
+  abspielen(document.getElementById('signieren'), 9000)
+
+  // Layouts: drei Reiter, ein Bild.
   const reiter = [...document.querySelectorAll('.reiter [role=tab]')]
   const awBild = document.querySelector('#aw-bild img')
   const awText = document.getElementById('aw-text')
@@ -35,7 +59,7 @@
     r.addEventListener('click', () => {
       reiter.forEach((x) => x.setAttribute('aria-selected', String(x === r)))
       awBild.src = `img/${r.dataset.bild}.jpg`
-      awBild.alt = `Die Arbeitsweise ${r.textContent}`
+      awBild.alt = `Das Layout ${r.textContent}`
       awText.textContent = r.dataset.text
     })
     r.addEventListener('keydown', (e) => {
@@ -50,7 +74,7 @@
 
   // Erscheinen beim Scrollen.
   if (!ruhig) {
-    const teile = document.querySelectorAll('.abschnitt__kopf, .kachel, .saeule, .stufe, .demo__karte, details')
+    const teile = document.querySelectorAll('.abschnitt__kopf, .grundstock, .module, .befund__bild, .anpassen figure, .saeule, .stufe, .demo__karte, details, .kalender__punkte > div')
     teile.forEach((t) => t.classList.add('erscheint'))
     const sicht = new IntersectionObserver((e) => e.forEach((x) => {
       if (x.isIntersecting) { x.target.classList.add('erscheint--da'); sicht.unobserve(x.target) }
@@ -58,14 +82,14 @@
     teile.forEach((t) => sicht.observe(t))
   }
 
-  // Demo: Adresse, Fassung, Größe und Prüfsumme stehen in demo.json – ein neuer Bau ändert nur diese Datei.
+  // Demo: Adresse, Fassung und Größe stehen in demo.json – ein neuer Bau ändert nur diese Datei.
   const link = document.getElementById('demo-link')
   const meta = document.getElementById('demo-meta')
   fetch('demo.json', { cache: 'no-cache' }).then((r) => { if (!r.ok) throw new Error(String(r.status)); return r.json() }).then((d) => {
     if (!d || !d.url) throw new Error('ohne Adresse')
     link.href = d.url
     link.setAttribute('download', '')
-    meta.innerHTML = `Fassung ${d.fassung} · ${d.groesse}<br>SHA-256 ${d.sha256}`
+    meta.textContent = `Fassung ${d.fassung} · ${d.groesse}`
   }).catch(() => {
     link.setAttribute('aria-disabled', 'true')
     meta.textContent = 'Die Demo wird gerade neu bereitgestellt – bitte später noch einmal.'

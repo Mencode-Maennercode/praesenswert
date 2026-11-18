@@ -3,12 +3,12 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Mobile Praxis – Praxissoftware für Physiotherapie, die mit Ihnen hinausfährt</title>
-<meta name="description" content="Termine, Tour, Akte, Rechnungen und Kassenabrechnung für Physiotherapie – gebaut für das Tablet, mit den Daten in Ihrer Praxis statt in einer Cloud. Demo kostenlos laden, Vollversion 30 Tage testen.">
+<title>Mobile Praxis – Praxissoftware für Physiotherapie, in der Praxis und unterwegs</title>
+<meta name="description" content="Termine, Akte, Befund, Dokumentation, Rechnungen und Kassenabrechnung für Physiotherapie – in der Praxis am Schreibtisch und unterwegs am Tablet. Schlank starten, mit Modulen erweitern. Daten bleiben in Ihrer Praxis. Demo kostenlos laden.">
 <meta name="theme-color" content="#21403f">
 <meta property="og:title" content="Mobile Praxis – Praxissoftware für Physiotherapie">
-<meta property="og:description" content="Die Praxissoftware, die mit Ihnen hinausfährt. Demo kostenlos laden.">
-<meta property="og:image" content="https://praesenzwert.de/mobile-praxis/img/hausbesuche-01.jpg">
+<meta property="og:description" content="Einfach anfangen, mit Modulen wachsen. In der Praxis und unterwegs. Demo kostenlos laden.">
+<meta property="og:image" content="https://praesenzwert.de/mobile-praxis/img/web-heute.jpg">
 <link rel="canonical" href="https://praesenzwert.de/mobile-praxis/">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cpath d='M12 50A26 26 0 0 1 52 18' fill='none' stroke='%232f5d5b' stroke-width='7' stroke-linecap='round'/%3E%3Cpath d='M22 46A15 15 0 0 1 44 27' fill='none' stroke='%23b8a27c' stroke-width='5' stroke-linecap='round'/%3E%3C/svg%3E">
 <link rel="preload" href="fonts/newsreader.woff2" as="font" type="font/woff2" crossorigin>
@@ -24,11 +24,12 @@
       <span>Mobile Praxis</span>
     </a>
     <nav class="navi" aria-label="Hauptnavigation">
+      <a href="#einfach">Module</a>
       <a href="#tag">Ein Tag</a>
-      <a href="#funktionen">Funktionen</a>
+      <a href="#kalender">Kalender</a>
+      <a href="#anpassen">Ihr Programm</a>
       <a href="#sicherheit">Sicherheit</a>
       <a href="#preise">Preise</a>
-      <a href="#fragen">Fragen</a>
     </nav>
     <a class="knopf knopf--klein" href="#demo">Demo laden</a>
   </div>
@@ -39,152 +40,267 @@
 <section class="held" id="oben">
   <div class="held__text">
     <p class="kicker">Praxissoftware für Physiotherapie</p>
-    <h1>Die Software, die mit Ihnen <em>hinausfährt.</em></h1>
-    <p class="held__unter">Termine, Tour, Akte, Rechnungen und Kassenabrechnung – gebaut für das Tablet in der Hand, nicht für den Schreibtisch. Und Ihre Akten bleiben in Ihrer Praxis, nicht in einer Cloud.</p>
+    <h1>Ihre Praxis. <em>In den Räumen und unterwegs.</em></h1>
+    <p class="held__unter">Termine, Akte, Befund, Dokumentation, Rechnungen und Kassenabrechnung in einem Programm. Es ist nach dem Installieren startklar und wächst über Module mit. Ihre Akten bleiben dabei in Ihrer Praxis, nicht in einer Cloud.</p>
     <div class="held__knoepfe">
       <a class="knopf" href="#demo">Demo kostenlos laden</a>
       <a class="knopf knopf--hell" href="#preise">30 Tage Vollversion testen</a>
     </div>
     <ul class="held__fakten" aria-label="Auf einen Blick">
-      <li><strong>Offline</strong>arbeitet ohne Internet</li>
-      <li><strong>Verschlüsselt</strong>die ganze Datenbank</li>
-      <li><strong>Tablet zuerst</strong>Stift, Finger, Querformat</li>
+      <li><strong>Sofort startklar</strong>wenig einstellen, gleich loslegen</li>
+      <li><strong>Mit Modulen</strong>nur, was Ihre Praxis braucht</li>
+      <li><strong>Offline</strong>verschlüsselt, ohne Cloud</li>
     </ul>
   </div>
   <div class="held__bild" aria-hidden="true">
-    <figure class="geraet geraet--tablet">
-      <img src="img/hausbesuche-01.jpg" alt="" width="1280" height="800" fetchpriority="high">
+    <figure class="monitor monitor--held">
+      <div class="monitor__schirm"><img src="img/web-heute.jpg" alt="" width="2560" height="1600" fetchpriority="high"></div>
+      <span class="monitor__fuss"></span>
     </figure>
-    <img class="telefon" src="img/sms-telefon.png" alt="" width="376" height="716" loading="lazy">
-    <div class="schwebe schwebe--fahrt">
-      <span class="schwebe__punkt"></span>
-      <div><strong>Losfahren 08:20</strong><span>10 Min · 1,5 km bis Frau Hoffmann</span></div>
-    </div>
+    <figure class="surface surface--held">
+      <div class="surface__schirm"><img src="img/web-befund.jpg" alt="" width="2560" height="1600" loading="lazy"></div>
+    </figure>
   </div>
 </section>
 
 <section class="band" aria-label="Was dahintersteckt">
   <ul>
-    <li>Daten bleiben in der Praxis</li>
-    <li>Örtliche KI ohne Cloud</li>
-    <li>Unterschrift direkt am Tablet</li>
+    <li>Befund und Dokumentation</li>
+    <li>Unterschrift direkt am Surface</li>
+    <li>Kalender auf dem zweiten Bildschirm</li>
+    <li>Posteingang mit eigenem Postfach</li>
     <li>Kassenabrechnung nach § 302 SGB V</li>
-    <li>Fahrtenbuch schreibt sich selbst</li>
+    <li>Örtliche KI ohne Cloud</li>
     <li>Windows · macOS · Linux</li>
   </ul>
+</section>
+
+<section class="einfach" id="einfach">
+  <div class="abschnitt__kopf">
+    <p class="kicker">Die Idee</p>
+    <h2>Einfach anfangen. <em>Wachsen, wenn Sie wollen.</em></h2>
+    <p class="abschnitt__unter">Nach dem Installieren fragt das Programm nur ab, was auf Ihren Rechnungen und Verträgen stehen muss, danach können Sie arbeiten. Weitere Funktionen schalten Sie als Modul dazu. Was ausgeschaltet ist, taucht nirgends auf: kein Menüpunkt, kein leeres Feld, keine Meldung.</p>
+  </div>
+  <div class="einfach__raster">
+    <div class="grundstock">
+      <h3>Von Anfang an dabei</h3>
+      <ul class="grundstock__liste">
+        <li>Termine und Kalender fürs Team</li>
+        <li>Patientinnen und Akte</li>
+        <li>Befund und Dokumentation</li>
+        <li>Verträge mit Unterschrift am Gerät</li>
+        <li>Rechnungen, Zahlungen, Mahnungen</li>
+        <li>Posteingang mit eigenem Postfach</li>
+        <li>Statistik und Monatsabschluss</li>
+        <li>Begleiter mit örtlicher KI</li>
+      </ul>
+    </div>
+    <div class="module" role="group" aria-label="Module zum Ausprobieren">
+      <p class="module__hinweis">Zum Ausprobieren antippen – im Programm geht das genauso.</p>
+      <ul class="module__liste">
+        <li><button class="modul" aria-pressed="true"><span class="modul__name">Hausbesuche</span><span class="modul__text">Tour, Fahrzeiten, Fahrtenbuch</span><span class="schalter"></span></button></li>
+        <li><button class="modul" aria-pressed="true"><span class="modul__name">Terminerinnerung per SMS</span><span class="modul__text">am Vortag, ohne Namen im Text</span><span class="schalter"></span></button></li>
+        <li><button class="modul" aria-pressed="false"><span class="modul__name">Kassenabrechnung</span><span class="modul__text">Nachweis, Zuzahlung, Paket</span><span class="schalter"></span></button></li>
+        <li><button class="modul" aria-pressed="true"><span class="modul__name">Warteliste</span><span class="modul__text">wer passt bei einer Absage</span><span class="schalter"></span></button></li>
+        <li><button class="modul" aria-pressed="false"><span class="modul__name">Standorte</span><span class="modul__text">mehrere Orte oder Praxisgemeinschaft</span><span class="schalter"></span></button></li>
+        <li><button class="modul" aria-pressed="false"><span class="modul__name">Kurse</span><span class="modul__text">Prävention, Rehasport, Anwesenheit</span><span class="schalter"></span></button></li>
+        <li><button class="modul" aria-pressed="false"><span class="modul__name">Telefon</span><span class="modul__text">anrufen über FRITZ!Box oder Handy</span><span class="schalter"></span></button></li>
+        <li><button class="modul" aria-pressed="true"><span class="modul__name">Fotos</span><span class="modul__text">ein Gesicht zu jeder Akte</span><span class="schalter"></span></button></li>
+        <li><button class="modul" aria-pressed="false"><span class="modul__name">Ergotherapie</span><span class="modul__text">eigener Fachbereich je Serie</span><span class="schalter"></span></button></li>
+        <li><button class="modul" aria-pressed="false"><span class="modul__name">Gutscheine</span><span class="modul__text">Wertgutschein und Mehrfachkarte</span><span class="schalter"></span></button></li>
+        <li><button class="modul" aria-pressed="false"><span class="modul__name">Praxis-Messenger</span><span class="modul__text">kurze Nachrichten im Team</span><span class="schalter"></span></button></li>
+        <li><button class="modul" aria-pressed="false"><span class="modul__name">Arbeitszeit</span><span class="modul__text">aus den Terminen vorgeschlagen</span><span class="schalter"></span></button></li>
+        <li><button class="modul" aria-pressed="false"><span class="modul__name">Videosprechstunde</span><span class="modul__text">über einen zertifizierten Dienst</span><span class="schalter"></span></button></li>
+        <li><button class="modul" aria-pressed="false"><span class="modul__name">Gerätebuch &amp; Praxispflichten</span><span class="modul__text">Prüffristen im Blick</span><span class="schalter"></span></button></li>
+        <li><button class="modul" aria-pressed="false"><span class="modul__name">Patientenbefragung</span><span class="modul__text">anonym, ab fünf Antworten</span><span class="schalter"></span></button></li>
+        <li><button class="modul" aria-pressed="false"><span class="modul__name">Mehrere Geräte</span><span class="modul__text">ein Praxisserver, auch offline</span><span class="schalter"></span></button></li>
+      </ul>
+      <p class="module__zahl" aria-live="polite"><span id="modul-zahl">4</span> von 16 Modulen eingeschaltet</p>
+    </div>
+  </div>
+  <figure class="monitor monitor--breit">
+    <div class="monitor__schirm"><img src="img/web-module.jpg" alt="Die Modulübersicht im Programm" width="2560" height="1600" loading="lazy"></div>
+    <span class="monitor__fuss"></span>
+  </figure>
 </section>
 
 <section class="tag" id="tag">
   <div class="abschnitt__kopf">
     <p class="kicker">Ein Tag mit Mobile Praxis</p>
-    <h2>Von der ersten Fahrt bis zum Feierabend – <em>ohne Zettel.</em></h2>
+    <h2>Vom ersten Termin bis zum Feierabend, <em>ohne Zettel.</em></h2>
   </div>
   <div class="tag__raster">
     <ol class="tag__schritte">
-      <li class="schritt" data-bild="hausbesuche-01">
+      <li class="schritt" data-bild="web-heute">
         <span class="schritt__zeit">07:45</span>
-        <h3>Der Tag liegt als Route vor Ihnen.</h3>
-        <p>Alle Besuche in der richtigen Reihenfolge, die Fahrt dazwischen und wann Sie losfahren müssen. Termine in der Praxis stehen dazwischen – ganz ohne Fahrt.</p>
+        <h3>Heute: alles Wichtige auf einer Seite.</h3>
+        <p>Die Termine des Tages, offene Aufgaben, Rückrufe und unbezahlte Rechnungen. Welche Kacheln auf Ihrer Startseite stehen, legen Sie selbst fest.</p>
       </li>
-      <li class="schritt" data-bild="fotos-02">
+      <li class="schritt" data-bild="web-befund">
         <span class="schritt__zeit">08:30</span>
-        <h3>Die Akte öffnet sich an der Haustür.</h3>
-        <p>Verordnung, Serien, Befunde, Ziele, Rechnungen – auf einen Blick. Verträge unterschreibt die Patientin mit dem Stift direkt im Dokument, Kästchen zum Antippen.</p>
+        <h3>Der Befund ist strukturiert und schnell erhoben.</h3>
+        <p>Befundbögen mit Tests, Skalen und ICF, dazu Verlaufsbefunde, die an den Erstbefund anknüpfen. Bilder und Videos liegen verschlüsselt in der Akte.</p>
       </li>
-      <li class="schritt" data-bild="ki-02">
-        <span class="schritt__zeit">12:10</span>
-        <h3>Doku per Zuruf statt am Abend.</h3>
-        <p>Der Begleiter beantwortet Fragen zum Tag, entwirft die Dokumentation aus Ihrem Diktat und plant mit – Sie entscheiden. Die KI rechnet auf Ihrem Gerät, kein Wort geht ins Netz.</p>
+      <li class="schritt" data-bild="web-doku">
+        <span class="schritt__zeit">10:15</span>
+        <h3>Die Dokumentation schreiben Sie direkt nach der Behandlung.</h3>
+        <p>Strukturiert nach Befinden, Befund, Maßnahmen und Plan, mit Schmerzskala vorher und nachher. Wer mag, diktiert, und die örtliche KI macht daraus einen Entwurf. Was gespeichert wird, bestimmen Sie.</p>
       </li>
-      <li class="schritt" data-bild="gkv-abrechnungsstelle-01">
-        <span class="schritt__zeit">15:30</span>
-        <h3>Jede Behandlung ist belegt.</h3>
-        <p>Erbrachte Einheiten werden zum Behandlungsnachweis, Zuzahlung und Kassenanteil rechnet das Programm. Am Monatsende liegt das Paket für Ihr Abrechnungszentrum bereit.</p>
+      <li class="schritt" data-bild="web-post">
+        <span class="schritt__zeit">13:00</span>
+        <h3>Die Post landet gleich bei der richtigen Patientin.</h3>
+        <p>Sie verbinden Ihr Praxis-Postfach einmal, danach kommen E-Mails direkt ins Programm und werden der passenden Akte zugeordnet. Antworten, Unterlagen und Rezepte haben Sie dort, wo Sie behandeln.</p>
       </li>
-      <li class="schritt" data-bild="hausbesuche-03">
-        <span class="schritt__zeit">17:40</span>
-        <h3>Feierabend – und das Fahrtenbuch ist fertig.</h3>
-        <p>Aus der Tour werden die Fahrten des Tages, mit Postleitzahl und Ort statt Namen. Sie bestätigen nur. Was noch offen ist, sagt Ihnen der Feierabend-Check.</p>
+      <li class="schritt" data-bild="web-statistik">
+        <span class="schritt__zeit">17:30</span>
+        <h3>Am Abend sehen Sie, wo die Praxis steht.</h3>
+        <p>Umsatz, Auslastung, offene Forderungen und Ausfälle je Monat und je Person. Am Monatsende liegt das Paket für die Steuerberatung bereit.</p>
       </li>
     </ol>
     <div class="tag__buehne" aria-hidden="true">
-      <figure class="geraet geraet--tablet geraet--buehne">
-        <img id="buehne" src="img/hausbesuche-01.jpg" alt="" width="1280" height="800" loading="lazy">
+      <figure class="monitor monitor--buehne">
+        <div class="monitor__schirm"><img id="buehne" src="img/web-heute.jpg" alt="" width="2560" height="1600" loading="lazy"></div>
+        <span class="monitor__fuss"></span>
       </figure>
     </div>
   </div>
 </section>
 
-<section class="funktionen" id="funktionen">
+<section class="befund" id="befund">
   <div class="abschnitt__kopf">
-    <p class="kicker">Funktionen</p>
-    <h2>Alles, was eine Praxis braucht. <em>Nichts, was sie aufhält.</em></h2>
-    <p class="abschnitt__unter">Was Sie nicht brauchen, schalten Sie als Modul aus – dann ist davon auch nichts zu sehen.</p>
+    <p class="kicker">Befund &amp; Dokumentation</p>
+    <h2>Die Akte, <em>die mitdenkt und nichts verliert.</em></h2>
+    <p class="abschnitt__unter">Jede Änderung wird als neue Fassung gespeichert, überschrieben wird nichts. So verlangt es § 630f BGB, und Sie müssen nicht daran denken.</p>
   </div>
-  <div class="kacheln">
-    <article class="kachel kachel--gross">
-      <img src="img/terminerinnerung-sms-01.jpg" alt="Wochenkalender mit zwei Therapeutinnen nebeneinander" width="1280" height="800" loading="lazy">
-      <div class="kachel__text">
-        <h3>Kalender fürs ganze Team</h3>
-        <p>Jede Person in ihrer Spalte, Räume und Geräte mit Kapazität, freie Zeiten auf Knopfdruck – mit der Fahrzeit zwischen zwei Hausbesuchen gleich mitgerechnet.</p>
-      </div>
-    </article>
-    <article class="kachel">
-      <h3>Erinnerung per SMS</h3>
-      <p>Am Vortag, automatisch, Server in Deutschland. Ohne Namen und ohne Leistung im Text – wird abgesagt, verschwindet die Erinnerung von selbst.</p>
-      <img class="kachel__telefon" src="img/sms-telefon.png" alt="Terminerinnerung als SMS auf dem Handy" width="376" height="716" loading="lazy">
-    </article>
-    <article class="kachel">
-      <h3>Rechnungen, die stimmen</h3>
-      <p>Faktoren, Hausbesuch und Kilometer, Ausfallhonorar, Mahnstufen, GiroCode zum Scannen. Den Kontoauszug lesen Sie ein, Zahlungen ordnen sich zu.</p>
-      <img src="img/weiterer-standort-02.jpg" alt="Liste offener Rechnungen" width="1280" height="800" loading="lazy">
-    </article>
-    <article class="kachel kachel--dunkel">
-      <h3>Dokumentation, die hält</h3>
-      <p>Jede Änderung wird zur neuen Fassung, nichts wird überschrieben – so, wie es § 630f BGB verlangt. Bild- und Videobefund liegen verschlüsselt in der Akte.</p>
-    </article>
-    <article class="kachel">
-      <h3>Mehrere Standorte</h3>
-      <p>Ein Kalender, zwei Orte, ein Rechnungskreis je Betriebsstätte. Auch als Praxisgemeinschaft, in der jede Praxis nur ihre eigenen Akten sieht.</p>
-      <img src="img/weiterer-standort-01.jpg" alt="Kalender mit zwei Standorten" width="1280" height="800" loading="lazy">
-    </article>
-    <article class="kachel">
-      <h3>Team mit klaren Rollen</h3>
-      <p>Inhaberin, Therapeutin, Büro. Das Büro rechnet ab, sieht aber nie eine Dokumentation – die Schweigepflicht steckt im Programm, nicht in einer Dienstanweisung.</p>
-      <img src="img/fotos-03.jpg" alt="Das Team auf einen Blick" width="1280" height="800" loading="lazy">
-    </article>
-    <article class="kachel kachel--breit">
-      <div class="kachel__text">
-        <h3>Und vieles, das man erst im Alltag schätzt</h3>
-        <ul class="liste">
-          <li>Warteliste, die bei einer Absage sagt, wer passt</li>
-          <li>Anrufen aus der Akte über FRITZ!Box oder Handy</li>
-          <li>Heimübungspläne und Therapieziele für den Bericht</li>
-          <li>Folgeverordnung anfordern und nachhalten</li>
-          <li>Gutscheine und Mehrfachkarten</li>
-          <li>Monatsabschluss und Paket für die Steuerberatung</li>
-          <li>Arbeitszeit nach Arbeitszeitgesetz, aus den Terminen vorgeschlagen</li>
-          <li>Mehrere Geräte mit einem Praxisserver – auch ohne Verbindung</li>
-        </ul>
-      </div>
-    </article>
+  <div class="befund__paar">
+    <figure class="befund__bild">
+      <div class="monitor monitor--flach"><div class="monitor__schirm"><img src="img/web-befund.jpg" alt="Befundbogen in der Akte" width="2560" height="1600" loading="lazy"></div></div>
+      <figcaption><strong>Befund.</strong> Eigene Bögen und Testbatterien, Erst- und Verlaufsbefund, Ziele mit Stand für den Bericht.</figcaption>
+    </figure>
+    <figure class="befund__bild">
+      <div class="monitor monitor--flach"><div class="monitor__schirm"><img src="img/web-doku.jpg" alt="Dokumentation der Behandlungen" width="2560" height="1600" loading="lazy"></div></div>
+      <figcaption><strong>Dokumentation.</strong> Jede Behandlung mit Maßnahmen und Schmerzverlauf. Ein Bericht an den Arzt entsteht daraus mit wenigen Klicks.</figcaption>
+    </figure>
   </div>
 </section>
 
-<section class="arbeitsweisen" aria-labelledby="aw-titel">
+<section class="unterschrift" id="unterschrift">
+  <div class="unterschrift__innen">
+    <div class="unterschrift__text">
+      <p class="kicker kicker--hell">Unterschrift</p>
+      <h2>Unterschreiben, <em>direkt auf dem Surface.</em></h2>
+      <p>Behandlungsvertrag, Datenschutz, Einwilligung: Die Patientin unterschreibt mit dem Stift direkt im PDF. Kästchen tippt sie an. Die Unterschrift wird an genau die richtige Stelle gesetzt und das Dokument versiegelt. Sie brauchen keinen Drucker und keinen Scanner und müssen nichts abheften.</p>
+      <ul class="liste liste--hell">
+        <li>Der Wortlaut bleibt unverändert, hinzu kommt nur die Unterschrift</li>
+        <li>Unterschriebenes ist versiegelt und lässt sich nicht mehr ändern</li>
+        <li>Haken bei der E-Mail-Einwilligung? Er landet gleich in den Stammdaten</li>
+      </ul>
+    </div>
+    <div class="unterschrift__bild" aria-hidden="true">
+      <div class="surface surface--gross" id="signieren">
+        <div class="surface__schirm">
+          <div class="blatt">
+            <p class="blatt__kopf">Physiotherapie Albers</p>
+            <p class="blatt__titel">Behandlungsvertrag</p>
+            <span class="zeile"></span><span class="zeile"></span><span class="zeile zeile--kurz"></span>
+            <div class="blatt__wahl"><span class="kaestchen"></span><span>Ich möchte Termine per E-Mail erhalten.</span></div>
+            <div class="blatt__wahl"><span class="kaestchen kaestchen--zwei"></span><span>Ich habe die Datenschutzhinweise erhalten.</span></div>
+            <span class="zeile"></span><span class="zeile zeile--kurz"></span>
+            <div class="blatt__unterschrift">
+              <svg viewBox="0 0 320 90" class="namenszug"><path d="M10 62c14-30 26-46 32-40 7 8-14 44-6 46 9 2 18-34 28-34 8 0-2 30 6 30 9 0 14-22 22-22 7 0 1 20 9 20 10 0 18-28 30-28 6 0 0 26 8 26 12 0 26-20 40-24 10-3 6 14 16 12 14-3 30-10 52-14 18-3 34-2 50 2"/></svg>
+              <span class="blatt__linie">Unterschrift Patientin</span>
+            </div>
+            <span class="siegel">Unterschrieben · versiegelt</span>
+          </div>
+        </div>
+        <span class="stift"></span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="kalender" id="kalender">
   <div class="abschnitt__kopf">
-    <p class="kicker">Drei Arbeitsweisen</p>
-    <h2 id="aw-titel">Am Tablet, am Schreibtisch, <em>am großen Bildschirm.</em></h2>
+    <p class="kicker">Kalender</p>
+    <h2>Der Kalender bekommt <em>seinen eigenen Bildschirm.</em></h2>
+    <p class="abschnitt__unter">Ein Klick, und der Kalender öffnet sich als eigenes Fenster. Sie ziehen ihn auf den zweiten Monitor und arbeiten im Hauptfenster weiter: Akte, Rechnung, Post, während die Woche immer sichtbar bleibt.</p>
   </div>
-  <div class="reiter" role="tablist" aria-label="Arbeitsweise wählen">
-    <button role="tab" aria-selected="true" aria-controls="aw-bild" data-bild="darstellung-01" data-text="Große Flächen für Stift und Finger, Hoch- und Querformat.">Klassisch</button>
-    <button role="tab" aria-selected="false" aria-controls="aw-bild" data-bild="darstellung-03" data-text="Kompakt für Maus und Tastatur, mit Tastenkürzeln und Schnellsuche.">Modern</button>
-    <button role="tab" aria-selected="false" aria-controls="aw-bild" data-bild="darstellung-04" data-text="Kennzahlen oben, der Tag rechts – für die Anmeldung am großen Monitor.">Cockpit</button>
+  <div class="schreibtisch" id="schreibtisch" aria-hidden="true">
+    <figure class="monitor monitor--links">
+      <div class="monitor__schirm"><img src="img/web-doku.jpg" alt="" width="2560" height="1600" loading="lazy"></div>
+      <span class="monitor__fuss"></span>
+    </figure>
+    <figure class="monitor monitor--rechts">
+      <div class="monitor__schirm monitor__schirm--leer"></div>
+      <span class="monitor__fuss"></span>
+    </figure>
+    <div class="fenster" id="kalenderfenster">
+      <span class="fenster__leiste"><i></i><i></i><i></i>Kalender</span>
+      <img src="img/web-kalender-fenster.jpg" alt="" width="1600" height="1000" loading="lazy">
+    </div>
   </div>
-  <p class="reiter__text" id="aw-text">Große Flächen für Stift und Finger, Hoch- und Querformat.</p>
-  <figure class="geraet geraet--monitor" id="aw-bild" role="tabpanel">
-    <img src="img/darstellung-01.jpg" alt="Die Arbeitsweise Klassisch" width="1280" height="800" loading="lazy">
-  </figure>
+  <div class="kalender__punkte">
+    <div><h3>Jede Person in ihrer Spalte</h3><p>Tag, Woche, Monat, Liste. Sie blenden ein, wen und welchen Ort Sie sehen wollen, und färben nach Person, Leistung oder Status.</p></div>
+    <div><h3>Räume und Geräte</h3><p>Mit Kapazität. Ist etwas doppelt belegt, warnt das Programm und schlägt einen anderen Raum oder eine andere Zeit vor.</p></div>
+    <div><h3>Freie Zeit auf Knopfdruck</h3><p>Passende Lücken nach den Terminwünschen der Patientin, Serien in einem Zug und Feiertage schon eingetragen.</p></div>
+  </div>
+</section>
+
+<section class="anpassen" id="anpassen">
+  <div class="abschnitt__kopf">
+    <p class="kicker">Ihr Programm</p>
+    <h2>Jede Person richtet es sich ein, <em>wie sie arbeitet.</em></h2>
+    <p class="abschnitt__unter">Tippen Sie auf den Stift. Navigation und Startseite lassen sich dann verschieben, ausblenden und in der Breite ändern. Das gilt für jede Person einzeln, die Dokumente sehen danach unverändert aus.</p>
+  </div>
+  <div class="anpassen__raster">
+    <figure class="anpassen__haupt">
+      <div class="monitor monitor--flach"><div class="monitor__schirm"><img src="img/web-anpassen.jpg" alt="Navigation und Startseite im Bearbeiten-Modus" width="2560" height="1600" loading="lazy"></div></div>
+      <figcaption><strong>Navigation und Heute-Seite.</strong> Einträge ziehen, Kacheln dazu nehmen, Unwichtiges ausblenden.</figcaption>
+    </figure>
+    <figure class="anpassen__neben">
+      <div class="monitor monitor--flach"><div class="monitor__schirm"><img src="img/web-statistik.jpg" alt="Statistik der Praxis" width="2560" height="1600" loading="lazy"></div></div>
+      <figcaption><strong>Statistik.</strong> Umsatz, Auslastung, Eingänge und Ausfälle, je Monat und je Person.</figcaption>
+    </figure>
+  </div>
+  <div class="layouts">
+    <div class="layouts__kopf">
+      <h3>Drei Layouts, zehn Designs</h3>
+      <div class="reiter" role="tablist" aria-label="Layout wählen">
+        <button role="tab" aria-selected="true" aria-controls="aw-bild" data-bild="darstellung-01" data-text="Große Flächen für Stift und Finger, Hoch- und Querformat.">Klassisch</button>
+        <button role="tab" aria-selected="false" aria-controls="aw-bild" data-bild="darstellung-03" data-text="Kompakt für Maus und Tastatur, mit Tastenkürzeln und Schnellsuche.">Modern</button>
+        <button role="tab" aria-selected="false" aria-controls="aw-bild" data-bild="darstellung-04" data-text="Kennzahlen oben, der Tag rechts: für die Anmeldung am großen Monitor.">Cockpit</button>
+      </div>
+      <p class="reiter__text" id="aw-text">Große Flächen für Stift und Finger, Hoch- und Querformat.</p>
+    </div>
+    <figure class="monitor monitor--breit" id="aw-bild" role="tabpanel">
+      <div class="monitor__schirm"><img src="img/darstellung-01.jpg" alt="Das Layout Klassisch" width="1280" height="800" loading="lazy"></div>
+      <span class="monitor__fuss"></span>
+    </figure>
+  </div>
+</section>
+
+<section class="unterwegs" id="unterwegs">
+  <div class="unterwegs__innen">
+    <div class="abschnitt__kopf">
+      <p class="kicker">Modul Hausbesuche</p>
+      <h2>Und wer hinausfährt, <em>hat die Praxis dabei.</em></h2>
+      <p class="abschnitt__unter">Mit dem Modul Hausbesuche wird aus dem Tag eine Route. Sie sehen, wann Sie losfahren müssen, und das Fahrtenbuch füllt sich von selbst. Die Akte nehmen Sie auf dem Tablet mit, auch ohne Netz.</p>
+    </div>
+    <div class="unterwegs__bild" aria-hidden="true">
+      <figure class="ipad"><div class="ipad__schirm"><img src="img/hausbesuche-01.jpg" alt="" width="1280" height="800" loading="lazy"></div></figure>
+      <img class="telefon" src="img/sms-telefon.png" alt="" width="376" height="716" loading="lazy">
+      <div class="schwebe schwebe--fahrt">
+        <span class="schwebe__punkt"></span>
+        <div><strong>Losfahren 08:20</strong><span>10 Min · 1,5 km bis Frau Hoffmann</span></div>
+      </div>
+    </div>
+    <ul class="unterwegs__liste">
+      <li><strong>Tour mit Fahrzeiten</strong>Reihenfolge, Abfahrtszeit, Navi per QR-Code aufs Handy</li>
+      <li><strong>Fahrtenbuch</strong>mit Postleitzahl und Ort statt Namen, Sie bestätigen nur noch</li>
+      <li><strong>„Ich komme später“</strong>schicken Sie mit einem Tipp als SMS an die nächste Patientin</li>
+      <li><strong>Offline</strong>arbeiten Sie ohne Netz weiter, abgeglichen wird bei der nächsten Verbindung</li>
+    </ul>
+  </div>
 </section>
 
 <section class="sicherheit" id="sicherheit">
@@ -192,13 +308,13 @@
     <div class="abschnitt__kopf">
       <p class="kicker kicker--hell">Sicherheit</p>
       <h2>Ihre Akten verlassen <em>die Praxis nicht.</em></h2>
-      <p class="abschnitt__unter">Keine Cloud, keine Telemetrie, kein fremder Server, der mitliest. Jeder Weg ins Netz ist einzeln benannt und durch Prüfungen festgehalten.</p>
+      <p class="abschnitt__unter">Keine Cloud, keine Telemetrie und kein fremder Server, der mitliest. Jede Stelle, an der das Programm ins Netz geht, ist einzeln benannt und durch Prüfungen abgesichert.</p>
     </div>
     <div class="saeulen">
-      <div class="saeule"><span class="saeule__zahl">01</span><h3>Verschlüsselt gespeichert</h3><p>Die ganze Datenbank ist verschlüsselt, Sicherungen auch. Fotos und Videos aus dem Befund liegen einzeln verschlüsselt.</p></div>
-      <div class="saeule"><span class="saeule__zahl">02</span><h3>KI auf dem Gerät</h3><p>Diktat, Suche und der Begleiter laufen auf Ihrem Rechner – ohne Netzverbindung. Fragt er doch einmal im Netz nach, dann nur ohne jeden Personenbezug.</p></div>
+      <div class="saeule"><span class="saeule__zahl">01</span><h3>Verschlüsselt gespeichert</h3><p>Die ganze Datenbank ist verschlüsselt, ebenso die Sicherungen. Fotos und Videos aus dem Befund sind einzeln verschlüsselt.</p></div>
+      <div class="saeule"><span class="saeule__zahl">02</span><h3>KI auf dem Gerät</h3><p>Diktat, Suche und der Begleiter laufen auf Ihrem Rechner, ohne Netzverbindung. Fragt der Begleiter doch einmal im Netz nach, dann nur ohne jeden Personenbezug.</p></div>
       <div class="saeule"><span class="saeule__zahl">03</span><h3>Nichts verschwindet heimlich</h3><p>Dokumentation, Befunde und das Protokoll sind unveränderlich. Wer was wann geändert hat, bleibt nachvollziehbar.</p></div>
-      <div class="saeule"><span class="saeule__zahl">04</span><h3>Unterschriebene Updates</h3><p>Jede neue Fassung ist digital unterschrieben. Was nicht passt, wird nicht eingespielt – und nie mitten am Arbeitstag.</p></div>
+      <div class="saeule"><span class="saeule__zahl">04</span><h3>Klare Rollen</h3><p>Inhaberin, Therapeutin, Büro. Das Büro rechnet ab, sieht aber keine Dokumentation. Die Schweigepflicht ist im Programm umgesetzt und hängt nicht an einer Dienstanweisung.</p></div>
     </div>
   </div>
 </section>
@@ -213,21 +329,21 @@
       <span class="stufe__nr">1</span>
       <h3>Demo</h3>
       <p class="stufe__preis">kostenlos</p>
-      <p>Das ganze Programm mit einer erfundenen Musterpraxis. Jedes Dokument trägt „Demo“ – zum Ansehen, nicht zum Arbeiten.</p>
+      <p>Das ganze Programm mit einer erfundenen Musterpraxis. Jedes Dokument trägt den Stempel „Demo“. Die Demo ist zum Ansehen gedacht, nicht zum Arbeiten.</p>
       <a class="knopf knopf--hell" href="#demo">Demo laden</a>
     </div>
     <div class="stufe stufe--hervor">
       <span class="stufe__nr">2</span>
       <h3>Vollversion testen</h3>
       <p class="stufe__preis">30 Tage frei</p>
-      <p>Mit Ihren echten Patientinnen, allen Funktionen und ohne Wasserzeichen. Ohne Zahlungsdaten, ohne Kündigung.</p>
+      <p>Mit Ihren echten Patientinnen, allen Funktionen und ohne Wasserzeichen. Sie geben keine Zahlungsdaten an und müssen nichts kündigen.</p>
       <a class="knopf" href="mailto:kontakt@praesenzwert.de?subject=Mobile%20Praxis%3A%20Vollversion%20testen">Testzugang anfordern</a>
     </div>
     <div class="stufe">
       <span class="stufe__nr">3</span>
       <h3>Lizenz</h3>
       <p class="stufe__preis">monatlich oder jährlich</p>
-      <p>Mit allen Updates, neuen Kassenpreisen und Katalogen. Läuft die Lizenz aus, bleibt alles lesbar und exportierbar – niemand wird ausgesperrt.</p>
+      <p>Mit allen Updates, neuen Kassenpreisen und Katalogen. Läuft die Lizenz aus, bleibt alles lesbar und exportierbar. Ausgesperrt wird niemand.</p>
       <a class="knopf knopf--hell" href="mailto:kontakt@praesenzwert.de?subject=Mobile%20Praxis%3A%20Angebot">Angebot anfordern</a>
     </div>
   </div>
@@ -238,11 +354,11 @@
     <div class="demo__text">
       <p class="kicker">Demo</p>
       <h2>In fünf Minuten <em>auf Ihrem Rechner.</em></h2>
-      <p>Installieren, öffnen, mit einem Tipp anmelden – die Musterpraxis ist schon eingerichtet: Patientinnen, Termine, Rechnungen, ein ganzes Team. Mit „Neue Musterpraxis“ fangen Sie jederzeit frisch an.</p>
+      <p>Installieren, öffnen, mit einem Tipp anmelden. Die Musterpraxis ist schon eingerichtet, mit Patientinnen, Terminen, Rechnungen und einem ganzen Team. Mit „Neue Musterpraxis“ fangen Sie jederzeit von vorn an.</p>
       <ul class="liste liste--klein">
-        <li>Windows 10 oder 11, 64 Bit · rund 4 GB frei</li>
-        <li>Nur erfundene Daten – bitte keine echten Patientinnen eintragen</li>
-        <li>Windows fragt beim ersten Start nach („Weitere Informationen“ → „Trotzdem ausführen“), weil das Programm noch kein kostenpflichtiges Signaturzertifikat trägt</li>
+        <li>Windows 10 oder 11, 64 Bit, rund 4 GB frei</li>
+        <li>Nur erfundene Daten: Bitte tragen Sie keine echten Patientinnen ein</li>
+        <li>Windows fragt beim ersten Start nach. Klicken Sie auf „Weitere Informationen“ und dann auf „Trotzdem ausführen“.</li>
       </ul>
     </div>
     <div class="demo__laden">
@@ -258,13 +374,16 @@
     <h2>Was Praxen <em>vorher wissen wollen.</em></h2>
   </div>
   <div class="fragen__liste">
-    <details><summary>Brauche ich Internet?</summary><p>Nein. Das Programm arbeitet vollständig auf Ihrem Gerät. Internet brauchen nur Dinge, die ohne gar nicht gehen: SMS-Erinnerungen, E-Mail, Updates und Kataloge.</p></details>
-    <details><summary>Wo liegen meine Daten?</summary><p>Auf Ihrem Rechner, verschlüsselt. Arbeiten mehrere Geräte zusammen, ist ein Rechner Ihrer Praxis der Server – kein Rechenzentrum eines Dritten.</p></details>
-    <details><summary>Kann ich mit gesetzlichen Kassen abrechnen?</summary><p>Ja. Das Programm führt die Behandlungsnachweise, rechnet Vertragspreis und Zuzahlung und legt das Abrechnungspaket für Ihr Abrechnungszentrum ab. Dafür brauchen Sie wie bisher Zulassung und Institutionskennzeichen.</p></details>
-    <details><summary>Und die Telematikinfrastruktur?</summary><p>Die Anbindung ist in Vorbereitung: Gesundheitskarte, KIM und elektronische Patientenakte sind gebaut und werden vor der Freigabe gegen echte Anlagen geprüft. Pflicht ist der Anschluss ab dem 1. Oktober 2027.</p></details>
-    <details><summary>Läuft es auf Mac oder Linux?</summary><p>Die Vollversion gibt es für Windows, macOS und Linux. Die Demo steht vorerst für Windows bereit.</p></details>
-    <details><summary>Was passiert, wenn ich nicht verlängere?</summary><p>Nichts geht verloren. Sie können weiter lesen, sichern, exportieren und Auskunft geben – nur Neues anlegen geht erst wieder mit einer Lizenz. Akten unterliegen Aufbewahrungsfristen; aussperren gibt es bei uns nicht.</p></details>
-    <details><summary>Ist die KI ein Medizinprodukt?</summary><p>Nein, und das ist Absicht. Sie formuliert um, findet wieder und fasst zusammen – sie stellt keine Diagnose und bewertet nichts. Was in die Akte kommt, bestätigen Sie.</p></details>
+    <details><summary>Ist das nur etwas für mobile Praxen?</summary><p>Nein. Das Programm ist für Praxen mit eigenen Räumen genauso gebaut wie für Hausbesuche. Hausbesuche sind ein Modul: Ist es ausgeschaltet, gibt es keine Tour und kein Fahrtenbuch, und ein Termin findet einfach in der Praxis statt.</p></details>
+    <details><summary>Wie viel muss ich einrichten?</summary><p>Wenig. Die Ersteinrichtung fragt ab, was auf Rechnungen und Verträgen stehen muss: Name, Anschrift, Bank und Steuernummer. Danach können Sie arbeiten. Alles Weitere schalten Sie dazu, wenn Sie es brauchen.</p></details>
+    <details><summary>Brauche ich Internet?</summary><p>Nein. Das Programm arbeitet vollständig auf Ihrem Gerät. Internet brauchen nur Dinge, die ohne Netz nicht gehen: SMS-Erinnerungen, E-Mail, Updates und Kataloge.</p></details>
+    <details><summary>Kann ich mein E-Mail-Postfach anbinden?</summary><p>Ja. Sie verbinden Ihr Praxis-Postfach einmal, danach kommt die Post in den Posteingang des Programms und wird der passenden Patientin zugeordnet. Abgerufen wird verschlüsselt und in der Voreinstellung nur lesend, auf dem Server wird nichts gelöscht.</p></details>
+    <details><summary>Wo liegen meine Daten?</summary><p>Auf Ihrem Rechner, verschlüsselt. Arbeiten mehrere Geräte zusammen, ist ein Rechner Ihrer Praxis der Server und nicht das Rechenzentrum eines Dritten.</p></details>
+    <details><summary>Kann ich mit gesetzlichen Kassen abrechnen?</summary><p>Ja. Das Programm führt die Behandlungsnachweise, rechnet Vertragspreis und Zuzahlung und legt das Abrechnungspaket für Ihr Abrechnungszentrum ab. Zulassung und Institutionskennzeichen brauchen Sie dafür wie bisher.</p></details>
+    <details><summary>Und die Telematikinfrastruktur?</summary><p>Die Anbindung ist in Vorbereitung. Gesundheitskarte, KIM und elektronische Patientenakte sind gebaut und werden vor der Freigabe gegen echte Anlagen geprüft. Pflicht ist der Anschluss ab dem 1. Oktober 2027.</p></details>
+    <details><summary>Läuft es auf Mac oder Linux?</summary><p>Die Vollversion gibt es für Windows, macOS und Linux. Die Demo steht vorerst nur für Windows bereit.</p></details>
+    <details><summary>Was passiert, wenn ich nicht verlängere?</summary><p>Es geht nichts verloren. Sie können weiter lesen, sichern, exportieren und Auskunft geben, nur Neues anlegen geht erst wieder mit einer Lizenz. Akten unterliegen Aufbewahrungsfristen, deshalb sperren wir niemanden aus.</p></details>
+    <details><summary>Ist die KI ein Medizinprodukt?</summary><p>Nein, und das ist Absicht. Sie formuliert um, findet wieder und fasst zusammen. Sie stellt keine Diagnose und bewertet nichts. Was in die Akte kommt, bestätigen Sie.</p></details>
   </div>
 </section>
 
@@ -285,7 +404,7 @@
       <a href="/datenschutz/">Datenschutz</a>
     </nav>
   </div>
-  <p class="fuss__klein">Alle gezeigten Personen, Namen und Daten sind erfunden. Die Bilder sind Aufnahmen aus dem Programm. © <span id="jahr">2026</span> PräsenzWert</p>
+  <p class="fuss__klein">Alle gezeigten Personen, Namen und Daten sind erfunden. Die Bildschirmbilder sind Aufnahmen aus dem Programm, Unterschrift und Fensterwechsel sind nachgestellt. © <span id="jahr">2026</span> PräsenzWert</p>
 </footer>
 
 <script src="seite.js" defer></script>
