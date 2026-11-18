@@ -1,0 +1,5 @@
+# Laufzeitdaten (Caches, Zähler, Schlüssel, Admin-Hash) nie ins Repo –
+# nur der Riegel davor.
+/_data/*
+!/_data/.htaccess
+/_test/tmp/

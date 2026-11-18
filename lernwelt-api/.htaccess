@@ -1,0 +1,17 @@
+# Lernwelt-KI-Proxy. Eigene Rewrite-Regeln: die SPA-Weiterleitung der
+# Hauptseite greift hier nicht (mod_rewrite wird nicht geerbt).
+Options -Indexes
+RewriteEngine On
+RewriteBase /lernwelt-api/
+
+# Authorization-Header an PHP durchreichen (PHP-FPM/CGI verwirft ihn sonst).
+RewriteCond %{HTTP:Authorization} .
+RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
+
+# Datenspeicher, Bausteine (_lib.php, _ai.php) und Tests sind nie erreichbar.
+RewriteRule ^_ - [F,L]
+RewriteRule ^(README\.md|\.gitignore)$ - [F,L]
+
+<IfModule mod_headers.c>
+    Header always set X-Content-Type-Options "nosniff"
+</IfModule>

@@ -1,0 +1,6 @@
+# Zweiter Riegel: Schlüssel, Caches, Zähler, Admin-Hash. Nie ausliefern.
+Require all denied
+<IfModule !mod_authz_core.c>
+    Order allow,deny
+    Deny from all
+</IfModule>
