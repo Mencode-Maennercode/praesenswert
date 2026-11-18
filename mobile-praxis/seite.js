@@ -48,7 +48,31 @@
       setTimeout(() => { laeuft = false }, dauer)
     }), { threshold: 0.55 }).observe(el)
   }
-  abspielen(document.getElementById('schreibtisch'), 9000)
+  // Das Kalenderfenster startet klein auf dem linken Bildschirm und landet genau auf der Bildfläche des rechten:
+  // beide Rechtecke werden an den Monitoren ausgemessen, nicht geschätzt.
+  const tisch = document.getElementById('schreibtisch')
+  const flaeche = (sel) => {
+    const schirm = tisch.querySelector(sel)
+    const t = tisch.getBoundingClientRect(), r = schirm.getBoundingClientRect()
+    const p = parseFloat(getComputedStyle(schirm).paddingLeft) || 0
+    return { l: r.left - t.left + p, t: r.top - t.top + p, b: r.width - 2 * p, h: r.height - 2 * p }
+  }
+  const vermesse = () => {
+    if (!tisch) return
+    const links = flaeche('.monitor--links .monitor__schirm')
+    const rechts = flaeche('.monitor--rechts .monitor__schirm')
+    const s = tisch.style
+    s.setProperty('--s-l', `${links.l + links.b * 0.08}px`); s.setProperty('--s-t', `${links.t + links.h * 0.12}px`)
+    s.setProperty('--s-b', `${links.b * 0.46}px`); s.setProperty('--s-h', `${links.h * 0.46}px`)
+    s.setProperty('--z-l', `${rechts.l}px`); s.setProperty('--z-t', `${rechts.t}px`)
+    s.setProperty('--z-b', `${rechts.b}px`); s.setProperty('--z-h', `${rechts.h}px`)
+  }
+  vermesse()
+  addEventListener('load', vermesse)
+  addEventListener('resize', () => { vermesse(); if (tisch?.classList.contains('laeuft')) { tisch.classList.remove('laeuft'); tisch.classList.add('fertig') } })
+  if (tisch) tisch.addEventListener('animationend', () => { tisch.classList.remove('laeuft'); tisch.classList.add('fertig') })
+  if (tisch) tisch.addEventListener('animationstart', () => tisch.classList.remove('fertig'))
+  abspielen(tisch, 9000)
   abspielen(document.getElementById('signieren'), 9000)
 
   // Layouts: drei Reiter, ein Bild.

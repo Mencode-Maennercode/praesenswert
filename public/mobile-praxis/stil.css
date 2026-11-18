@@ -271,21 +271,23 @@ details p { padding: 0 48px 28px 0; color: var(--leise); max-width: 46em; }
 /* Kalender auf dem zweiten Bildschirm */
 .schreibtisch { position: relative; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: clamp(14px, 2.4vw, 32px); }
 .schreibtisch::after { content: ""; position: absolute; left: -2%; right: -2%; bottom: -10px; height: 14px; border-radius: 8px; background: linear-gradient(#e2dacb, #d4cab7); z-index: -1; }
-.monitor__schirm--leer { aspect-ratio: 1.6; }
+.schreibtisch .monitor__schirm img, .monitor__schirm--leer { aspect-ratio: 16 / 9; }
 .monitor__schirm--leer::before { content: ""; display: block; height: 100%; border-radius: 6px; background: radial-gradient(90% 90% at 30% 20%, #26403f, #142423); }
-.fenster { --ziel-l: calc(50% + clamp(7px, 1.2vw, 16px) + 9px); --ziel-b: calc(50% - clamp(7px, 1.2vw, 16px) - 18px); position: absolute; z-index: 2; left: 6%; top: 12%; width: 26%; background: #fbf8f2; border-radius: 6px; overflow: hidden; box-shadow: 0 30px 60px -20px rgba(0,0,0,.55); opacity: 0; }
-.fenster__leiste { display: flex; align-items: center; gap: 5px; height: 16px; padding: 0 8px; background: #e9e3d7; font: 600 9px/1 var(--sans); color: var(--leise); }
+/* Start- und Zielrechteck misst seite.js an den Bildschirmen aus (--s-*, --z-*), damit das Fenster genau im rechten Monitor landet. */
+.fenster { position: absolute; z-index: 2; left: var(--s-l, 6%); top: var(--s-t, 12%); width: var(--s-b, 26%); height: var(--s-h, 18%); display: flex; flex-direction: column; background: #fbf8f2; border-radius: 6px; overflow: hidden; box-shadow: 0 30px 60px -20px rgba(0,0,0,.55); opacity: 0; }
+.fenster__leiste { flex: none; display: flex; align-items: center; gap: 5px; height: 16px; padding: 0 8px; background: #e9e3d7; font: 600 9px/1 var(--sans); color: var(--leise); }
 .fenster__leiste i { width: 6px; height: 6px; border-radius: 50%; background: #c6bead; }
 .fenster__leiste i:last-of-type { margin-right: 6px; }
-.fenster img { width: 100%; aspect-ratio: 1.6; object-fit: cover; object-position: left top; }
+.fenster img { flex: 1; min-height: 0; width: 100%; height: 100%; object-fit: cover; object-position: left top; }
 .schreibtisch.laeuft .fenster { animation: abloesen 5.6s cubic-bezier(.5, 0, .2, 1) forwards; }
+.schreibtisch.fertig .fenster { opacity: 1; left: var(--z-l); top: var(--z-t); width: var(--z-b); height: var(--z-h); border-radius: 5px; }
 @keyframes abloesen {
-  0% { opacity: 0; left: 5%; top: 28%; width: 4%; }
-  16% { opacity: 1; left: 6%; top: 12%; width: 26%; }
-  34% { left: 6%; top: 12%; width: 26%; transform: rotate(0); }
+  0% { opacity: 0; transform: scale(.2); transform-origin: top left; }
+  16% { opacity: 1; transform: none; }
+  34% { left: var(--s-l); top: var(--s-t); transform: rotate(0); }
   46% { transform: rotate(-1.5deg); }
-  72% { left: 60%; top: 12%; width: 26%; transform: rotate(0); }
-  88%, 100% { opacity: 1; left: var(--ziel-l); top: 9px; width: var(--ziel-b); }
+  70% { left: calc(var(--z-l) + 6%); top: var(--s-t); width: var(--s-b); height: var(--s-h); transform: rotate(0); }
+  88%, 100% { opacity: 1; left: var(--z-l); top: var(--z-t); width: var(--z-b); height: var(--z-h); border-radius: 5px; }
 }
 .kalender__punkte { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: clamp(20px, 3vw, 44px); margin-top: clamp(56px, 7vw, 96px); border-top: 1px solid var(--linie); padding-top: 32px; }
 .kalender__punkte h3 { font-size: 24px; line-height: 1.2; }
@@ -344,7 +346,7 @@ details p { padding: 0 48px 28px 0; color: var(--leise); max-width: 46em; }
   .stift { display: none; }
 }
 @media (prefers-reduced-motion: reduce) {
-  .schreibtisch .fenster { opacity: 1; left: var(--ziel-l); top: 9px; width: var(--ziel-b); }
+  .schreibtisch .fenster { opacity: 1; left: var(--z-l); top: var(--z-t); width: var(--z-b); height: var(--z-h); }
   .namenszug { stroke-dashoffset: 0; }
   .kaestchen::after { transform: rotate(45deg) scale(1); }
   .siegel { opacity: 1; transform: none; }
